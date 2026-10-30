@@ -20,3 +20,12 @@ cd frontend && npm install && npm run dev
 ```
 
 Full usage, limitations and reused projects are added in Phase 7.
+
+## Known limitations
+
+Kept current as the build progresses.
+
+- **Documents before 25 June 2007** have no headline categories, so pairing has less evidence.
+  They can only be shown as "Matched" under a stricter rule (D-009 in `docs/DECISIONS.md`);
+  otherwise they are shown as "Check pairing". If testing shows the rule is unsafe, all
+  pre-2007 pairs will be "Check pairing" and this section will say so.

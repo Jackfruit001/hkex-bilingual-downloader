@@ -50,3 +50,12 @@ Each record: context, options, decision, reasons, status. Add new records at the
 
 - **Decision:** each filename uses that document's own HKT publication date, so a separately published Chinese annual report keeps its real date.
 - **Status:** accepted.
+
+## D-009 Pre-2007 pairing: lower threshold, require two structural signals
+
+- **Context:** documents before 25 June 2007 have no headline categories, so signal S2 (up to +3) is unavailable. With the SPEC §4.3 threshold of 9 they could never be `matched`. The probe (research notes §9, Q6) found the 2005 Chinese file shares the English file number with `_c` added (16 of 16 same-minute pairs), whereas 2014 onwards is +1.
+- **Options:** (a) leave the threshold at 9, so every pre-2007 pair is `check`; (b) lower the threshold when no category exists, with extra conditions; (c) always run the content check for pre-2007 pairs.
+- **Decision:** (b). When neither document has categories, `matched` needs a score of at least 7 (config `MATCH_MIN_SCORE_NO_CATEGORY`) and both S1 (same release minute) and S3 (adjacent or identical file number for that era) must hold, plus the existing mutual-best, margin and no-conflict rules. Anything else stays `check`. The content check (S7) remains available for `check` entries.
+- **Reasons:** 7 is the 9 threshold minus the 3 points the category signal would have contributed. Requiring two independent structural signals keeps the rule explainable.
+- **Validation and fallback:** the golden set must include pre-2007 pairs (SPEC §10.4). If it shows any wrong `matched` among them, revert to (a), keep every pre-2007 pair as `check`, and say so in the README limitations.
+- **Status:** accepted provisionally; SPEC §4.3 and §4.4 to be updated at Gate 0 approval.
