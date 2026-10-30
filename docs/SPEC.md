@@ -14,10 +14,10 @@ Every requirement maps to at least one test. Fill the Tests column as tests are 
 
 | ID | Requirement (from the brief) | Notes | Tests |
 |---|---|---|---|
-| R1 | Enter a HK stock code, preserving leading zeros | Accept `700`, `0700`, `00700`, `700.HK`; normalise to `00700` | |
-| R2 | Select a publication date range; inclusive; HKT | Both ends inclusive | |
+| R1 | Enter a HK stock code, preserving leading zeros | Accept `700`, `0700`, `00700`, `700.HK`; normalise to `00700` | `tests/unit/test_validation.py` |
+| R2 | Select a publication date range; inclusive; HKT | Both ends inclusive | `tests/unit/test_validation.py`, `tests/unit/test_timeutil.py`, `tests/unit/test_search.py` (HKT filtering) |
 | R3 | Filter by headline category, with "All categories" | Categories exist only for documents from 25 Jun 2007 | |
-| R4 | Search and browse results, including beyond the first page | All HKEX pages fetched server-side | |
+| R4 | Search and browse results, including beyond the first page | All HKEX pages fetched server-side | `tests/unit/test_search.py`, `tests/integration/test_replay.py` (search layer only) |
 | R5 | Title keyword filter (optional) | English or Chinese keyword | |
 | R6 | Each EN document associated with its TC version, shown as one entry with per-language downloads | Central requirement | |
 | R7 | Show code and company name, date and time, EN and TC titles, category, availability per language, links to source documents | | |
@@ -30,11 +30,11 @@ Every requirement maps to at least one test. Fill the Tests column as tests are 
 | R14 | Default filenames `LANG_YYYY-MM-DD-CODE-TITLE.pdf` | Title Case for EN (D-004) | |
 | R15 | Windows-invalid characters, long titles and collisions handled | | |
 | R16 | Edit proposed filenames (optional); defaults work with no edits | | |
-| R17 | Invalid stock code or date range | | |
+| R17 | Invalid stock code or date range | | `tests/unit/test_validation.py` (domain layer; UI in Phase 5) |
 | R18 | Search with no results | | |
 | R19 | Several announcements from one company on one day | | |
 | R20 | Missing or uncertain language matches | | |
-| R21 | Results spanning multiple pages | | |
+| R21 | Results spanning multiple pages | | `tests/unit/test_search.py`, `tests/integration/test_replay.py::test_large_range_takes_two_calls_and_returns_every_row` |
 | R22 | Failed or interrupted downloads | | |
 | R23 | Repeated downloads and filename collisions | | |
 | R24 | Progress, success and error messages; failures never shown as success | | |
@@ -68,14 +68,14 @@ HKEX's `rowRange` is reported to be cumulative (it returns rows 1 to N). Strateg
 - First call with `rowRange=100` to learn the total count.
 - If more rows exist, one call with `rowRange = min(total, 5000)`.
 - If the total exceeds 5,000, split the date range in halves recursively and merge.
-- Deduplicate by file path. Guard against loops: stop if a call adds no new rows.
+- Remove repeated rows by `NEWS_ID` (the file path is not an identity: shared `/dod/` pages). Guard against loops: if a call returns fewer rows than `recordCnt` reports, stop and add a warning instead of asking again.
 - Hard limit of 20,000 rows per language per search; beyond it return `TOO_MANY_RESULTS` asking the user to narrow the range or choose a category.
 
 ### 3.4 Normalised document
 
 | Field | Source and rule |
 |---|---|
-| `path` | `FILE_LINK`; unique key |
+| `path` | `FILE_LINK`; used to fetch the file, not a unique key (shared `/dod/` pages) |
 | `lang` | `en` or `tc` (the section it came from) |
 | `release_at` | `DATE_TIME` (`DD/MM/YYYY HH:MM`) as HKT |
 | `stock_codes`, `stock_names` | split on `<br/>`; codes zero-padded |
@@ -85,8 +85,8 @@ HKEX's `rowRange` is reported to be cumulative (it returns rows 1 to N). Strateg
 | `file_type`, `size_label` | `FILE_TYPE`, `FILE_INFO` |
 | `folder_date`, `seq` | parsed from the path (`/YYYY/MMDD/` and the numeric stem; supports the older `LTN` prefix and sub-folders) |
 | `is_stub` | title matches a stub fragment (research notes §5) |
-| `flags` | `cancelled`, `headlines_revised`, `revised` from title or category prefixes |
-| `news_id` | `NEWS_ID` |
+| `flags`, `category_prefix` | `cancelled`, `headlines_revised`, `revised` from the bracketed category prefix or an English `(Revised)` title prefix; the raw prefix is always kept so an unmapped marker stays visible to the matcher |
+| `news_id` | `NEWS_ID`; unique within a language, the key for removing repeated rows |
 | `source_url` | absolute `https://www1.hkexnews.hk/...` |
 
 Parsing must tolerate nulls and numbers in string fields.

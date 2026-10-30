@@ -14,6 +14,7 @@ How AI tools were used, and the mistakes they made that were caught. Entries are
 | 2026-10-30 | Claude chat | Researched HKEXnews: HKEX e-Submission FAQ, search guide, terms of use, official datafeed; cloned and read five open-source HKEX clients | Research notes, decisions D-001 to D-008, spec and plan. The chat sandbox could not reach hkexnews.hk, so API details stay "Reported" until the probe confirms them |
 | 2026-10-30 | Manual (Zarif) | Checked document URLs on hkexnews.hk | Confirmed the `_c` suffix and EN + 1 numbering (Zai Lab, 28 Oct); found a Chinese-section stub for a Form 8-K at EN + 1 |
 | 2026-10-30 | Claude Code | Phase 0: backend and frontend scaffold, `scripts/probe_hkex.py`, live probe of HKEXnews (about 57 requests), findings in research notes §9 | Q1 to Q13 answered with fixtures; several spec assumptions corrected (see M-002, M-003) |
+| 2026-10-30 | Claude Code | Phase 1: domain validation and HKT helpers, HKEX client, parser, reference data with snapshot, search with pagination; tests first throughout | 175 offline tests and 1 live smoke test; five assumptions corrected (M-004 to M-006) |
 
 ## Mistakes caught
 
@@ -43,6 +44,33 @@ How AI tools were used, and the mistakes they made that were caught. Entries are
 - **How it was caught:** reading the probe output before writing anything into the research notes.
 - **Fix and commit:** (1) and (2) fixed in `scripts/probe_hkex.py` and re-run from cache; (3) left as an Open item in research notes §9 rather than guessing another code.
 - **Guard added:** findings are written into the research notes by hand after reading the output, not generated.
+
+### M-004: stock-code normaliser accepted a superscript digit
+
+- **Date and tool:** 2026-10-30, Claude Code.
+- **What the AI produced:** `normalise_stock_code` applied Unicode NFKC so that full-width digits typed on a Chinese keyboard would work.
+- **What was wrong:** NFKC also folds `²` to `2`, so the input `²` became stock `00002`.
+- **How it was caught:** my own unit test listed `²` as an input that must be rejected.
+- **Fix and commit:** only the ten full-width digits (U+FF10 to U+FF19) are folded now; test kept.
+- **Guard added:** the Hypothesis property that any accepted code is exactly five ASCII digits.
+
+### M-005: test assumed Tencent has one directory entry
+
+- **Date and tool:** 2026-10-30, Claude Code.
+- **What the AI produced:** a test expecting `lookup("00700")` to return one security.
+- **What was wrong:** 00700 is also the code of YAOHAN INT'L (delisted), so with SPEC §3.1 as written even Tencent would show a "choose the company" prompt. About 6.7% of ordinary `0xxxx` codes (250 of 3,757) have a delisted twin.
+- **How it was caught:** the test failed against the recorded stock lists.
+- **Fix and commit:** test now asserts the real data (active entry listed first); the UX consequence is raised at Gate 1 rather than silently changed.
+- **Guard added:** directory tests run against the recorded lists, not hand-made ones.
+
+### M-006: a one-line edit overwrote the wrong line
+
+- **Date and tool:** 2026-10-30, Claude Code.
+- **What the AI produced:** a `sed` command to shorten a docstring that replaced line 17 of `reference.py`, which was the `class CategoryIndex:` line, because I misread the line numbers of the listing I was working from.
+- **What was wrong:** the file no longer parsed; `ruff` reported syntax errors.
+- **How it was caught:** `ruff check` ran straight after the edit.
+- **Fix and commit:** restored the class line and shortened the docstring on the right line; all tests green again.
+- **Guard added:** line-number edits are checked against the file (a `sed -n` with numbers) before running, and the lint run follows every edit.
 
 ### Template
 

@@ -1,6 +1,6 @@
 # Plan
 
-**Status:** Gate 0 approved 30 Oct 2026; `/api/probe` removed. Phase 1 plan awaiting approval. Update this line at every gate.
+**Status:** Phase 1 built; awaiting Gate 1 approval. Update this line at every gate. Update this line at every gate.
 
 **Timeline (HKT):** Fri 30 Oct, Phases 0 to 2. Sat 31 Oct, Phases 3 and 4. Sun 1 Nov, Phases 5 and 6. Mon 2 Nov, Phase 7 and submit.
 
@@ -35,11 +35,11 @@ Goal: confirm how HKEXnews really behaves before designing around it.
 
 ## Phase 1: HKEX client and domain model (about 3 h)
 
-- [ ] 1.1 `domain/`: models (`Document`, `Announcement`, `Stock`, `Category`), validation (stock code, date range), HKT helpers. Tests first.
-- [ ] 1.2 `hkex/client.py`: httpx AsyncClient, headers, timeouts, retries with backoff and jitter, `Retry-After`, concurrency limit, rate limit; session warm-up only if Phase 0 shows it is needed.
-- [ ] 1.3 `hkex/reference.py`: stock directory (active and delisted, EN and TC names) and category tree with code-to-name maps in both languages; TTL cache; bundled snapshot fallback from the probe fixtures.
-- [ ] 1.4 `hkex/search.py` and `hkex/parse.py`: per-language search with cumulative pagination, dedupe, loop guard, range splitting and caps (SPEC §3.3); normalisation (SPEC §3.4) including stub and flag detection.
-- [ ] 1.5 Tests: unit tests, fixture-based tests for every Phase 0 scenario, one `live` smoke test.
+- [x] 1.1 `domain/`: models (`Document`, `Stock`, `Category`; `Announcement` moves to Phase 2 where its shape is settled by pairing), validation (stock code, date range), HKT helpers. Tests first.
+- [x] 1.2 `hkex/client.py`: httpx AsyncClient, headers, timeouts, retries with backoff and jitter, `Retry-After`, concurrency limit, rate limit; session warm-up only if Phase 0 shows it is needed.
+- [x] 1.3 `hkex/reference.py`: stock directory (active and delisted, EN and TC names) and category tree with code-to-name maps in both languages; TTL cache; bundled snapshot fallback from the probe fixtures.
+- [x] 1.4 `hkex/search.py` and `hkex/parse.py`: per-language search with cumulative pagination, dedupe, loop guard, range splitting and caps (SPEC §3.3); normalisation (SPEC §3.4) including stub and flag detection.
+- [x] 1.5 Tests: unit tests, fixture-based tests for every Phase 0 scenario, one `live` smoke test.
 - **GATE 1:** test summary; sample normalised output for `zai-lab-nddr` and `form-8k-en-only`.
 
 ## Phase 2: Pairing engine and golden set (about 4 h)
