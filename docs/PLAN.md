@@ -1,8 +1,8 @@
 # Plan
 
-**Status:** Gate 1 approved 31 October 2026 (with D-010, code reuse); Phase 2 plan proposed, awaiting approval. Update this line at every gate.
+**Status:** Phase 2 in progress (31 October 2026): 2.1 to 2.3 done (matcher, evidence, content check; D-011 approved); next is 2.4, the golden helper, which needs live calls (not yet approved). Gate 2 not reached. Update this line at every gate.
 
-**Timeline (HKT):** Fri 30 Oct, Phases 0 to 2. Sat 31 Oct, Phases 3 and 4. Sun 1 Nov, Phases 5 and 6. Mon 2 Nov, Phase 7 and submit.
+**Timeline (HKT):** Fri 30 Oct, Phases 0 to 2. Sat 31 Oct, Phases 3 and 4. Sun 1 Nov, Phases 5 and 6. Mon 2 Nov, Phase 7 and submit. Update, 31 Oct: the reviewer allowed one extra day, so submission can slip to Tue 3 Nov. Phases run strictly in order, each gate approved before the next starts; no phase is skipped or reopened to save time.
 
 Tasks marked [Zarif] need Zarif. Everything else is for Claude Code, after Zarif approves the phase plan. Never start a phase before the previous gate is approved.
 
@@ -44,9 +44,9 @@ Goal: confirm how HKEXnews really behaves before designing around it.
 
 ## Phase 2: Pairing engine and golden set (about 4 h)
 
-- [ ] 2.1 Synthetic fixtures for hard cases: same-minute pairs, interleaved sequence numbers, stubs in both directions, revised headlines, identical-hash bilingual file, separately submitted annual report.
-- [ ] 2.2 `pairing/matcher.py` per SPEC §4, with evidence text in `evidence.py`. Tests first.
-- [ ] 2.3 `pairing/content_check.py` per SPEC §4.5.
+- [x] 2.1 Synthetic fixtures for hard cases: same-minute pairs, interleaved sequence numbers, stubs in both directions, revised headlines, identical-hash bilingual file, separately submitted annual report. (`tests/support.py` `make_doc` and `make_pdf`; cases in `tests/unit/test_matcher.py`.)
+- [x] 2.2 `pairing/matcher.py` per SPEC §4, with evidence text in `evidence.py`. Tests first. (D-011 layout rule; stub claims; 2005 numbering; replay of all 11 recorded scenarios; Hypothesis invariants; mutation-checked.)
+- [x] 2.3 `pairing/content_check.py` per SPEC §4.5. Pure fingerprint, containment and verdict functions plus text extraction in a worker process with a 10 s limit; fetching the PDFs stays in Phase 3. Done before 2.4 because the golden helper prints first-page figures with it.
 - [ ] 2.4 `scripts/golden_helper.py`: for a scenario, print proposed pairs side by side (titles, times, categories, sequence numbers, first-page figures) and write draft `pairs.yaml` entries for Zarif to confirm or correct.
 - [ ] 2.5 [Zarif] Verify and finalise at least 50 golden entries (SPEC §10.4).
 - [ ] 2.6 Golden test: zero wrong `matched`; print a metrics table. Tune weights and thresholds only with evidence, and record changes in the research notes.

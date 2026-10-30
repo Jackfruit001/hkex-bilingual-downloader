@@ -83,6 +83,24 @@ How AI tools were used, and the mistakes they made that were caught. Entries are
 
 ### Template
 
+### M-008: "a stub is always at the real document's number + 1"
+
+- **Date and tool:** 2026-10-31, Claude Code.
+- **What the AI produced:** research notes Q7 and SPEC §4.4 stated a stub is "always at the real document's sequence +1", and the first matcher draft claimed stubs only at exactly +1.
+- **What was wrong:** file numbers are one counter for the whole market, so other issuers' files can fall between. The replay of the 00005 three-year scenario found 2 of 790 stubs at +2 and +3; those two English documents were reported as "No Chinese version found" although HKEXnews showed a notice for them.
+- **How it was caught:** replaying every recorded scenario through the matcher and checking the unclaimed English documents one by one, not a failing test.
+- **Fix and commit:** a second claim pass (one unclaimed same-minute document within 5 numbers, only if exactly one qualifies and it has no real counterpart), four tests, SPEC §4.4 and research notes Q7 corrected.
+- **Guard added:** the replay test asserts that every stub in every recorded scenario is attached to an announcement or counted as an orphan, and that none is silently dropped.
+
+### M-009: two numbering-scheme errors in the first matcher draft
+
+- **Date and tool:** 2026-10-31, Claude Code.
+- **What the AI produced:** (a) a numbering-scheme detector that decided "same number plus `_c`" only from pairs inside the same folder, so a lone pre-2007 pair (EN 110, TC 111_c) was read as the modern "+1" scheme and reached `matched`; (b) the ±3 "nearby number" score and the D-011 neutral layout applied in folders numbered the 2005 way, where numbers are unique within a language.
+- **What was wrong:** (a) the cut-over year between the schemes is Open, so assuming the modern one could turn a wrong pair into `matched`; (b) the extra rivals produced wrong guesses, for example EN 97 shown with TC 96_c instead of EN 96, and held back pairs that are structurally unambiguous (16 matched in `old-docs` where 22 are).
+- **How it was caught:** (a) a unit test I wrote for the pre-2007 rule failed on first run; (b) reading the `old-docs` replay output line by line, not a failing test.
+- **Fix and commit:** pre-2007 folders default to the old scheme (config `same_number_before`); in that scheme only an exact number counts and the layout rule is not applied; D-009 and D-011 updated.
+- **Guard added:** tests for the lone pair, for consecutive 2005 pairs, and for a Chinese file that must not be pulled to a neighbour; the golden set must include 2005 pairs (SPEC §10.4).
+
 ### M-00X: short title
 
 - **Date and tool:**

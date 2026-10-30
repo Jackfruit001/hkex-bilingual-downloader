@@ -1,6 +1,6 @@
 # Specification
 
-Version 1.2, 31 October 2026 (Gate 0 changes: D-009, research notes §9; Gate 1 change: D-010, code reuse). Owner: Zarif. Changes need Zarif's approval and an entry in `docs/DECISIONS.md`.
+Version 1.3, 31 October 2026 (Gate 0 changes: D-009, research notes §9; Gate 1 change: D-010, code reuse; Phase 2: D-011, same-minute batches). Owner: Zarif. Changes need Zarif's approval and an entry in `docs/DECISIONS.md`.
 
 ## 1. Users and the job to be done
 
@@ -118,7 +118,7 @@ Initial weights; tune on the golden set and keep them in `config.py`.
 |---|---|---|
 | S1 | Same release minute | +3; within 5 minutes +1 |
 | S2 | Headline category codes | identical +3; overlapping +1; disjoint −4 |
-| S3 | File sequence in the same date folder, era-aware | TC = EN + 1, or the identical number with `_c` added (2005 `ltn` files): +4; within ±3: +2. Evidence text says which relationship applied |
+| S3 | File sequence in the same date folder, numbering-aware | TC = EN + 1: +4; within ±3: +2. In folders numbered the 2005 way (the Chinese file has the English number plus `_c`, detected from the folder, and assumed before 25 June 2007): only the identical number counts, +4, and nearby numbers score 0. Evidence text says which relationship applied |
 | S4 | `NEWS_ID` of the TC document is the EN one plus 1 | +1 (weak corroboration; `NEWS_ID` is not shared across languages, and the offset differs in about 1% of pairs) |
 | S5 | Identical SHA-256 of the files | decisive (bilingual document submitted twice) |
 | S6 | Numbers in titles (years, form numbers, amounts) | agree +1; conflict −2 |
@@ -134,12 +134,13 @@ Initial weights; tune on the golden set and keep them in `config.py`.
    - score ≥ 9, or a decisive signal; when neither document has category codes (pre-2007), score ≥ 7 (`MATCH_MIN_SCORE_NO_CATEGORY`) and both S1 (same release minute) and S3 must hold (D-009);
    - margin: the runner-up for either side scores at least 3 lower;
    - no hard conflict (disjoint categories, conflicting title numbers, differing cancelled or revised flags).
+   - layout (D-011): if the pair sits in a same-minute group (same release minute and date folder, stubs and stub-claimed documents removed) that is not interleaved, it is never `matched` unless a decisive signal confirms it. A group is interleaved when no two documents of the same language have consecutive file numbers (2005 `_c` numbering: when every number occurs once per language). In a non-interleaved group S3 is scored +2 for every candidate, ties break by file order, and every pair is `check` with evidence that file order cannot identify the pair.
 5. Otherwise, if the best candidate scores ≥ 4: status `check`, with up to two rivals listed.
 6. Otherwise: single-language.
 
 ### 4.4 Special cases
 
-- **Stubs.** A stub in the other section (a small `.htm` of about 1 KB, always at the real document's sequence +1, in either direction; exact titles in research notes §5) sets `en_only` or `tc_only` with reason `stub_in_other_section`. Stubs are never shown as their own announcement or offered as a language version; the notice is linked as a source.
+- **Stubs.** A stub in the other section (a small `.htm` of about 1 KB, in either direction; exact titles in research notes §5) stands in for the document published at the same minute whose file number is just before it: +1 in 788 of 790 recorded cases, up to +3 when another issuer's files fall between (file numbers are one counter for the whole market). A stub claims its document at exactly +1, or the one unclaimed same-minute document within 5 numbers if exactly one qualifies and it has no real counterpart; shared pages without file numbers (`dod/en.html`) are claimed by NEWS_ID minus 1. A stub that claims nothing is ignored and counted in the diagnostics. The claimed document sets `en_only` or `tc_only` with reason `stub_in_other_section`. Stubs are never shown as their own announcement or offered as a language version; the notice is linked as a source.
 - **Separate submissions.** HKEX allows annual reports and listing documents to be submitted in each language separately. For those categories, if no counterpart is found in range, search ±14 days. A counterpart found this way is `check` ("Chinese version published separately on 28 Apr 2026") unless a decisive signal confirms it.
 - **Bilingual documents.** Identical bytes in both sections means one bilingual file published twice: `matched`, labelled "Bilingual document".
 - **Headline revisions.** Exact duplicates (same path) collapse into one. Cancelled and revised entries pair within their own flag group and are flagged in the UI.
