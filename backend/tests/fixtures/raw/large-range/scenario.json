@@ -1,0 +1,15 @@
+{
+  "name": "large-range",
+  "code": "00005",
+  "stock": [
+    {
+      "i": 5,
+      "c": "00005",
+      "n": "HSBC HOLDINGS",
+      "s": 7041
+    }
+  ],
+  "from": "20231030",
+  "to": "20261030",
+  "category": 0
+}

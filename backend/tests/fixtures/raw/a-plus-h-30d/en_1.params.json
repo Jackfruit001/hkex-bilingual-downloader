@@ -1,0 +1,31 @@
+{
+  "url": "https://www1.hkexnews.hk/search/titleSearchServlet.do",
+  "params": {
+    "sortDir": 0,
+    "sortByOptions": "DateTime",
+    "category": 0,
+    "market": "SEHK",
+    "stockId": 9970,
+    "documentType": -1,
+    "fromDate": "20260930",
+    "toDate": "20261030",
+    "title": "",
+    "searchType": 0,
+    "t1code": -2,
+    "t2Gcode": -2,
+    "t2code": -2,
+    "rowRange": 100,
+    "lang": "EN"
+  },
+  "status": 200,
+  "elapsed_s": 1.631,
+  "headers": {
+    "access-control-allow-origin": "https://sc.hkexnews.hk",
+    "cache-control": "private, no-store, no-cache, must-revalidate",
+    "content-type": "application/json;charset=utf-8",
+    "content-encoding": "gzip",
+    "content-length": "1350",
+    "vary": "Accept-Encoding",
+    "set-cookie": "bm_s=YAAQHhVLFzYxVXmhAQAA9fTijAbwlpoypvSxb1aPFe4ZWm0dz7kjlxzHrBJdtWdyd60ydtQB/C8duq/G3leND/ExfNgITnGuEF34LVcVxX/U36gduYKi7hfHugpgcPkMHyGvwKSaR1ijobaFlVeHFfXPlzImhlJc2EtTS3+i9AR/fUmgTREFF0QeHedgHEo/jn3CPyRY5InWQ2KfzPqMFk8w3sbTXIYnl544N0owLVg5Huyp/rcwEV7vThzAjDUQGRkMerVqTd0HYCJtYY7ziLqgS9y7vtzLVlPmWrDmDa18LT0M9ydXAt2d7c/4l/Ps0dWBtDj8mff5XN6obvnCn24RiTW/tEkXz1FIYf9zM5+5AAX7scyxE6C5MfWeXgfBBrC+aEiarf35I/io4a+/R6seJkfBP8+TQ/Owtq6cZgOGPGEyF27UJK3H35kWZ9Tm4MK7Bz8JkRX1VsmyHSVODz1DL4FRU6z0sS7j/Prbv7pYXVgJMadlGUJi1ZHoBcHvL/nqhcsTyUBLIU+wRblKb+nIF7s9Zth9Rw0ORPtiKR/eVpA2j3fuwhMoyIe31BTskGtQ8kHYenN3tpaMys2N4FIm36us; Domain=.hkexnews.hk; Path=/; Expires=Mon, 30 Nov 2026 12:57:26 GMT; Max-Age=2678400; Secure; HttpOnly, bm_so=A561F7EEE013E8DC1A13666E3C55E3FCB53C4E79AA1DE3D75F88414BDAEE8FA1~YAAQHhVLFzcxVXmhAQAA9fTijAmDaRHoKgPXL7K27bGk2lq5xiYRVUpR02OxkWo0y/DEdQDl4/jTbBhSUmH/mnvhTJOoJL4qaTMwtt+xaDFSHLZWggMdGI40myVG8Z80NCFLzaopPiviQ7azzDRnwecCkmNYWQ1x8W+3C1vwfkR90tj0+W79+wQQk89AFDLefYxYiSpZRi/3SlOE9PcKbFePv5w3WDIuAzxAxi1Foid/iiP0cdAOwOCyt+F8ISW7Cd4zYxs9pVqr7VJpZDIUnlCtTZnB8dlwdWXaybjBsakyv34aPYUXURuNLQ99juW77prihc9Syyp0AC2fblDMnxwWeNcCUSLUvdDLbri8tJtjIygk11pUy37MsmmSHU9gjrOXsZT+B2hP05Wg0mqxHnJG0uT+Huinzkhdkgf6sA5KwWPaekD6tM8BCKvfOBBztwno1W3xH+Yk5FOsrI0BIofG3gLFvXTR7HWe7lY=~4; Domain=.hkexnews.hk; Path=/; Expires=Sat, 31 Oct 2026 12:57:26 GMT; Max-Age=86400; Secure"
+  }
+}

@@ -1,0 +1,46 @@
+rows analysed: 6969; folder date != DATE_TIME date: 0; no category text: 160
+Q6 TC minus EN file sequence (same stock and minute, one each): {1: 2197, 0: 16, -1: 1, 2: 1, 3: 1}
+Q5 TC minus EN NEWS_ID (same pairs): {1: 2199, -1: 10, 2: 5, 3: 2, 7: 1}
+Q9 multi-code values: ["annual-report-season: '00700<br/>80700'", "annual-report-season: '00700<br/>80700'", "annual-report-season: '00700<br/>80700'", "annual-report-season: '00700<br/>80700'", "annual-report-season: '00700<br/>80700'", "annual-report-season: '00700<br/>80700'", "annual-report-season: '00700<br/>80700'", "annual-report-season: '00700<br/>80700'"]
+Q7 EN small or htm entries (27):
+    a-plus-h-30d: An announcement has just been published by the issuer in the Chinese section of this website, a corresponding  | 2026103000899.htm | 1KB
+    delisted: EXCHANGE NOTICE - RESUMPTION OF TRADING | ltn20150519153.htm | 1KB
+    delisted: EXCHANGE NOTICE - TRADING HALT | ltn20150519057.htm | 1KB
+    delisted: EXCHANGE NOTICE - RESUMPTION OF TRADING | ltn20150421077.htm | 1KB
+    delisted: EXCHANGE NOTICE - TRADING HALT | ltn20150420079.htm | 1KB
+    delisted: EXCHANGE NOTICE - RESUMPTION OF TRADING | ltn20150318065.htm | 1KB
+    delisted: EXCHANGE NOTICE - TRADING HALT | ltn20150317079.htm | 1KB
+    delisted: EXCHANGE NOTICE - RESUMPTION OF TRADING | ltn20150225107.htm | 1KB
+    delisted: EXCHANGE NOTICE - TRADING HALT | ltn20150225041.htm | 1KB
+    delisted: EXCHANGE NOTICE - RESUMPTION OF TRADING | ltn20150123201.htm | 1KB
+    delisted: EXCHANGE NOTICE - TRADING HALT | ltn20150123099.htm | 1KB
+    old-docs:  3rd Interim Dividend | ltn20051107101.htm | 2KB
+Q7 ZH small or htm entries (824):
+    delisted: 交易所通告 - 復牌 | ltn20150519154_c.htm | 1KB
+    delisted: 交易所通告 - 短暫停牌 | ltn20150519058_c.htm | 1KB
+    delisted: 交易所通告 - 復牌 | ltn20150421078_c.htm | 1KB
+    delisted: 交易所通告 - 短暫停牌 | ltn20150420080_c.htm | 1KB
+    delisted: 交易所通告 - 復牌 | ltn20150318066_c.htm | 1KB
+    delisted: 交易所通告 - 短暫停牌 | ltn20150317080_c.htm | 1KB
+    delisted: 交易所通告 - 復牌 | ltn20150225108_c.htm | 1KB
+    delisted: 交易所通告 - 短暫停牌 | ltn20150225042_c.htm | 1KB
+    delisted: 交易所通告 - 復牌 | ltn20150123202_c.htm | 1KB
+    delisted: 交易所通告 - 短暫停牌 | ltn20150123100_c.htm | 1KB
+    form-8k-en-only: 發行人剛在本網站英文版面發布一項公告，相應中文版本或會／或不會在本版面發布。 | 2026102301071_c.htm | 1KB
+    large-range: 發行人剛在本網站英文版面發布一項公告，相應中文版本或會／或不會在本版面發布。 | 2026102900052_c.htm | 1KB
+Q8 EN distinct category strings: 122
+    1560  Takeovers Code - dealing disclosures
+     579  Announcements and Notices - [Overseas Regulatory Announcement - Other]
+     509  Next Day Disclosure Returns - [Share Buyback]
+     125  
+      87  Announcements and Notices - [Overseas Regulatory Announcement - Issue of Securities and Related Matters]
+      80  Announcements and Notices - [Overseas Regulatory Announcement - Corporate Governance Related Matters]
+Q8 ZH distinct category strings: 122
+    1559  合併守則 - 交易披露
+     579  公告及通告 - [海外監管公告-其他]
+     509  翌日披露報表 - [股份購回]
+      87  公告及通告 - [海外監管公告-證券發行及相關事宜]
+      80  公告及通告 - [海外監管公告-企業管治相關事宜]
+      69  月報表
+
+live requests: 0, cache hits: 0

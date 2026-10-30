@@ -1,0 +1,44 @@
+[
+  {
+    "question": "Q1",
+    "answer": "Chinese section only for lang in ['ZH', 'zh']; other values silently return English",
+    "evidence": "access-q1/*.json; compare echoed `lang` and `_c` links per value",
+    "status": "Verified"
+  },
+  {
+    "question": "Q2",
+    "answer": "A direct servlet GET with no prior page visit or cookie returns data",
+    "evidence": "HTTP 200; response sets cookies: ['JSESSIONID', 'TS014a5f8b', 'TS0168982d', 'bm_s', 'bm_so'] (bot-management style; hosting risk to test at Gate 0)",
+    "status": "Verified"
+  },
+  {
+    "question": "Q3",
+    "answer": "fromDate and toDate are both inclusive of the whole day",
+    "evidence": "fromDate=toDate=20261028 returned 28/10/2026 22:52 2026102801739.pdf; 28/10/2026 22:28 2026102801671.pdf; none outside that day",
+    "status": "Verified"
+  },
+  {
+    "question": "Q5",
+    "answer": "NEWS_ID is not shared across languages",
+    "evidence": "EN 12386841 vs TC 12386842; EN 12386773 vs TC 12386774",
+    "status": "Verified"
+  },
+  {
+    "question": "Q10",
+    "answer": "CORS header on the servlet",
+    "evidence": "access-control-allow-origin: https://sc.hkexnews.hk (not '*', so a browser app on another origin cannot call it; server-side fetch is required)",
+    "status": "Verified"
+  },
+  {
+    "question": "Q4",
+    "answer": "rowRange is cumulative (rows 1..N): True; total in `recordCnt`",
+    "evidence": "access-q4/en_5|10|100.json; largest honoured value tested in the large-range scenario",
+    "status": "Verified"
+  },
+  {
+    "question": "Q11",
+    "answer": "servlet latency 0s to 0s",
+    "evidence": "0 live calls; no throttling seen",
+    "status": "Verified (partial; see scenarios)"
+  }
+]

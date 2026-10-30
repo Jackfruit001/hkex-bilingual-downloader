@@ -1,0 +1,25 @@
+# Local prompt files, not part of the submission
+docs/prompts/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.hypothesis/
+
+# Node
+node_modules/
+frontend/dist/
+backend/static/
+
+# Probe cache (raw responses are kept in backend/tests/fixtures/raw instead)
+scripts/.probe_cache/
+
+# Environment and OS
+.env
+.env.*
+.DS_Store
+state/

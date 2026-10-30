@@ -112,7 +112,45 @@ None of these pairs English and Chinese versions.
 
 ## 9. Findings
 
-(Phase 0 appends dated findings here, each linked to its fixture files.)
+Phase 0 probe, 30 Oct 2026 (HKT), run from Zarif's Mac with `scripts/probe_hkex.py` (about 57 live requests, sequential, at least 1 s apart, no throttling). Fixtures are under `backend/tests/fixtures/raw/`; raw probe output is in `scripts/probe_out/`. Q1 to Q13 below; "Open" items are listed at the end.
+
+**Q1, language values (Verified).** `lang=ZH` (also `zh`) returns the Chinese section: the response echoes `lang: "C"` and every file link ends in `_c`. `EN` and `E` return English (echo `"E"`). `TC` and `C` are accepted with HTTP 200 but silently return English. The client must therefore assert the echoed `lang` and the `_c` suffix, never trust the parameter. Fixtures: `access-q1/{EN,E,ZH,TC,C,zh}_1.json`.
+
+**Q2, session (Verified).** A plain GET to `titleSearchServlet.do` works with no prior page visit and no cookie. The response sets `JSESSIONID`, two `TS…` cookies and `bm_s` / `bm_so`, which look like bot-management cookies. The Render test (Gate 0) is the check that a cloud IP is not challenged.
+
+**Q3, date bounds (Verified).** `fromDate=toDate=20261028` returned both 28 Oct documents, including one at 22:52, and nothing from other days. Both ends are inclusive for the whole day. Local filtering by HKT release time stays in the design. Fixture: `zai-lab-nddr/`.
+
+**Q4, pagination (Verified, one part Open).** `rowRange=N` is cumulative (rows 1 to N); the first 5 rows of `rowRange=10` equal `rowRange=5`. The envelope carries `recordCnt` (total), `loadedRecord`, `hasNextRow`, and each row has `TOTAL_COUNT`. `rowRange` was honoured at 1,574 (00005, three years) and 1,687 (00013, 2014 to 2015) in a single call, and the server echoes the value. Whether a cap exists above that is **Open**: no single-stock range exceeded 1,687 rows, so the 5,000 limit in SPEC §3.3 is unverified. An empty result is `result: "null"` with `recordCnt: 0` (fixture `no-results/`). Fixtures: `access-q4/`, `large-range/`, `delisted/`.
+
+**Q5, NEWS_ID (Verified).** `NEWS_ID` is not shared between languages. For same-minute single pairs, TC minus EN is +1 in 2,199 of 2,217 cases, -1 in 10, and +2, +3, +7 in 8. It tracks the file sequence but is weaker evidence than it, so S4 as written (decisive if shared) does not apply. Output: `scripts/probe_out/analysis.txt`.
+
+**Q6, sequence delta (Verified).** For the same stock and minute with one document per language, TC file number minus EN file number is +1 in 2,197 of 2,216 cases, 0 in 16, and -1, +2, +3 once each. By era: modern files +1 in 1,526 of 1,529; `ltn` files from 2014 to 2015 are +1 in 671; the 16 zeros are all `ltn` files from 2005, where the Chinese file is `ltn20051128110_c.pdf` beside `ltn20051128110.pdf`. So "+1" is the rule for 2014 onwards and the same number plus `_c` applied in 2005. The cut-over year is **Open**. Same-minute pairs interleave: `listing-docs` has EN 684 with TC 685 and EN 694 with TC 695, same minute and same category, so time and category alone cannot pair them.
+
+**Q7, stubs (Verified).** Both are `.htm` files of about 1 KB (700 to 800 bytes). A stub takes the number after the real document it stands in for, in either direction.
+- Chinese section stub (English-only original), 00005 and 09688: title `發行人剛在本網站英文版面發布一項公告，相應中文版本或會／或不會在本版面發布。`, body heading `上市公司訊息`. Example: EN `2026102301070.pdf`, stub `2026102301071_c.htm`.
+- English section stub (Chinese-only original), 00939: title `An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section`, body heading `Listed Company Information`. Example: Chinese `2026103000898_c.pdf`, stub `2026103000899.htm`, category copied from the real document.
+- Not every `.htm` is a stub: 00013 in 2014 to 2015 has real web-page entries titled `EXCHANGE NOTICE - TRADING HALT`. Stub detection must use the title, as in SPEC §4.4, not the extension.
+Fixtures: `documents/2026102301071_c.htm`, `documents/2026103000899.htm`, `form-8k-en-only/`, `a-plus-h-30d/`.
+
+**Q8, categories (Verified, with gaps).** `LONG_TEXT` has the form `Parent - [Child]` in English and `父類 - [子類]` in Chinese, HTML-escaped (`&#x2f;` for `/`). Some entries have no parent (`Monthly Returns`, `月報表`) and pre-2007 entries are empty (160 rows in the sample). The child name resolved to a tier code in 3,237 of 3,405 English rows (95%). Gaps: 93 names map to several codes, so resolution needs the parent too; multi-category entries join children with ` / ` (`Others / Share Buyback`); and corrections prefix `(Cancelled and Reissued)`. The category files are lists of `{code, name, count, t1code, t2Gcode}`. Fixtures: `reference/tier*.json`.
+
+**Q9, multi-code (Verified).** Several codes are joined by `<br/>`, for example `00700<br/>80700` (HKD and RMB counters). Fixture: `annual-report-season/`.
+
+**Q10, CORS (Verified).** The servlet sends `access-control-allow-origin: https://sc.hkexnews.hk`, so browsers on other origins cannot call it. Server-side fetching is required, which matches D-002.
+
+**Q11, latency (Verified).** Servlet calls took 1.2 to 3.5 s from Zarif's Mac; PDF range requests 0.3 to 0.5 s; reference files 1.2 to 3.7 s (the active list is 1 MB). No throttling at roughly one request per 1 to 1.5 s. PDF host supports `Range` (HTTP 206, `%PDF-` header, `application/pdf`).
+
+**Q12, delisted and reused codes (Verified).** `category=1` with an id from `inactivestock_sehk_e.json` searches delisted securities (00013 Hutchison, 2014 to 2015: 1,687 EN and 1,686 ZH rows). Code reuse is common: 00013 is HUTCHISON (delisted) and HUTCHMED (active); 03333 has three delisted entries (EVERGRANDE under two ids, SENYUAN INT'L). Searching is by internal id, so `AMBIGUOUS_STOCK_CODE` is a real case. The active list holds 17,399 entries; codes starting 1 and 5 alone account for about 7,200 and their names look like structured products (for example `HS#HSI  RC2708A`), so random-stock testing must filter to ordinary shares. List entries are `{i, c, n, s}`; the meaning of `s` is **Open**. Fixtures: `delisted/`, `reused-code/`, `reference/`.
+
+**Q13, folder date (Verified).** In 6,969 rows the folder date in `FILE_LINK` always matched the `DATE_TIME` date (0 mismatches). One entry has a non-standard path (`.../dod/en.html`).
+
+**Open after Phase 0**
+- Q4 cap above 1,687 rows per call.
+- Where the numbering changes from same-number-plus-`_c` to +1 (between 2005 and 2014).
+- Pre-2007 coverage differs by language: 00005 in 2005 has 125 EN and 35 ZH rows. Whether the extra English rows are English-only documents without stubs is not yet checked.
+- No separately submitted annual report was observed (00700 in March to May 2026: EN annual report `…01231.pdf`, TC `…01232_c.pdf`, same day).
+- An English-only issuer other than the Form 8-K case was not found; 40001 (a CCB note) has no documents.
+- The meaning of `s` in the stock lists.
 
 ## 10. Access constraints
 

@@ -1,0 +1,31 @@
+{
+  "url": "https://www1.hkexnews.hk/search/titleSearchServlet.do",
+  "params": {
+    "sortDir": 0,
+    "sortByOptions": "DateTime",
+    "category": 1,
+    "market": "SEHK",
+    "stockId": 20,
+    "documentType": -1,
+    "fromDate": "20140101",
+    "toDate": "20150731",
+    "title": "",
+    "searchType": 0,
+    "t1code": -2,
+    "t2Gcode": -2,
+    "t2code": -2,
+    "rowRange": 1686,
+    "lang": "ZH"
+  },
+  "status": 200,
+  "elapsed_s": 2.395,
+  "headers": {
+    "access-control-allow-origin": "https://sc.hkexnews.hk",
+    "cache-control": "private, no-store, no-cache, must-revalidate",
+    "content-type": "application/json;charset=utf-8",
+    "content-encoding": "gzip",
+    "content-length": "34058",
+    "vary": "Accept-Encoding",
+    "set-cookie": "bm_s=YAAQHhVLFx80VXmhAQAAGTXjjAZJo8XPDVZHavwLePl5eh6PZSViUDYQiRiHuM+a6pYnhFhJZYNUr0ESx0rBBzg1BTJHmaHhGdipyJbwPVEozzR+5pHGQGz8FlREsP2huGBivOdoGQpsMrQa63zQK4807vNPRXTToYQLULEwLaO4AoRNFd0XD3kiYVtGM/paqJxdCfgkwiq/zqYlTXKzfwpYNWgDl6cWJ48jHKc9WbgvYnjHixssynrcD8bYXuJDqUWzSkJU4dfZppnSWX9chsVylkPkqE5VDL4iizLZkaicznrSMk/6CYybUDbXts39gJI9pMeK4xJO/3+mXYUbB4QuDzeJTdGIjI8EywfSkJ3StWdNwsF5AXMrUTBFFGtXkY5tjuRcZlP6fekZ84OYHnP/ZWW/V5piEKVstScx/mo8bNe1ukBgOksGCshCGZsgMdPStCkxYnSfvJM23ygZTK3/oR36a8LKLhFAzsWYxo/SCniokGBKqv1giOlOLX7UOwpZuLBkH3iZRT9K6YlfQtvY9a1US+Nd03d+a2tsWdeSEpJLXLYZVbzwSv8R+6jMLxsLjFFDReobgyuChyhxHpdZcjUq; Domain=.hkexnews.hk; Path=/; Expires=Mon, 30 Nov 2026 12:57:42 GMT; Max-Age=2678400; Secure; HttpOnly"
+  }
+}

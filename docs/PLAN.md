@@ -1,6 +1,6 @@
 # Plan
 
-**Status:** Phase 0 not started. Update this line at every gate.
+**Status:** Phase 0 built, awaiting the Render reachability test (0.4) and Gate 0 approval. Update this line at every gate.
 
 **Timeline (HKT):** Fri 30 Oct, Phases 0 to 2. Sat 31 Oct, Phases 3 and 4. Sun 1 Nov, Phases 5 and 6. Mon 2 Nov, Phase 7 and submit.
 
@@ -10,9 +10,9 @@ Tasks marked [Zarif] need Zarif. Everything else is for Claude Code, after Zarif
 
 Goal: confirm how HKEXnews really behaves before designing around it.
 
-- [ ] 0.1 [Zarif] Create the public GitHub repo `hkex-bilingual-downloader`; add `CLAUDE.md` and `docs/`; first commit.
-- [ ] 0.2 Scaffold: `backend/` uv project (Python 3.12) with FastAPI, ruff, mypy, pytest config and a `live` marker; `frontend/` with Vite, React, TypeScript and Tailwind; root `.gitignore`, MIT `LICENSE`, README stub, `THIRD_PARTY_NOTICES.md`, `TESTING.md` stub. Confirm the Commands section in CLAUDE.md.
-- [ ] 0.3 `scripts/probe_hkex.py`. It must be polite (at most 1 request per second, identifying User-Agent, responses cached to disk) and must:
+- [x] 0.1 [Zarif] Create the public GitHub repo `hkex-bilingual-downloader`; add `CLAUDE.md` and `docs/`; first commit.
+- [x] 0.2 Scaffold: `backend/` uv project (Python 3.12) with FastAPI, ruff, mypy, pytest config and a `live` marker; `frontend/` with Vite, React, TypeScript and Tailwind; root `.gitignore`, MIT `LICENSE`, README stub, `THIRD_PARTY_NOTICES.md`, `TESTING.md` stub. Confirm the Commands section in CLAUDE.md.
+- [x] 0.3 `scripts/probe_hkex.py`. It must be polite (at most 1 request per second, identifying User-Agent, responses cached to disk) and must:
   - download the stock lists (active and inactive, EN and TC) and category files (EN and TC) into `backend/tests/fixtures/raw/reference/`;
   - resolve each scenario's code to its internal id;
   - run EN and TC searches per scenario, saving raw responses as `backend/tests/fixtures/raw/<scenario>/{en,tc}_<n>.json` with the request parameters alongside;

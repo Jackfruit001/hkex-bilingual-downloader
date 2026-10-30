@@ -1,0 +1,15 @@
+{
+  "name": "annual-report-season",
+  "code": "00700",
+  "stock": [
+    {
+      "i": 7609,
+      "c": "00700",
+      "n": "TENCENT",
+      "s": 14918
+    }
+  ],
+  "from": "20260301",
+  "to": "20260531",
+  "category": 0
+}
