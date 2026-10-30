@@ -1,6 +1,6 @@
 # Plan
 
-**Status:** Phase 2 in progress (31 October 2026): 2.1 to 2.3 done (matcher, evidence, content check; D-011 approved); next is 2.4, the golden helper, which needs live calls (not yet approved). Gate 2 not reached. Update this line at every gate.
+**Status:** Phase 2 in progress (31 October 2026): 2.1 to 2.3 done (matcher, evidence, content check; D-011 approved); next is 2.4, the golden helper; Zarif approved its live calls on 31 October (plan awaiting approval). Gate 2 not reached. Update this line at every gate.
 
 **Timeline (HKT):** Fri 30 Oct, Phases 0 to 2. Sat 31 Oct, Phases 3 and 4. Sun 1 Nov, Phases 5 and 6. Mon 2 Nov, Phase 7 and submit. Update, 31 Oct: the reviewer allowed one extra day, so submission can slip to Tue 3 Nov. Phases run strictly in order, each gate approved before the next starts; no phase is skipped or reopened to save time.
 
