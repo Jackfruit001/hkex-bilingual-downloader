@@ -1,6 +1,6 @@
 # Specification
 
-Version 1.4, 31 October 2026 (Gate 0 changes: D-009, research notes §9; Gate 1 change: D-010, code reuse; Phase 2: D-011, same-minute batches; D-013, GEM paths and unreadable Chinese text). Owner: Zarif. Changes need Zarif's approval and an entry in `docs/DECISIONS.md`.
+Version 1.5, 31 October 2026 (Gate 2 answers: D-015, pre-2007 fallback; Gate 0 changes: D-009, research notes §9; Gate 1 change: D-010, code reuse; Phase 2: D-011, same-minute batches; D-013, GEM paths and unreadable Chinese text). Owner: Zarif. Changes need Zarif's approval and an entry in `docs/DECISIONS.md`.
 
 ## 1. Users and the job to be done
 
@@ -85,7 +85,7 @@ HKEX's `rowRange` is reported to be cumulative (it returns rows 1 to N). Strateg
 | `file_type`, `size_label` | `FILE_TYPE`, `FILE_INFO` |
 | `folder_date`, `seq` | parsed from the path (`/YYYY/MMDD/` under `/sehk/` or, for GEM issuers, `/gem/`, and the numeric stem; supports the older `LTN` prefix and sub-folders) |
 | `is_stub` | title matches a stub fragment (research notes §5) |
-| `flags`, `category_prefix` | `cancelled`, `headlines_revised`, `revised` from the bracketed category prefix or an English `(Revised)` title prefix; the raw prefix is always kept so an unmapped marker stays visible to the matcher |
+| `flags`, `category_prefix` | `cancelled`, `headlines_revised`, `revised` from the bracketed category prefix (English `Headline(s) Revised`, Chinese `修改後標題`) or a title prefix (English `(Revised)`, Chinese `(經修訂)`); the raw prefix is always kept so an unmapped marker stays visible to the matcher |
 | `news_id` | `NEWS_ID`; unique within a language, the key for removing repeated rows |
 | `source_url` | absolute `https://www1.hkexnews.hk/...` |
 
@@ -106,7 +106,7 @@ Announcements sorted newest first (toggle for oldest first), a summary (counts b
 | `en_only` | English only | No TC version; reason given |
 | `tc_only` | Chinese only | No EN version; reason given |
 
-Reasons for single-language entries: `stub_in_other_section` ("The issuer published this in English only. HKEXnews' Chinese section shows a notice instead.") and `not_found` ("No Chinese version found between [dates].").
+Reasons for single-language entries: `stub_in_other_section` ("No Chinese version found between [dates]. HKEXnews' Chinese section shows a notice instead, saying a Chinese version may or may not be published there.") and `not_found` ("No Chinese version found between [dates]."). The notice never says the issuer published in one language only, so the evidence must not say it either (D-015).
 
 Every announcement also has a `format`: `pdf`, `web_page`, `multi_file` or `other` (R13).
 
@@ -131,7 +131,7 @@ Initial weights; tune on the golden set and keep them in `config.py`.
 3. Split the candidate graph into connected components. Within each, find the best one-to-one assignment (exhaustive when a side has ≤ 8 documents, which covers real cases; greedy with ambiguity flags otherwise).
 4. Classify an assigned pair as `matched` only if all of these hold:
    - mutual best: each is the other's top-scoring candidate;
-   - score ≥ 9, or a decisive signal; when neither document has category codes (pre-2007), score ≥ 7 (`MATCH_MIN_SCORE_NO_CATEGORY`) and both S1 (same release minute) and S3 must hold (D-009);
+   - score ≥ 9, or a decisive signal. A pair with no headline category on either side (no category text and no codes, as before 25 June 2007) is never `matched` on time and file numbers alone: it stays `check`, with a note saying why, unless a decisive signal confirms it (D-009 fallback, D-015). A category text that no code resolves to (a retired category) keeps the lower rule: score ≥ 7 (`MATCH_MIN_SCORE_NO_CATEGORY`) and both S1 (same release minute) and S3;
    - margin: the runner-up for either side scores at least 3 lower;
    - no hard conflict (disjoint categories, conflicting title numbers, differing cancelled or revised flags).
    - layout (D-011): if the pair sits in a same-minute group (same release minute and date folder, stubs and stub-claimed documents removed) that is not interleaved, it is never `matched` unless a decisive signal confirms it. A group is interleaved when no two documents of the same language have consecutive file numbers (2005 `_c` numbering: when every number occurs once per language). In a non-interleaved group S3 is scored +2 for every candidate, ties break by file order, and every pair is `check` with evidence that file order cannot identify the pair.
@@ -145,7 +145,7 @@ Initial weights; tune on the golden set and keep them in `config.py`.
 - **Bilingual documents.** Identical bytes in both sections means one bilingual file published twice: `matched`, labelled "Bilingual document".
 - **Headline revisions.** Exact duplicates (same path) collapse into one. Cancelled and revised entries pair within their own flag group and are flagged in the UI.
 - **Multi-code documents** (dual counters, joint announcements): shown under the searched code; other codes listed.
-- **Pre-2007 documents** have no categories; S2 contributes 0, so pairing relies on S1 and S3 under the lower threshold in §4.3 (D-009). If the golden set shows any wrong `matched` among them, all pre-2007 pairs become `check` and the README limitation says so.
+- **Pre-2007 documents** have no categories; S2 contributes 0, and the 2005 file numbering is irregular (research notes, Phase 2.5 findings). Every pre-2007 pair is therefore `check` unless identical bytes (S5) or a conclusive content check (S7) confirm it (D-009 fallback, D-015), with the evidence line "Neither version has a headline category, so time and file numbers can't confirm the pair on their own." The README limitation says so.
 
 ### 4.5 Content check
 
@@ -163,7 +163,7 @@ Each announcement carries readable evidence, for example:
 
 - "Published together at 22:52 HKT, same headline category, consecutive HKEX file numbers (01739 and 01740)."
 - "Two Chinese documents were published at 16:30 with the same category. Best guess shown; compare before relying on it."
-- "The issuer published this in English only. HKEXnews' Chinese section shows a notice instead."
+- "No Chinese version found between 28 Oct 2026 and 28 Oct 2026. HKEXnews' Chinese section shows a notice instead, saying a Chinese version may or may not be published there."
 
 ## 5. Filenames
 

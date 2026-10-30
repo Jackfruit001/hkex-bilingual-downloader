@@ -6,8 +6,13 @@ from app.domain.models import Document, Lang
 from app.pairing.models import ContentVerdict, Rival, SignalHit, SingleReason
 
 _LANG_NAME = {Lang.EN: "English", Lang.TC: "Chinese"}
+_A_LANG_NAME = {Lang.EN: "an English", Lang.TC: "a Chinese"}
 
 CHECK_NOTE = "Best guess shown; compare before relying on it."
+NO_CATEGORY_NOTE = (
+    "Neither version has a headline category, so time and file numbers can't confirm the pair "
+    "on their own."
+)
 
 
 def hkt_date(value: date) -> str:
@@ -83,6 +88,7 @@ def pair_evidence(
     conflicts: tuple[str, ...],
     bilingual: bool,
     separate: bool,
+    uncategorised: bool,
     verdict: ContentVerdict | None,
     layout_counts: tuple[int, int] | None,
     rivals: tuple[Rival, ...],
@@ -98,6 +104,8 @@ def pair_evidence(
     else:
         lines.append(_describe(en, tc, signals))
     lines.extend(_CONFLICT_TEXT[c] for c in conflicts)
+    if uncategorised:
+        lines.append(NO_CATEGORY_NOTE)
     if verdict is not None:
         lines.append(f"Content check: {round(verdict.score * 100)}% of figures match.")
     if layout_counts is not None:
@@ -130,19 +138,21 @@ def single_evidence(
     searched: tuple[date, date] | None,
     lost_to: Document | None,
 ) -> tuple[str, ...]:
-    own = _LANG_NAME[doc.lang]
-    other = _LANG_NAME[Lang.TC if doc.lang is Lang.EN else Lang.EN]
-    if reason is SingleReason.STUB_IN_OTHER_SECTION:
-        return (
-            f"The issuer published this in {own} only. "
-            f"HKEXnews' {other} section shows a notice instead.",
-        )
+    other_lang = Lang.TC if doc.lang is Lang.EN else Lang.EN
+    other = _LANG_NAME[other_lang]
     if searched is None:
         lines = [f"No {other} version found in the search results."]
     else:
         lines = [
             f"No {other} version found between {hkt_date(searched[0])} and {hkt_date(searched[1])}."
         ]
+    if reason is SingleReason.STUB_IN_OTHER_SECTION:
+        # The notice says a version "may or may not" be published there; it never says "only".
+        lines.append(
+            f"HKEXnews' {other} section shows a notice instead, saying {_A_LANG_NAME[other_lang]} "
+            "version may or may not be published there."
+        )
+        return tuple(lines)
     if lost_to is not None:
         lines.append(
             f"A possible counterpart ({_LANG_NAME[lost_to.lang]} file {_seq(lost_to)}) is shown "

@@ -380,12 +380,19 @@ class _Pairer:
         e, t = self.E[edge.en], self.T[edge.tc]
         if e.category_codes or t.category_codes:
             return edge.score >= self.cfg.match_min_score
+        if self._uncategorised(edge):
+            return False  # D-009 fallback: only identical bytes or a content check can match
         kinds = {(h.id, h.kind) for h in edge.hits}
         return (
             edge.score >= self.cfg.match_min_score_no_category
             and ("S1", "same_minute") in kinds
             and (("S3", "plus_one") in kinds or ("S3", "same_number_c") in kinds)
         )
+
+    def _uncategorised(self, edge: _Edge) -> bool:
+        """No headline category at all on either side, as before 25 June 2007."""
+        e, t = self.E[edge.en], self.T[edge.tc]
+        return not (e.category_codes or t.category_codes or e.category_text or t.category_text)
 
     # --- decisive evidence -------------------------------------------------------------------
 
@@ -574,6 +581,7 @@ class _Pairer:
             conflicts=p.edge.conflicts,
             bilingual=p.decisive == "S5",
             separate=separate,
+            uncategorised=not matched and self._uncategorised(p.edge),
             verdict=verdict,
             layout_counts=self.group_counts.get(self._group_key(e)) if layout else None,
             rivals=rivals,

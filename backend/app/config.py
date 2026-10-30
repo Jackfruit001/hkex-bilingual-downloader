@@ -41,7 +41,7 @@ class PairingConfig:
     file_near_window: int = 3
     # Folders before this date are assumed to use "same number plus _c" numbering unless the
     # data says otherwise (research notes Q6: seen in 2005, not in 2014 to 2015; cut-over Open).
-    # Pre-2007 pairs need the exact relation to be matched (D-009), so the cautious reading wins.
+    # Pre-2007 pairs are never matched on structure (D-009 fallback), so the cautious reading wins.
     same_number_before: date = date(2007, 6, 25)
     # S4, NEWS_ID of the TC document is the EN one plus 1 (weak)
     news_id_next: int = 1
@@ -53,7 +53,7 @@ class PairingConfig:
     candidate_window: int = 5  # file numbers either side
     check_min_score: int = 4
     match_min_score: int = 9
-    # D-009: neither document has categories (pre-2007); needs S1 and S3 as well
+    # D-009: a category text exists but no code resolves (a retired category); needs S1 and S3 too
     match_min_score_no_category: int = 7
     margin: int = 3
     exhaustive_max_side: int = 8

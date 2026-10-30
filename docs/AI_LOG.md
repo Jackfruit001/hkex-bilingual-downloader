@@ -143,8 +143,35 @@ How AI tools were used, and the mistakes they made that were caught. Entries are
 - **What the AI produced:** a rule that, before 25 June 2007, treats an exact file number plus `_c` in the same minute as strong evidence, enough for `matched` at a lower score threshold (D-009), validated only on the 2005 pairs in the recordings.
 - **What was wrong:** in HSBC's 31 March 2005 batch the Chinese files are not at the English number: English 96 (Form of Election) was matched with Chinese 96 (Entitlement Advice Form) while the real counterpart, Chinese 95, stayed unpaired. Figure overlap (92%) agreed, because the two forms share their figures.
 - **How it was caught:** reading the documents for the golden set (Phase 2.5); a triage that trusted figure overlap had classed the entry as strong.
-- **Fix and commit:** not made. D-009 already names the fallback (every pre-2007 pair stays `check`); applying it is a decision for Gate 2.
+- **Fix and commit:** at Gate 2 (31 October 2026) Zarif chose the fallback named in D-009 (every pre-2007 pair stays `check`); applied in D-015 and the commit that follows it. It fixes the structural run only; see M-015.
 - **Guard added:** the corrected entry and the two single-language entries that are really a pair go into the golden set, so the golden test (2.6) fails on this case until the rule is changed.
+
+### M-015: predicted that the fallback would clear the strict expected failure
+
+- **Date and tool:** 2026-10-31, Claude Code (Gate 2 follow-up).
+- **What the AI produced:** the recommendation put to Zarif said the D-009 fallback "removes the `KNOWN_WRONG` xfail for 00005-303146", and the Gate 2 report and the hand-off prompt repeated it. Nothing had been run.
+- **What was wrong:** the fallback makes the pair a `check`, so the content check now runs on it, and in the golden test's second run it confirms the wrong pair (92% of figures match, no rival listed, so a single candidate is conclusive). The xfail goes in the structural run and stays in the run with the content check.
+- **How it was caught:** the full suite after the change: the with-content case of `00005-303146` failed.
+- **Fix and commit:** the strict marker is kept for that run only, with the reason. The content-check weakness is open and is Zarif's decision (D-015).
+- **Guard added:** the expected failure is keyed on (run, entry) and is strict, so it fails the day it is fixed.
+
+### M-016: first version of the fallback keyed on resolved category codes
+
+- **Date and tool:** 2026-10-31, Claude Code (Gate 2 follow-up).
+- **What the AI produced:** `_can_match` returned false when neither document had category *codes*, and the new note said "Neither version has a headline category".
+- **What was wrong:** the codes come from resolving the category text against the current category lists. Two 2014 Hutchison announcements with a retired category ("Share Option Scheme") have text but no code, so two correct `matched` pairs became `check` with a note that was false.
+- **How it was caught:** the `delisted` replay count test (676 matched became 674); I then listed the two pairs.
+- **Fix and commit:** the rule is keyed on category text and codes both being absent; the lower threshold stays for text without codes, with a unit test.
+- **Guard added:** `test_a_category_text_the_directory_cannot_resolve_keeps_the_lower_threshold`; five mutants of the new rule and note were killed.
+
+### M-017: stub evidence said more than the HKEXnews notice
+
+- **Date and tool:** 2026-10-31, Claude Code (matcher evidence, Phase 2.2).
+- **What the AI produced:** the evidence text "The issuer published this in English only. HKEXnews' Chinese section shows a notice instead." for a document with a stub in the other section (taken from the spec's wording).
+- **What was wrong:** the notice says a Chinese version "may or may not" be published in that section. It does not say the issuer published in one language only.
+- **How it was caught:** reading the notice titles while checking the golden entries (Phase 2.5); recorded in research notes, wording decided at Gate 2.
+- **Fix and commit:** reworded to the search result plus what the notice says; SPEC §4.1 and §4.6 updated (D-015).
+- **Guard added:** unit tests assert the exact evidence in both directions.
 
 ### M-00X: short title
 

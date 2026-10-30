@@ -101,9 +101,9 @@ def _flags(prefix: str, title: str) -> frozenset[Flag]:
     p = prefix.lower()
     if p.startswith("cancel") or "作廢" in p or p.startswith("取消"):
         flags.add(Flag.CANCELLED)
-    elif p.startswith("headline") and "revis" in p:
+    elif (p.startswith("headline") and "revis" in p) or p.startswith("修改後標題"):
         flags.add(Flag.HEADLINES_REVISED)
-    if title.lower().startswith("(revised)"):
+    if title.lower().startswith("(revised)") or title.startswith("(經修訂)"):
         flags.add(Flag.REVISED)
     return frozenset(flags)
 

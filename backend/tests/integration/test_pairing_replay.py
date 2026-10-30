@@ -71,11 +71,13 @@ EXPECTED = {
     "listing-docs": (2, 0, 0, 0),
     "reused-code": (54, 0, 8, 0),
     "large-range": (784, 0, 790, 0),
-    # 2015 Hutchison: Rule 22 dealing batches (block layout) are check, never matched.
-    "delisted": (676, 1010, 1, 0),
-    # 2005: exact number + `_c` + same minute are matched (D-009); 91 more English files than
+    # 2015 Hutchison: Rule 22 dealing batches (block layout) are check, never matched. The
+    # headline-revised pair of 23 Jan 2015 is matched since 修改後標題 is mapped (D-015).
+    "delisted": (677, 1009, 1, 0),
+    # 2005: no categories, so nothing is matched on structure (D-009 fallback, Gate 2); the 33
+    # pairs that were matched or checked before are all checks. 91 more English files than
     # Chinese ones are unexplained (research notes, Open).
-    "old-docs": (22, 11, 92, 2),
+    "old-docs": (0, 33, 92, 2),
 }
 
 

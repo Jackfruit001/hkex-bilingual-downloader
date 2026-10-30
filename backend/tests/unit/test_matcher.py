@@ -153,6 +153,13 @@ def test_same_minute_documents_far_apart_in_number_are_only_a_check() -> None:
 # --- pre-2007 (D-009) ---------------------------------------------------------------------
 
 
+NO_CATEGORY_NOTE = (
+    "Neither version has a headline category, so time and file numbers can't confirm the pair "
+    "on their own."
+)
+CHECK_NOTE = "Best guess shown; compare before relying on it."
+
+
 def old(lang: Lang, seq: int, minute: int = 0, **kw: Any) -> Document:
     when = datetime(2005, 11, 28, 10, minute)
     return make_doc(lang, seq, when, categories=(), old_style=True, c_suffix=lang is Lang.TC, **kw)
@@ -162,11 +169,50 @@ def old_pair(minute_en: int = 0, minute_tc: int = 0, seq_en: int = 110, seq_tc: 
     return [old(Lang.EN, seq_en, minute_en)], [old(Lang.TC, seq_tc, minute_tc)]
 
 
-def test_a_2005_pair_with_the_same_number_and_minute_is_matched() -> None:
+def test_a_2005_pair_with_the_same_number_and_minute_is_only_a_check() -> None:
+    # D-009 fallback (Gate 2): without headline categories, time and file numbers do not confirm.
     english, chinese = old_pair()
     a = only(run(english, chinese))
-    assert (a.status, a.score) == (Status.MATCHED, 7)
+    assert (a.status, a.score) == (Status.CHECK, 7)
     assert "same HKEX file number" in a.evidence[0]
+    assert a.evidence.index(NO_CATEGORY_NOTE) < a.evidence.index(CHECK_NOTE)
+
+
+def test_a_pre_2007_pair_is_never_matched_by_structure_however_high_it_scores() -> None:
+    # S1 same minute 3 + S3 exact 4 + S4 1 + S6 1 = 9, the full structural score and the threshold
+    # a category-bearing pair needs. Without a category on either side it is still a check.
+    e = old(Lang.EN, 110, 0, title="Annual Report 2005", news_id=500)
+    t = old(Lang.TC, 110, 0, title="2005年報", news_id=501)
+    a = only(run([e], [t]))
+    assert a.score == 9
+    assert a.status is Status.CHECK
+
+
+def test_a_pair_without_categories_is_a_check_whatever_the_year() -> None:
+    e = en(110, categories=())
+    t = tc(111, categories=())
+    a = only(run([e], [t]))
+    assert a.status is Status.CHECK
+    assert NO_CATEGORY_NOTE in a.evidence
+
+
+def test_the_missing_category_note_is_for_pairs_with_no_category_on_either_side() -> None:
+    one_side = only(run([en(110, categories=("1",))], [tc(111, categories=())]))
+    both_sides = only(run([en(110)], [tc(111)]))
+    assert NO_CATEGORY_NOTE not in one_side.evidence
+    assert NO_CATEGORY_NOTE not in both_sides.evidence
+
+
+def test_a_category_text_the_directory_cannot_resolve_keeps_the_lower_threshold() -> None:
+    # 2014 Hutchison "Share Option Scheme": the category is retired, so no code resolves, but the
+    # headline has a category text. D-009 fallback applies to documents with no category at all;
+    # this case is unchanged (open question for Gate 3).
+    text = "Announcements and Notices - [Share Option Scheme]"
+    e = en(110, categories=()).model_copy(update={"category_text": text})
+    t = tc(111, categories=()).model_copy(update={"category_text": text})
+    a = only(run([e], [t]))
+    assert (a.status, a.score) == (Status.MATCHED, 8)
+    assert NO_CATEGORY_NOTE not in a.evidence
 
 
 def test_a_2005_pair_a_minute_apart_is_only_a_check() -> None:
@@ -174,27 +220,36 @@ def test_a_2005_pair_a_minute_apart_is_only_a_check() -> None:
     assert only(run(english, chinese)).status is Status.CHECK
 
 
-def test_a_pre_2007_score_of_seven_without_the_same_minute_is_only_a_check() -> None:
-    # S1 close 1 + S3 exact 4 + S4 1 + S6 1 = 7 reaches the no-category threshold, but D-009 also
-    # needs the same release minute, so it must stay a check.
-    e = old(Lang.EN, 110, 0, title="Annual Report 2005", news_id=500)
-    t = old(Lang.TC, 110, 1, title="2005年報", news_id=501)
-    a = only(run([e], [t]))
-    assert a.score == 7
-    assert a.status is Status.CHECK
-
-
 def test_a_2005_pair_without_the_exact_number_relation_is_only_a_check() -> None:
     english, chinese = old_pair(seq_tc=111)  # same minute, numbers only near: 3 + 2 = 5
     assert only(run(english, chinese)).status is Status.CHECK
 
 
-def test_consecutive_2005_pairs_are_both_matched_because_each_number_is_unique() -> None:
+def test_consecutive_2005_pairs_are_both_checks_but_each_number_still_finds_its_partner() -> None:
     english = [old(Lang.EN, n) for n in (110, 111)]
     chinese = [old(Lang.TC, n) for n in (110, 111)]
     result = run(english, chinese)
-    assert shape(result) == {(110, 110): Status.MATCHED, (111, 111): Status.MATCHED}
+    assert shape(result) == {(110, 110): Status.CHECK, (111, 111): Status.CHECK}
     assert result.diagnostics.non_interleaved_groups == 0
+
+
+def test_identical_bytes_still_match_a_2005_pair() -> None:
+    english, chinese = old_pair()
+    digest = "dd" * 32
+    ev = ContentEvidence(
+        sha256={(Lang.EN, english[0].news_id): digest, (Lang.TC, chinese[0].news_id): digest}
+    )
+    a = only(run(english, chinese, content=ev))
+    assert (a.status, a.bilingual) == (Status.MATCHED, True)
+
+
+def test_a_conclusive_content_check_still_matches_a_2005_pair() -> None:
+    english, chinese = old_pair()
+    ev = ContentEvidence(verdicts=(verdict(english[0], chinese[0]),))
+    a = only(run(english, chinese, content=ev))
+    assert a.status is Status.MATCHED
+    assert any("Content check" in line for line in a.evidence)
+    assert NO_CATEGORY_NOTE not in a.evidence
 
 
 def test_a_2005_chinese_file_with_no_english_number_is_not_pulled_to_a_neighbour() -> None:
@@ -226,9 +281,11 @@ def test_a_chinese_stub_makes_the_english_document_english_only() -> None:
     a = only(result)
     assert (a.status, a.reason) == (Status.EN_ONLY, SingleReason.STUB_IN_OTHER_SECTION)
     assert a.tc is None and a.stub is not None and a.stub.seq == 1071
+    # The notice says a Chinese version "may or may not" be published; it does not say "only".
     assert a.evidence == (
-        "The issuer published this in English only. "
-        "HKEXnews' Chinese section shows a notice instead.",
+        "No Chinese version found in the search results.",
+        "HKEXnews' Chinese section shows a notice instead, saying a Chinese version may or may "
+        "not be published there.",
     )
 
 
@@ -236,6 +293,17 @@ def test_an_english_stub_makes_the_chinese_document_chinese_only() -> None:
     a = only(run([en(500, stub=True)], [tc(499)]))
     assert (a.status, a.reason) == (Status.TC_ONLY, SingleReason.STUB_IN_OTHER_SECTION)
     assert a.en is None and a.stub is not None and a.tc is not None and a.tc.seq == 499
+    assert a.evidence == (
+        "No English version found in the search results.",
+        "HKEXnews' English section shows a notice instead, saying an English version may or may "
+        "not be published there.",
+    )
+
+
+def test_stub_evidence_names_the_dates_that_were_searched() -> None:
+    day = date(2026, 10, 28)
+    a = only(run([en(1070, 28)], [tc(1071, 28, stub=True)], searched=(day, day)))
+    assert a.evidence[0] == "No Chinese version found between 28 Oct 2026 and 28 Oct 2026."
 
 
 def test_a_stub_is_never_offered_as_a_version_or_paired() -> None:

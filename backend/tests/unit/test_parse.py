@@ -278,6 +278,11 @@ def test_empty_category_is_empty() -> None:
             "此文件已經作廢，經修訂文件已另行發出",
             "合併守則 - 交易披露",
         ),
+        (
+            "(修改後標題) 公告及通告 - [內幕消息 / 復牌]",
+            "修改後標題",
+            "公告及通告",
+        ),
     ],
 )
 def test_category_prefixes_are_split_off(text: str, prefix: str, parent: str) -> None:
@@ -308,6 +313,16 @@ def test_category_prefixes_are_split_off(text: str, prefix: str, parent: str) ->
             "(Headline Revised) Announcements and Notices - [Inside Information / Resumption]",
             {Flag.HEADLINES_REVISED},
         ),
+        (
+            Lang.EN,
+            "(Headlines Revised) Announcements and Notices - [Change in Directors &#x2f; Other]",
+            {Flag.HEADLINES_REVISED},
+        ),
+        (
+            Lang.TC,
+            "(修改後標題) 公告及通告 - [內幕消息 &#x2f; 復牌]",
+            {Flag.HEADLINES_REVISED},
+        ),
         (Lang.TC, "(取消 - 標題已被取代及更換) 公告及通告 - [內幕消息]", {Flag.CANCELLED}),
         (Lang.TC, "(此文件已經作廢，經修訂文件已另行發出) 合併守則 - 交易披露", {Flag.CANCELLED}),
         (Lang.EN, "Announcements and Notices - [Other]", set()),
@@ -320,6 +335,26 @@ def test_flags_come_from_category_prefix(lang: Lang, category: str, flags: set[F
 def test_revised_flag_comes_from_english_title_prefix() -> None:
     assert Flag.REVISED in parse_row(row(TITLE="(Revised) Annual Report 2025"), Lang.EN).flags
     assert Flag.REVISED not in parse_row(row(TITLE="Revised Annual Report 2025"), Lang.EN).flags
+
+
+@pytest.mark.parametrize(
+    ("title", "revised"),
+    [
+        ("(經修訂) 董事名單與其角色和職能", True),
+        ("(經修訂)翌日披露報表", True),
+        ("經修訂年報", False),
+        ("建議採納第三次經修訂及重列之組織章程大綱及細則", False),
+    ],
+)
+def test_revised_flag_comes_from_chinese_title_prefix(title: str, revised: bool) -> None:
+    assert (Flag.REVISED in parse_row(row(TITLE=title), Lang.TC).flags) is revised
+
+
+def test_a_chinese_cancelled_marker_is_not_a_revised_flag() -> None:
+    doc = parse_row(
+        row(LONG_TEXT="(此文件已經作廢，經修訂文件已另行發出) 合併守則 - 交易披露"), Lang.TC
+    )
+    assert doc.flags == frozenset({Flag.CANCELLED})
 
 
 def test_unrecognised_prefix_is_kept_so_the_matcher_can_see_it() -> None:

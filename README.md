@@ -25,10 +25,10 @@ Full usage, limitations and reused projects are added in Phase 7.
 
 Kept current as the build progresses.
 
-- **Documents before 25 June 2007** have no headline categories, so pairing has less evidence.
-  They can only be shown as "Matched" under a stricter rule (D-009 in `docs/DECISIONS.md`);
-  otherwise they are shown as "Check pairing". If testing shows the rule is unsafe, all
-  pre-2007 pairs will be "Check pairing" and this section will say so.
+- **Documents before 25 June 2007** have no headline categories, and their file numbers are
+  irregular, so time and file numbers cannot confirm a pairing. Every such pair is shown as
+  "Check pairing" unless the two files are identical or "Check contents" is conclusive (D-009
+  and D-015 in `docs/DECISIONS.md`).
 - **Reused stock codes** (for example 00700, once YAOHAN INT'L's) search the company that is
   listed today. The delisted earlier holders are shown as a switch, not hidden (D-010).
 - **Annual reports published in each language separately** (HKEX allows it) are handled by a
@@ -40,3 +40,5 @@ Kept current as the build progresses.
 - **Checking contents** compares figures in the two PDFs. About a third of the Chinese PDFs
   sampled (21 of 62) have text that cannot be read, so for those the check says it is
   unavailable and the pairing stays "Check pairing" unless other evidence confirms it (D-013).
+  Two documents that share their figures can fool it: in the golden set, two 2005 HSBC scrip
+  dividend forms matched at 92% and the check confirmed the wrong one (M-015, open).

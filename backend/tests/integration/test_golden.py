@@ -32,12 +32,14 @@ WITH_CONTENT = "with content check"
 
 ENTRIES = [e for e in load_entries() if e.verified]
 
-# Wrong `matched` results known and open. Each needs a reason and is dropped when it is fixed:
-# the marker is strict, so a fixed entry fails the run until it is removed.
+# Wrong `matched` results known and open, as (run, entry id). Each needs a reason and is dropped when
+# it is fixed: the marker is strict, so a fixed entry fails the run until it is removed.
 KNOWN_WRONG = {
-    "00005-303146": (
-        "M-014: HSBC, 31 March 2005. The pre-2007 rule (D-009) confirms English file 96 with "
-        "Chinese file 96; the right partner is file 95. Decided at Gate 2."
+    (WITH_CONTENT, "00005-303146"): (
+        "M-014: HSBC, 31 March 2005. The D-009 fallback keeps the pair a check, but 'Check contents' "
+        "confirms English file 96 with Chinese file 96 (92% of figures match) because the matcher "
+        "lists no rival: the right partner, Chinese file 95, scores 3 and the check candidates "
+        "start at 4. The two scrip forms share their figures. Open after Gate 2."
     ),
 }
 
@@ -79,11 +81,8 @@ def _cases() -> list[object]:
     cases: list[object] = []
     for run in (STRUCTURAL, WITH_CONTENT):
         for e in ENTRIES:
-            marks = (
-                [pytest.mark.xfail(strict=True, reason=KNOWN_WRONG[e.id])]
-                if e.id in KNOWN_WRONG
-                else []
-            )
+            reason = KNOWN_WRONG.get((run, e.id))
+            marks = [pytest.mark.xfail(strict=True, reason=reason)] if reason else []
             cases.append(pytest.param(run, e.id, id=f"{run}: {e.id}", marks=marks))
     return cases
 
@@ -95,7 +94,21 @@ def test_no_entry_is_confirmed_wrongly(runs: dict[str, Report], run: str, entry_
 
 
 def test_the_known_failures_name_entries_that_are_in_the_golden_set() -> None:
-    assert set(KNOWN_WRONG) <= {e.id for e in ENTRIES}
+    assert {entry_id for _, entry_id in KNOWN_WRONG} <= {e.id for e in ENTRIES}
+
+
+# Pairs whose two headlines carry the same revision marker in both languages: `(Revised)` and
+# `(經修訂)` in the title, `(Headline Revised)` and `(修改後標題)` in the category prefix.
+REVISED_PAIRS = ("00013-2104022", "06909-12089411", "08223-12110929", "08223-12104235")
+
+
+@pytest.mark.parametrize("run", [STRUCTURAL, WITH_CONTENT])
+@pytest.mark.parametrize("entry_id", REVISED_PAIRS)
+def test_a_pair_revised_in_both_languages_is_confirmed(
+    runs: dict[str, Report], run: str, entry_id: str
+) -> None:
+    judgement = next(j for j in runs[run].judgements if j.entry_id == entry_id)
+    assert judgement.outcome is Outcome.MATCHED_RIGHT, judgement.detail
 
 
 def test_the_golden_set_is_big_enough_to_mean_something() -> None:
