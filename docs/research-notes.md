@@ -66,7 +66,7 @@ Zarif's observation: TC is "usually always" EN + 1. Treat this as strong evidenc
 When an issuer publishes in one language only, the other section gets a notice entry instead of a document.
 
 - **English section:** the notice title contains a fragment such as "published by the issuer in the Chinese section". These notices exist as HTM files and also as small PDFs.
-- **Chinese section:** the notice says (Zarif's translation) that the issuer has published an announcement in the English version, and a Chinese version may or may not be published. Exact Chinese wording from the probe: `TBC`.
+- **Chinese section:** the notice says that the issuer has just published an announcement in the English section, and a Chinese version may or may not be published. Verified title: `發行人剛在本網站英文版面發布一項公告，相應中文版本或會／或不會在本版面發布。` (probe, 30 Oct 2026). Verified English-section title: `An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section`. Both are `.htm` files of about 1 KB.
 - **Detection:** title fragment match, with file type and size as supporting evidence. Never pair or offer a stub as a language version.
 
 ## 6. HKEX submission rules relevant to pairing (Documented, e-Submission FAQ)
@@ -143,6 +143,8 @@ Fixtures: `documents/2026102301071_c.htm`, `documents/2026103000899.htm`, `form-
 **Q12, delisted and reused codes (Verified).** `category=1` with an id from `inactivestock_sehk_e.json` searches delisted securities (00013 Hutchison, 2014 to 2015: 1,687 EN and 1,686 ZH rows). Code reuse is common: 00013 is HUTCHISON (delisted) and HUTCHMED (active); 03333 has three delisted entries (EVERGRANDE under two ids, SENYUAN INT'L). Searching is by internal id, so `AMBIGUOUS_STOCK_CODE` is a real case. The active list holds 17,399 entries; codes starting 1 and 5 alone account for about 7,200 and their names look like structured products (for example `HS#HSI  RC2708A`), so random-stock testing must filter to ordinary shares. List entries are `{i, c, n, s}`; the meaning of `s` is **Open**. Fixtures: `delisted/`, `reused-code/`, `reference/`.
 
 **Q13, folder date (Verified).** In 6,969 rows the folder date in `FILE_LINK` always matched the `DATE_TIME` date (0 mismatches). One entry has a non-standard path (`.../dod/en.html`).
+
+**Hosting reachability (Verified, 30 Oct 2026 22:50 HKT).** The deployed Render service (Singapore, free plan) at `https://hkex-bilingual-downloader.onrender.com/api/probe` got the servlet search (HTTP 200, 2 rows, 1.14 s) and a PDF range request (HTTP 206, `%PDF-`, 0.02 s). No block or challenge page. Only `bm_s` and `bm_so` cookies were set there, against five cookies from the Mac; the difference is unexplained but did not affect results. Only one response was captured, so the cold-start timing is **Open**. A single successful probe does not rule out later throttling, so the audit in Phase 6 repeats this from Render over many requests.
 
 **Open after Phase 0**
 - Q4 cap above 1,687 rows per call.

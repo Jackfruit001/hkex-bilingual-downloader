@@ -1,6 +1,6 @@
 # Specification
 
-Version 1.0, 30 October 2026. Owner: Zarif. Changes need Zarif's approval and an entry in `docs/DECISIONS.md`.
+Version 1.1, 30 October 2026 (Gate 0 changes: D-009, research notes §9). Owner: Zarif. Changes need Zarif's approval and an entry in `docs/DECISIONS.md`.
 
 ## 1. Users and the job to be done
 
@@ -81,7 +81,7 @@ HKEX's `rowRange` is reported to be cumulative (it returns rows 1 to N). Strateg
 | `stock_codes`, `stock_names` | split on `<br/>`; codes zero-padded |
 | `title` | HTML-unescaped, whitespace collapsed, NFC |
 | `category_text` | `LONG_TEXT`, unescaped |
-| `category_codes` | tier codes resolved from `category_text` via the EN or TC category maps; empty if unknown or pre-2007 |
+| `category_codes` | tier codes resolved from `category_text` via the EN or TC category maps. Parse `Parent - [Child]`; split multiple children on ` / `; strip a leading `(Cancelled and Reissued)` or similar prefix into `flags`; resolve by parent and child together because 93 child names map to several codes; empty if unresolved or pre-2007 |
 | `file_type`, `size_label` | `FILE_TYPE`, `FILE_INFO` |
 | `folder_date`, `seq` | parsed from the path (`/YYYY/MMDD/` and the numeric stem; supports the older `LTN` prefix and sub-folders) |
 | `is_stub` | title matches a stub fragment (research notes §5) |
@@ -118,20 +118,20 @@ Initial weights; tune on the golden set and keep them in `config.py`.
 |---|---|---|
 | S1 | Same release minute | +3; within 5 minutes +1 |
 | S2 | Headline category codes | identical +3; overlapping +1; disjoint −4 |
-| S3 | File sequence in the same date folder | TC = EN + 1: +4; within ±3: +2 |
-| S4 | Same `NEWS_ID` | decisive, only if Phase 0 proves it is shared across languages |
+| S3 | File sequence in the same date folder, era-aware | TC = EN + 1, or the identical number with `_c` added (2005 `ltn` files): +4; within ±3: +2. Evidence text says which relationship applied |
+| S4 | `NEWS_ID` of the TC document is the EN one plus 1 | +1 (weak corroboration; `NEWS_ID` is not shared across languages, and the offset differs in about 1% of pairs) |
 | S5 | Identical SHA-256 of the files | decisive (bilingual document submitted twice) |
 | S6 | Numbers in titles (years, form numbers, amounts) | agree +1; conflict −2 |
 | S7 | Content check (§4.5) | decisive when conclusive |
 
 ### 4.3 Algorithm
 
-1. Candidates for each EN document: TC documents in the same date folder within ±5 sequence numbers, or with the same release minute. For separate-submission categories (§4.4), also documents of the same category within ±14 days.
+1. Remove stubs (§4.4) from both sides first, because a stub takes the number after the document it stands in for. Candidates for each EN document: TC documents in the same date folder within ±5 sequence numbers, or with the same release minute. Same minute and same category do not identify a pair on their own: documents interleave (EN 684 with TC 685, EN 694 with TC 695), so S3 is what separates them. For separate-submission categories (§4.4), also documents of the same category within ±14 days.
 2. Score each candidate pair.
 3. Split the candidate graph into connected components. Within each, find the best one-to-one assignment (exhaustive when a side has ≤ 8 documents, which covers real cases; greedy with ambiguity flags otherwise).
 4. Classify an assigned pair as `matched` only if all of these hold:
    - mutual best: each is the other's top-scoring candidate;
-   - score ≥ 9, or a decisive signal;
+   - score ≥ 9, or a decisive signal; when neither document has category codes (pre-2007), score ≥ 7 (`MATCH_MIN_SCORE_NO_CATEGORY`) and both S1 (same release minute) and S3 must hold (D-009);
    - margin: the runner-up for either side scores at least 3 lower;
    - no hard conflict (disjoint categories, conflicting title numbers, differing cancelled or revised flags).
 5. Otherwise, if the best candidate scores ≥ 4: status `check`, with up to two rivals listed.
@@ -139,12 +139,12 @@ Initial weights; tune on the golden set and keep them in `config.py`.
 
 ### 4.4 Special cases
 
-- **Stubs.** A stub in the other section (observed at sequence +1 for a Form 8-K overseas regulatory announcement) sets `en_only` or `tc_only` with reason `stub_in_other_section`. Stubs are never shown as their own announcement or offered as a language version; the notice is linked as a source.
+- **Stubs.** A stub in the other section (a small `.htm` of about 1 KB, always at the real document's sequence +1, in either direction; exact titles in research notes §5) sets `en_only` or `tc_only` with reason `stub_in_other_section`. Stubs are never shown as their own announcement or offered as a language version; the notice is linked as a source.
 - **Separate submissions.** HKEX allows annual reports and listing documents to be submitted in each language separately. For those categories, if no counterpart is found in range, search ±14 days. A counterpart found this way is `check` ("Chinese version published separately on 28 Apr 2026") unless a decisive signal confirms it.
 - **Bilingual documents.** Identical bytes in both sections means one bilingual file published twice: `matched`, labelled "Bilingual document".
 - **Headline revisions.** Exact duplicates (same path) collapse into one. Cancelled and revised entries pair within their own flag group and are flagged in the UI.
 - **Multi-code documents** (dual counters, joint announcements): shown under the searched code; other codes listed.
-- **Pre-2007 documents** have no categories; S2 contributes 0, so pairing relies on S1 and S3.
+- **Pre-2007 documents** have no categories; S2 contributes 0, so pairing relies on S1 and S3 under the lower threshold in §4.3 (D-009). If the golden set shows any wrong `matched` among them, all pre-2007 pairs become `check` and the README limitation says so.
 
 ### 4.5 Content check
 

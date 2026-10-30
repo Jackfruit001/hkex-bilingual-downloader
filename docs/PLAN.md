@@ -1,6 +1,6 @@
 # Plan
 
-**Status:** Phase 0 built, awaiting the Render reachability test (0.4) and Gate 0 approval. Update this line at every gate.
+**Status:** Gate 0 approved 30 Oct 2026; `/api/probe` removed. Phase 1 plan awaiting approval. Update this line at every gate.
 
 **Timeline (HKT):** Fri 30 Oct, Phases 0 to 2. Sat 31 Oct, Phases 3 and 4. Sun 1 Nov, Phases 5 and 6. Mon 2 Nov, Phase 7 and submit.
 
@@ -30,7 +30,7 @@ Goal: confirm how HKEXnews really behaves before designing around it.
   10. `delisted`: a delisted code from the inactive list.
   11. `no-results`: a valid code and a range with no documents.
   12. `english-only-issuer`: a debt or structured-product issuer found by the probe.
-- [ ] 0.4 Hosting reachability: a minimal FastAPI app with `/api/health` and a temporary `/api/probe` that runs one HKEX search and one PDF request and returns status codes and timings; `Dockerfile`; `render.yaml` (Singapore region). [Zarif] Create the Render web service from the repo (free plan is fine for this test) and open `/api/probe` on the deployed URL. Remove the probe route after the gate.
+- [x] 0.4 Hosting reachability: a minimal FastAPI app with `/api/health` and a temporary `/api/probe` that runs one HKEX search and one PDF request and returns status codes and timings; `Dockerfile`; `render.yaml` (Singapore region). [Zarif] Create the Render web service from the repo (free plan is fine for this test) and open `/api/probe` on the deployed URL. Remove the probe route after the gate (done).
 - **GATE 0:** answers to Q1 to Q12 with evidence; hosting result; proposed SPEC changes (signal weights, stub fragments, allowlist, pagination). Decide: hosted (continue) or blocked (Plan B).
 
 ## Phase 1: HKEX client and domain model (about 3 h)
