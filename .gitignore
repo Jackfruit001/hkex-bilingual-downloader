@@ -18,6 +18,9 @@ backend/static/
 # Probe cache (raw responses are kept in backend/tests/fixtures/raw instead)
 scripts/.probe_cache/
 
+# Golden helper cache: PDFs and search responses (PDFs are never committed)
+scripts/.golden_cache/
+
 # Environment and OS
 .env
 .env.*

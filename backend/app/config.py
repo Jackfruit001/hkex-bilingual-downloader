@@ -68,6 +68,9 @@ class PairingConfig:
     content_min_tokens: int = 5
     content_pages: int = 3
     content_min_chars: int = 200  # fewer means a scanned document
+    # Share of Chinese characters a Chinese PDF's text needs to be trusted. 21 of 62 real files had
+    # at most 2.8% (undecodable embedded font) and 41 had at least 14.5% (research notes §9).
+    content_min_chinese_share: float = 0.08
     content_timeout_s: float = 10.0
 
 

@@ -42,7 +42,7 @@ def _split_multi(value: Any) -> list[str]:
 
 
 _PATH = re.compile(
-    r"^/listedco/listconews/sehk/(\d{4})/(\d{2})(\d{2})/(?:[^/]+/)*([^/]+)$", re.IGNORECASE
+    r"^/listedco/listconews/(?:sehk|gem)/(\d{4})/(\d{2})(\d{2})/(?:[^/]+/)*([^/]+)$", re.IGNORECASE
 )
 _STEM = re.compile(r"^(?:ltn)?\d{8}(\d+?)(?:_c)?$", re.IGNORECASE)
 

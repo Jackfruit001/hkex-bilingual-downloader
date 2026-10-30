@@ -1,6 +1,6 @@
 # Specification
 
-Version 1.3, 31 October 2026 (Gate 0 changes: D-009, research notes §9; Gate 1 change: D-010, code reuse; Phase 2: D-011, same-minute batches). Owner: Zarif. Changes need Zarif's approval and an entry in `docs/DECISIONS.md`.
+Version 1.4, 31 October 2026 (Gate 0 changes: D-009, research notes §9; Gate 1 change: D-010, code reuse; Phase 2: D-011, same-minute batches; D-013, GEM paths and unreadable Chinese text). Owner: Zarif. Changes need Zarif's approval and an entry in `docs/DECISIONS.md`.
 
 ## 1. Users and the job to be done
 
@@ -83,7 +83,7 @@ HKEX's `rowRange` is reported to be cumulative (it returns rows 1 to N). Strateg
 | `category_text` | `LONG_TEXT`, unescaped |
 | `category_codes` | tier codes resolved from `category_text` via the EN or TC category maps. Parse `Parent - [Child]`; split multiple children on ` / `; strip a leading `(Cancelled and Reissued)` or similar prefix into `flags`; resolve by parent and child together because 93 child names map to several codes; empty if unresolved or pre-2007 |
 | `file_type`, `size_label` | `FILE_TYPE`, `FILE_INFO` |
-| `folder_date`, `seq` | parsed from the path (`/YYYY/MMDD/` and the numeric stem; supports the older `LTN` prefix and sub-folders) |
+| `folder_date`, `seq` | parsed from the path (`/YYYY/MMDD/` under `/sehk/` or, for GEM issuers, `/gem/`, and the numeric stem; supports the older `LTN` prefix and sub-folders) |
 | `is_stub` | title matches a stub fragment (research notes §5) |
 | `flags`, `category_prefix` | `cancelled`, `headlines_revised`, `revised` from the bracketed category prefix or an English `(Revised)` title prefix; the raw prefix is always kept so an unmapped marker stays visible to the matcher |
 | `news_id` | `NEWS_ID`; unique within a language, the key for removing repeated rows |
@@ -152,7 +152,7 @@ Initial weights; tune on the golden set and keep them in `config.py`.
 Runs on demand for `check` entries (a "Check contents" button) and automatically in the audit script.
 
 1. Download and verify both PDFs through the normal fetcher (cached).
-2. Extract text from the first three pages with pypdf, 10 s limit per file. Under 200 characters means "Content check unavailable (scanned document)".
+2. Extract text from the first three pages with pypdf, 10 s limit per file. Under 200 characters means "Content check unavailable (scanned document)". A Chinese document whose text is under 8% Chinese characters (`content_min_chinese_share`) is also unavailable ("text can't be decoded"): many Chinese PDFs embed a font pypdf cannot decode, and their extracted text is gibberish (D-013).
 3. Fingerprint: numeric tokens matching `\d[\d,]*(?:\.\d+)?%?`, commas removed, single digits dropped. English dates like "28 October 2026" also contribute `28`, `10`, `2026`, so they compare with "2026年10月28日".
 4. Score: multiset containment, |EN ∩ TC| / min(|EN|, |TC|).
 5. Conclusive if the best score ≥ 0.6, best minus second ≥ 0.2, and the EN fingerprint has ≥ 5 tokens. Then upgrade `check` to `matched` with evidence such as "Content check: 84% of figures match". Never downgrade a decisive match. Tune thresholds on the golden set and record them in the research notes.
@@ -274,7 +274,7 @@ All errors share one shape: `{code, message, details?}` with codes from §9.
 1. **Unit (pure logic):** validation, HKT helpers, row parsing, pagination merging, pairing rules, Title Case, filenames, verification.
 2. **Property-based (Hypothesis):** any title yields a filename that is non-empty, valid on Windows (no reserved characters, no trailing dot or space), within byte and character limits, deterministic, and keeps the `LANG_YYYY-MM-DD-CODE-` prefix.
 3. **Recorded fixtures:** real EN and TC responses captured by the Phase 0 probe (`tests/fixtures/raw/`), used to test search, normalisation and pairing offline and deterministically.
-4. **Golden pairing set** (`tests/golden/pairs.yaml`): at least 50 announcements from at least 12 issuers, each verified by Zarif (both PDFs opened; same stock code, dates and figures; Claude used to read Chinese where needed). Must cover: ordinary pairs; several on one day; several in the same minute; English only with stub; Chinese only with stub; separately published annual report; bilingual identical file; revised or cancelled headline; multi-file listing document; web-page entry; pre-2007 document; delisted company. Required result: zero wrong `matched`. Report counts per status and per case type.
+4. **Golden pairing set** (`tests/golden/pairs.yaml`): at least 50 announcements from at least 12 issuers, each verified by Zarif (both PDFs opened; same stock code, dates and figures; Claude used to read Chinese where needed). Must cover: ordinary pairs; several on one day; several in the same minute; English only with stub; Chinese only with stub; separately published annual report; bilingual identical file; revised or cancelled headline; multi-file listing document; web-page entry; pre-2007 document; delisted company. Required result: zero wrong `matched`. Report counts per status and per case type. Accepted gap (Zarif, 31 October 2026): no separately published annual report was found in real data, so that case is tested with synthetic documents only and is a README limitation; `golden_helper.py coverage` lists it as accepted, not as a failure.
 5. **Fault injection (respx):** timeouts; connection reset mid-body; 500 then success; 429 with `Retry-After`; truncated body versus `Content-Length`; HTML error page with status 200; non-PDF bytes; redirect off the allowlist.
 6. **API tests** with FastAPI's TestClient against fixtures.
 7. **Frontend:** Vitest for state logic; Playwright end to end against the backend in fixture mode (search, view pairs, download single, download ZIP, failure and retry, invalid inputs).

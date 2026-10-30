@@ -7,13 +7,17 @@ from collections import Counter
 
 import pytest
 
-from app.config import PairingConfig
+from app.config import PAIRING, PairingConfig
+from app.domain.models import Lang
 from app.pairing.content_check import (
+    ExtractedText,
     TextStatus,
     best_match,
+    chinese_share,
     containment,
     extract_text,
     fingerprint,
+    readable,
 )
 from tests.support import make_pdf
 
@@ -149,3 +153,54 @@ def crash(conn: mpc.Connection, pdf: bytes, pages: int) -> None:
 
 def test_a_worker_that_dies_without_answering_is_an_error() -> None:
     assert extract_text(make_pdf([LONG]), target=crash).status is TextStatus.ERROR
+
+
+# --- Chinese text that cannot be decoded ------------------------------------------------------
+# 21 of 62 real Chinese PDFs (31 October 2026) gave at most 2.8% Chinese characters: an embedded
+# font pypdf cannot decode, so the "text" is gibberish with a few stray digits, yet it is longer
+# than 200 characters and would pass for readable. The other 41 gave at least 14.5%.
+
+
+def ok(text: str) -> ExtractedText:
+    return ExtractedText(TextStatus.OK, text)
+
+
+def test_the_chinese_share_ignores_whitespace_and_counts_only_chinese_characters() -> None:
+    assert chinese_share("") == 0.0
+    assert chinese_share("測試 公告 2026") == pytest.approx(4 / 8)
+    assert chinese_share("Next Day Disclosure Return 28 October 2026") == 0.0
+
+
+def test_readable_chinese_text_is_left_alone() -> None:
+    extracted = ok("翌日披露報表 " * 20)
+    assert readable(Lang.TC, extracted) is extracted
+
+
+def test_chinese_text_with_almost_no_chinese_in_it_is_unavailable_and_says_why() -> None:
+    gibberish = "Wֻ∉܋∉ ၵರ஼੝Ḹі ٺܢứྛದˢˢၘ 305 2026 " * 20
+    result = readable(Lang.TC, ok(gibberish))
+    assert result.status is TextStatus.UNAVAILABLE
+    assert "Chinese" in result.detail and "%" in result.detail
+
+
+def test_the_threshold_sits_inside_the_measured_gap() -> None:
+    assert 0.028 < PAIRING.content_min_chinese_share < 0.145
+
+
+def test_the_threshold_comes_from_the_config() -> None:
+    text = ok("測試" + "x" * 8)  # 20% Chinese
+    assert readable(Lang.TC, text, PairingConfig(content_min_chinese_share=0.5)).status is (
+        TextStatus.UNAVAILABLE
+    )
+    assert readable(Lang.TC, text, PairingConfig(content_min_chinese_share=0.1)) is text
+
+
+def test_english_text_is_never_held_to_the_chinese_rule() -> None:
+    extracted = ok("Next Day Disclosure Return " * 20)
+    assert readable(Lang.EN, extracted) is extracted
+
+
+@pytest.mark.parametrize("status", [TextStatus.UNAVAILABLE, TextStatus.TIMEOUT, TextStatus.ERROR])
+def test_a_status_that_is_already_bad_is_passed_through(status: TextStatus) -> None:
+    extracted = ExtractedText(status, "x", "why")
+    assert readable(Lang.TC, extracted) is extracted

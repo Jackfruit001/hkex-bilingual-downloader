@@ -101,6 +101,42 @@ How AI tools were used, and the mistakes they made that were caught. Entries are
 - **Fix and commit:** pre-2007 folders default to the old scheme (config `same_number_before`); in that scheme only an exact number counts and the layout rule is not applied; D-009 and D-011 updated.
 - **Guard added:** tests for the lone pair, for consecutive 2005 pairs, and for a Chinese file that must not be pulled to a neighbour; the golden set must include 2005 pairs (SPEC §10.4).
 
+### M-010: a mutation check that reported false "killed" results
+
+- **Date and tool:** 2026-10-31, Claude Code.
+- **What the AI produced:** a throwaway harness that mutates one line of the golden helper, runs its tests, and restores the file, to show the tests would notice a broken budget, allowlist, append rule or case tag. It reported all 21 mutants killed.
+- **What was wrong:** the harness restored each file within the same second as the mutation, and some mutants had the same file size as the original (`1.0` and `0.0`). Python reused the compiled mutant, so the working tree behaved as if the code were broken after the harness finished, and some "killed" verdicts came from stale bytecode. Run properly, two mutants survived: a document on 1 January 2007 was never tested against the pre-2007 rule, and the coverage test only asserted that some gap existed, which the missing case types guarantee, so counting drafts as verified went unnoticed.
+- **How it was caught:** the next full test run failed one test that had passed (`test_live_requests_are_at_least_a_second_apart`), and a small debug script printed the client's spacing as 0.0 although the source said 1.0. I cleared the cache and reran with bytecode writing off.
+- **Fix and commit:** two tests added (the 2007 boundary on both sides; totals count verified entries only, with exact gap messages); all 21 mutants are killed on a clean run. Nothing in the helper's code changed.
+- **Guard added:** the harness now sets `PYTHONDONTWRITEBYTECODE=1` and clears the cache before each run, and a mutation result only counts after a clean full run of the suite.
+
+### M-011: "every HKEXnews file lives under `/sehk/`"
+
+- **Date and tool:** 2026-10-31, Claude Code (written in Phase 1.4, found in Phase 2.4).
+- **What the AI produced:** `parse_file_path` (Phase 1) accepts only `/listedco/listconews/sehk/YYYY/MMDD/...`; SPEC §3.4 describes the folder date and file number without saying the folder name can differ.
+- **What was wrong:** GEM issuers' files live under `/listedco/listconews/gem/...` with the same numbering. Every GEM announcement lost its folder date and file number, so the sequence signal never applied: five GEM issuers (34 announcements) came out 34 `check` and 0 `matched`; with the folder accepted, 32 `matched` and 2 `check`. A random 08xxx code (305 active securities) would show no confirmed pair.
+- **How it was caught:** the live table runs of Phase 2.4 on small-cap issuers, a probe, not a test. None of the 12 recorded scenarios had a GEM issuer, so no test could see it. Nothing wrong reached a user: the failure is on the safe side (`check`, never a wrong `matched`).
+- **Fix and commit:** raised for Zarif rather than fixed in Phase 1 unasked; Zarif delegated it on 31 October. The pattern now accepts `sehk|gem` (D-013), with three new parser cases; nine GEM drafts are in the golden set.
+- **Guard added:** GEM path cases in the parser test, and GEM issuers in the golden set and its fixtures.
+
+### M-012: the content check treats any 200 characters as readable text
+
+- **Date and tool:** 2026-10-31, Claude Code (SPEC §4.5 and Phase 2.3).
+- **What the AI produced:** SPEC §4.5 step 2 says text under 200 characters means "unavailable (scanned document)"; `content_check.extract_text` implements exactly that.
+- **What was wrong:** 21 of 62 real Chinese PDFs yield more than 200 characters of gibberish (an embedded font pypdf cannot decode, 2.8% Chinese characters at most), so they count as readable. The content check would compare figures against noise and could report "X% of figures match" or a false "conclusive". The other 41 files are at 14.5% or more, a clear gap.
+- **How it was caught:** the side-by-side first-page output of the golden helper showed unreadable Chinese for HSBC's Second Interim Dividend with a 20% overlap; measuring every cached Chinese PDF followed.
+- **Fix and commit:** first in the helper only (D-012), then in the product after Zarif delegated the decision: `content_check.readable` and `content_min_chinese_share = 0.08` (D-013, SPEC §4.5), used by the helper too.
+- **Guard added:** tests for the rule and a test that the threshold sits inside the measured gap (2.8% against 14.5%).
+
+### M-013: a scripted edit that matched nothing
+
+- **Date and tool:** 2026-10-31, Claude Code.
+- **What the AI produced:** a Python string replacement in `draft.py` to pass the new `status` and `note` into `FileView`; the target text had been reformatted by `ruff format` earlier, so the replacement silently did nothing.
+- **What was wrong:** the new "undecodable text" rule was not applied, while the rest of the change was.
+- **How it was caught:** the new integration test failed on first run.
+- **Fix and commit:** edited with the Edit tool; the full suite passed.
+- **Guard added:** scripted replacements assert that their target exists before writing. A later scripted multi-line cut removed a neighbouring constant as well; the suite failed at once, and the lesson is to make small edits with the Edit tool and run the tests straight after.
+
 ### M-00X: short title
 
 - **Date and tool:**

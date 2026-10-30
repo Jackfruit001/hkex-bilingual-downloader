@@ -1,6 +1,6 @@
 # Plan
 
-**Status:** Phase 2 in progress (31 October 2026): 2.1 to 2.3 done (matcher, evidence, content check; D-011 approved); next is 2.4, the golden helper; Zarif approved its live calls on 31 October (plan awaiting approval). Gate 2 not reached. Update this line at every gate.
+**Status:** Phase 2 in progress (31 October 2026): 2.1 to 2.4 done (matcher, evidence, content check, golden helper; D-011 and D-012); 77 draft golden entries from 21 securities wait in `backend/tests/golden/pairs.yaml` for Zarif (2.5). The 2.4 findings were settled on 31 October (D-013): GEM paths fixed, unreadable Chinese text rule added to the content check, separate annual report an accepted README limitation. Then 2.6 and Gate 2. Phase 3 starts in a new chat only after Gate 2 is approved. Update this line at every gate.
 
 **Timeline (HKT):** Fri 30 Oct, Phases 0 to 2. Sat 31 Oct, Phases 3 and 4. Sun 1 Nov, Phases 5 and 6. Mon 2 Nov, Phase 7 and submit. Update, 31 Oct: the reviewer allowed one extra day, so submission can slip to Tue 3 Nov. Phases run strictly in order, each gate approved before the next starts; no phase is skipped or reopened to save time.
 
@@ -47,8 +47,8 @@ Goal: confirm how HKEXnews really behaves before designing around it.
 - [x] 2.1 Synthetic fixtures for hard cases: same-minute pairs, interleaved sequence numbers, stubs in both directions, revised headlines, identical-hash bilingual file, separately submitted annual report. (`tests/support.py` `make_doc` and `make_pdf`; cases in `tests/unit/test_matcher.py`.)
 - [x] 2.2 `pairing/matcher.py` per SPEC §4, with evidence text in `evidence.py`. Tests first. (D-011 layout rule; stub claims; 2005 numbering; replay of all 11 recorded scenarios; Hypothesis invariants; mutation-checked.)
 - [x] 2.3 `pairing/content_check.py` per SPEC §4.5. Pure fingerprint, containment and verdict functions plus text extraction in a worker process with a 10 s limit; fetching the PDFs stays in Phase 3. Done before 2.4 because the golden helper prints first-page figures with it.
-- [ ] 2.4 `scripts/golden_helper.py`: for a scenario, print proposed pairs side by side (titles, times, categories, sequence numbers, first-page figures) and write draft `pairs.yaml` entries for Zarif to confirm or correct.
-- [ ] 2.5 [Zarif] Verify and finalise at least 50 golden entries (SPEC §10.4).
+- [x] 2.4 `scripts/golden_helper.py`: for a scenario, print proposed pairs side by side (titles, times, categories, sequence numbers, first-page figures) and write draft `pairs.yaml` entries for Zarif to confirm or correct. (Pure logic and tests in `backend/tests/golden/` and `tests/unit/test_golden_*.py`; D-012; drafts reproducible with `scripts/golden_drafts.sh`; `coverage` shows what SPEC §10.4 still lacks. 77 drafts from 21 securities including GEM; no separately published annual report found, an accepted gap, D-013.)
+- [ ] 2.5 [Zarif] Verify and finalise at least 50 golden entries (SPEC §10.4). Open both PDFs per entry (`golden_helper.py show <entry-id>` reprints the evidence and the cached file paths, free); set `verified: true`, or correct `truth` first. Run `coverage` to see the gaps; every required case type needs a verified entry.
 - [ ] 2.6 Golden test: zero wrong `matched`; print a metrics table. Tune weights and thresholds only with evidence, and record changes in the research notes.
 - **GATE 2:** metrics table; every `check` and single-language case with its reason; any weight changes.
 

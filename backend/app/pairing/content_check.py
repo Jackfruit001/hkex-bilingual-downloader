@@ -18,6 +18,7 @@ from io import BytesIO
 from pypdf import PdfReader
 
 from app.config import PAIRING, PairingConfig
+from app.domain.models import Lang
 from app.pairing.models import ContentVerdict
 
 _NUMBER = re.compile(r"\d[\d,]*(?:\.\d+)?%?")
@@ -94,6 +95,34 @@ class ExtractedText:
     status: TextStatus
     text: str = ""
     detail: str = ""
+
+
+_CHINESE = re.compile(r"[㐀-䶿一-鿿豈-﫿]")
+
+
+def chinese_share(text: str) -> float:
+    """Share of the non-space characters that are Chinese."""
+    chars = "".join(text.split())
+    return len(_CHINESE.findall(chars)) / len(chars) if chars else 0.0
+
+
+def readable(lang: Lang, extracted: ExtractedText, cfg: PairingConfig = PAIRING) -> ExtractedText:
+    """Text that can be compared, or `UNAVAILABLE` with the reason.
+
+    Many Chinese PDFs embed a font pypdf cannot decode: the extracted "text" is long enough to
+    pass the length test but is gibberish with a few stray digits, so its figures say nothing.
+    A Chinese document with almost no Chinese characters in its text is therefore unavailable.
+    """
+    if extracted.status is not TextStatus.OK or lang is not Lang.TC:
+        return extracted
+    share = chinese_share(extracted.text)
+    if share < cfg.content_min_chinese_share:
+        return ExtractedText(
+            TextStatus.UNAVAILABLE,
+            extracted.text,
+            f"only {share:.1%} of the characters are Chinese; the PDF's text can't be decoded",
+        )
+    return extracted
 
 
 def _extract(pdf: bytes, pages: int) -> str:

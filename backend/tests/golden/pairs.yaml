@@ -1,0 +1,2123 @@
+# Golden pairing set (SPEC section 10.4). Drafted by scripts/golden_helper.py, verified by Zarif.
+#
+# Each entry is a claim to confirm. `truth` says which English and Chinese documents belong
+# together (or that one side is missing and why). Open both PDFs; check the stock code, the dates
+# and the figures. If the claim is right set `verified: true`; if it is wrong, correct `truth`
+# first (news ids matter, path and title are for reading). `proposal` is only what the matcher
+# said when the entry was drafted. It is not evidence and the golden test ignores it.
+#
+# Never edit `id`. Run `uv run --project backend python scripts/golden_helper.py coverage` to see
+# what is still missing.
+- id: 09688-12386841
+  verified: false
+  stock_code: '09688'
+  stock_id: 1000057951
+  stock_name: ZAI LAB
+  scenario: 09688-20261028-20261028
+  case_types:
+  - ordinary
+  - several_same_day
+  truth:
+    en:
+      news_id: '12386841'
+      path: /listedco/listconews/sehk/2026/1028/2026102801739.pdf
+      title: Next Day Disclosure Return
+      released: 2026-10-28 22:52
+    tc:
+      news_id: '12386842'
+      path: /listedco/listconews/sehk/2026/1028/2026102801740_c.pdf
+      title: 翌日披露報表
+      released: 2026-10-28 22:52
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 22:52 HKT, same headline category, consecutive HKEX file numbers (01739 and 01740).
+- id: 09688-12386773
+  verified: false
+  stock_code: '09688'
+  stock_id: 1000057951
+  stock_name: ZAI LAB
+  scenario: 09688-20261028-20261028
+  case_types:
+  - ordinary
+  - several_same_day
+  truth:
+    en:
+      news_id: '12386773'
+      path: /listedco/listconews/sehk/2026/1028/2026102801671.pdf
+      title: VOLUNTARY ANNOUNCEMENT - CLOSING OF THE PRIVATE PLACEMENT OF AMERICAN DEPOSITARY SHARES
+      released: 2026-10-28 22:28
+    tc:
+      news_id: '12386774'
+      path: /listedco/listconews/sehk/2026/1028/2026102801672_c.pdf
+      title: 自願公告 - 交割私人配售美國存託股份
+      released: 2026-10-28 22:28
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 22:28 HKT, same headline category, consecutive HKEX file numbers (01671 and 01672).
+- id: 09688-12382152
+  verified: false
+  stock_code: '09688'
+  stock_id: 1000057951
+  stock_name: ZAI LAB
+  scenario: 09688-20261023-20261023
+  case_types:
+  - ordinary
+  - several_same_day
+  truth:
+    en:
+      news_id: '12382152'
+      path: /listedco/listconews/sehk/2026/1023/2026102301563.pdf
+      title: NOTICE OF AUDIT COMMITTEE ACTION
+      released: 2026-10-23 21:24
+    tc:
+      news_id: '12382153'
+      path: /listedco/listconews/sehk/2026/1023/2026102301564_c.pdf
+      title: 審核委員會行動通告
+      released: 2026-10-23 21:24
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 21:24 HKT, same headline category, consecutive HKEX file numbers (01563 and 01564).
+- id: 09688-12381738
+  verified: false
+  stock_code: '09688'
+  stock_id: 1000057951
+  stock_name: ZAI LAB
+  scenario: 09688-20261023-20261023
+  case_types:
+  - ordinary
+  - several_same_day
+  truth:
+    en:
+      news_id: '12381738'
+      path: /listedco/listconews/sehk/2026/1023/2026102301149.pdf
+      title: INSIDE INFORMATION - UPDATE ON FIRST DATA FROM GLOBAL PHASE 1B CLINICAL TRIAL
+      released: 2026-10-23 18:58
+    tc:
+      news_id: '12381739'
+      path: /listedco/listconews/sehk/2026/1023/2026102301150_c.pdf
+      title: 內幕消息 - 關於zocilurtatug pelitecan全球1b 期臨床研究的首個數據的更新
+      released: 2026-10-23 18:58
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 18:58 HKT, same headline category, consecutive HKEX file numbers (01149 and 01150).
+- id: 09688-12381659
+  verified: false
+  stock_code: '09688'
+  stock_id: 1000057951
+  stock_name: ZAI LAB
+  scenario: 09688-20261023-20261023
+  case_types:
+  - several_same_day
+  - en_only_stub
+  truth:
+    en:
+      news_id: '12381659'
+      path: /listedco/listconews/sehk/2026/1023/2026102301070.pdf
+      title: OVERSEAS REGULATORY ANNOUNCEMENT - FORM 8-K
+      released: 2026-10-23 18:28
+    tc: null
+    absent: stub
+  notes: ''
+  proposal:
+    status: en_only
+    score: null
+    evidence:
+    - The issuer published this in English only. HKEXnews' Chinese section shows a notice instead.
+- id: 09688-12380653
+  verified: false
+  stock_code: '09688'
+  stock_id: 1000057951
+  stock_name: ZAI LAB
+  scenario: 09688-20261023-20261023
+  case_types:
+  - ordinary
+  - several_same_day
+  truth:
+    en:
+      news_id: '12380653'
+      path: /listedco/listconews/sehk/2026/1023/2026102300069.pdf
+      title: PRIVATE PLACEMENT OF AMERICAN DEPOSITARY SHARES AND ISSUANCE OF UNDERLYING SHARES UNDER GENERAL MANDATE
+      released: 2026-10-23 08:28
+    tc:
+      news_id: '12380654'
+      path: /listedco/listconews/sehk/2026/1023/2026102300070_c.pdf
+      title: 私人配售美國存託股份及根據一般授權發行相關股份
+      released: 2026-10-23 08:28
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 08:28 HKT, same headline category, consecutive HKEX file numbers (00069 and 00070).
+- id: 00700-12379123
+  verified: false
+  stock_code: '00700'
+  stock_id: 7609
+  stock_name: TENCENT
+  scenario: 00700-20261001-20261030
+  case_types:
+  - ordinary
+  - several_same_day
+  truth:
+    en:
+      news_id: '12379123'
+      path: /listedco/listconews/sehk/2026/1022/2026102200202.pdf
+      title: Publication of Pricing Supplements for the Issuance of US$1,300,000,000 6.10% Senior Notes Due 2036 and US$500,000,000
+        6.75% Senior Notes Due 2046 and CNY20,000,000,000 2.40% Senior Notes Due 2036 and CNY6,000,000,000 3.00% Senior Notes
+        Due 2056 under the Global Medium Term Note Programme of Tencent Holdings Limited with Maximum Limit of US$30 Billion
+      released: 2026-10-22 12:03
+    tc:
+      news_id: '12379124'
+      path: /listedco/listconews/sehk/2026/1022/2026102200203_c.pdf
+      title: 根據騰訊控股有限公司最高限額為300億美元之全球中期票據計劃發行將於二零三六年到期的1,300,000,000美元6.10%優先票據及將於二零四六年到期的500,000,000美元6.75%優先票據及將於二零三六年到期的人民幣20,000,000,000元2.40%優先票據及將於二零五六年到期的人民幣6,000,000,000元3.00%優先票據刊發定價補充文件
+      released: 2026-10-22 12:03
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 12:03 HKT, same headline category, consecutive HKEX file numbers (00202 and 00203).
+- id: 00700-12378784
+  verified: false
+  stock_code: '00700'
+  stock_id: 7609
+  stock_name: TENCENT
+  scenario: 00700-20261001-20261030
+  case_types:
+  - ordinary
+  - several_same_day
+  truth:
+    en:
+      news_id: '12378784'
+      path: /listedco/listconews/sehk/2026/1022/2026102200035.pdf
+      title: NOTICE OF LISTING ON THE STOCK EXCHANGE OF HONG KONG LIMITED - US$1,300,000,000 6.10% Senior Notes Due 2036 and
+        US$500,000,000 6.75% Senior Notes Due 2046 and CNY20,000,000,000 2.40% Senior Notes Due 2036 and CNY6,000,000,000
+        3.00% Senior Notes Due 2056 issued under the Global Medium Term Note Programme of Tencent Holdings Limited with Maximum
+        Limit of US$30 Billion
+      released: 2026-10-22 07:40
+    tc:
+      news_id: '12378785'
+      path: /listedco/listconews/sehk/2026/1022/2026102200036_c.pdf
+      title: 於香港聯合交易所有限公司上市之通告 - 根據騰訊控股有限公司最高限額為300億美元之全球中期票據計劃發行將於二零三六年到期的1,300,000,000美元6.10%優先票據及將於二零四六年到期的500,000,000美元6.75%優先票據及將於二零三六年到期的人民幣20,000,000,000元2.40%優先票據及將於二零五六年到期的人民幣6,000,000,000元3.00%優先票據
+      released: 2026-10-22 07:40
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 07:40 HKT, same headline category, consecutive HKEX file numbers (00035 and 00036).
+- id: 00700-12369908
+  verified: false
+  stock_code: '00700'
+  stock_id: 7609
+  stock_name: TENCENT
+  scenario: 00700-20261001-20261030
+  case_types:
+  - ordinary
+  - several_same_day
+  truth:
+    en:
+      news_id: '12369908'
+      path: /listedco/listconews/sehk/2026/1012/2026101200659.pdf
+      title: Next Day Disclosure Return - Changes in issued shares and share buybacks
+      released: 2026-10-12 17:50
+    tc:
+      news_id: '12369909'
+      path: /listedco/listconews/sehk/2026/1012/2026101200660_c.pdf
+      title: 翌日披露報表 - 已發行股份變動及股份購回
+      released: 2026-10-12 17:50
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 17:50 HKT, same headline category, consecutive HKEX file numbers (00659 and 00660).
+- id: 01810-12381758
+  verified: false
+  stock_code: '01810'
+  stock_id: 190371
+  stock_name: XIAOMI-W
+  scenario: 01810-20261001-20261030
+  case_types:
+  - ordinary
+  truth:
+    en:
+      news_id: '12381758'
+      path: /listedco/listconews/sehk/2026/1023/2026102301169.pdf
+      title: DATE OF BOARD MEETING
+      released: 2026-10-23 19:01
+    tc:
+      news_id: '12381759'
+      path: /listedco/listconews/sehk/2026/1023/2026102301170_c.pdf
+      title: 董事會會議召開日期
+      released: 2026-10-23 19:01
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 19:01 HKT, same headline category, consecutive HKEX file numbers (01169 and 01170).
+- id: 01810-12365166
+  verified: false
+  stock_code: '01810'
+  stock_id: 190371
+  stock_name: XIAOMI-W
+  scenario: 01810-20261001-20261030
+  case_types:
+  - ordinary
+  truth:
+    en:
+      news_id: '12365166'
+      path: /listedco/listconews/sehk/2026/1007/2026100700862.pdf
+      title: Monthly Return of Equity Issuer on Movements in Securities for the month ended 30 September 2026
+      released: 2026-10-07 16:36
+    tc:
+      news_id: '12365167'
+      path: /listedco/listconews/sehk/2026/1007/2026100700863_c.pdf
+      title: 截至二零二六年九月三十日止之股份發行人的證券變動月報表
+      released: 2026-10-07 16:36
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 16:36 HKT, same headline category, consecutive HKEX file numbers (00862 and 00863).
+- id: 09988-12371800
+  verified: false
+  stock_code: '09988'
+  stock_id: 1000015694
+  stock_name: BABA-W
+  scenario: 09988-20261001-20261030
+  case_types:
+  - en_only_stub
+  truth:
+    en:
+      news_id: '12371800'
+      path: /listedco/listconews/sehk/2026/1014/2026101400017.pdf
+      title: OVERSEAS REGULATORY ANNOUNCEMENT
+      released: 2026-10-14 06:07
+    tc: null
+    absent: stub
+  notes: ''
+  proposal:
+    status: en_only
+    score: null
+    evidence:
+    - The issuer published this in English only. HKEXnews' Chinese section shows a notice instead.
+- id: 09988-12365726
+  verified: false
+  stock_code: '09988'
+  stock_id: 1000015694
+  stock_name: BABA-W
+  scenario: 09988-20261001-20261030
+  case_types:
+  - ordinary
+  truth:
+    en:
+      news_id: '12365726'
+      path: /listedco/listconews/sehk/2026/1007/2026100701422.pdf
+      title: Monthly Return for Equity Issuer on Movements in Securities for the Month Ended 30 September 2026
+      released: 2026-10-07 18:00
+    tc:
+      news_id: '12365727'
+      path: /listedco/listconews/sehk/2026/1007/2026100701423_c.pdf
+      title: 截至2026年9月30日止月份之股份發行人的證券變動月報表
+      released: 2026-10-07 18:00
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 12
+    evidence:
+    - Published together at 18:00 HKT, same headline category, consecutive HKEX file numbers (01422 and 01423), the same numbers
+      appear in both titles.
+- id: 03690-12385257
+  verified: false
+  stock_code: '03690'
+  stock_id: 198419
+  stock_name: MEITUAN-W
+  scenario: 03690-20261001-20261030
+  case_types:
+  - ordinary
+  truth:
+    en:
+      news_id: '12385257'
+      path: /listedco/listconews/sehk/2026/1028/2026102800041.pdf
+      title: ISSUANCE OF CNY4.5 BILLION 2.50% SENIOR NOTES DUE 2031 AND CNY3.5 BILLION 3.10% SENIOR NOTES DUE 2036
+      released: 2026-10-28 08:00
+    tc:
+      news_id: '12385258'
+      path: /listedco/listconews/sehk/2026/1028/2026102800042_c.pdf
+      title: 發行人民幣45億元於2031年到期的2.50%優先票據及人民幣35億元於2036年到期的3.10%優先票據
+      released: 2026-10-28 08:00
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 12
+    evidence:
+    - Published together at 08:00 HKT, same headline category, consecutive HKEX file numbers (00041 and 00042), the same numbers
+      appear in both titles.
+- id: 03690-12385009
+  verified: false
+  stock_code: '03690'
+  stock_id: 198419
+  stock_name: MEITUAN-W
+  scenario: 03690-20261001-20261030
+  case_types:
+  - ordinary
+  truth:
+    en:
+      news_id: '12385009'
+      path: /listedco/listconews/sehk/2026/1027/2026102701305.pdf
+      title: GRANT OF RESTRICTED SHARE UNITS
+      released: 2026-10-27 22:00
+    tc:
+      news_id: '12385010'
+      path: /listedco/listconews/sehk/2026/1027/2026102701306_c.pdf
+      title: 授出受限制股份單位
+      released: 2026-10-27 22:00
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 22:00 HKT, same headline category, consecutive HKEX file numbers (01305 and 01306).
+- id: 00939-tc-12390048
+  verified: false
+  stock_code: '00939'
+  stock_id: 9970
+  stock_name: CCB
+  scenario: 00939-20261001-20261030
+  case_types:
+  - several_same_day
+  - tc_only_stub
+  truth:
+    en: null
+    tc:
+      news_id: '12390048'
+      path: /listedco/listconews/sehk/2026/1030/2026103000898_c.pdf
+      title: 2026年A股第三季度報告
+      released: 2026-10-30 16:57
+    absent: stub
+  notes: ''
+  proposal:
+    status: tc_only
+    score: null
+    evidence:
+    - The issuer published this in Chinese only. HKEXnews' English section shows a notice instead.
+- id: 00939-12389930
+  verified: false
+  stock_code: '00939'
+  stock_id: 9970
+  stock_name: CCB
+  scenario: 00939-20261001-20261030
+  case_types:
+  - ordinary
+  - several_same_day
+  truth:
+    en:
+      news_id: '12389930'
+      path: /listedco/listconews/sehk/2026/1030/2026103000754.pdf
+      title: Third Quarter Report of 2026
+      released: 2026-10-30 16:45
+    tc:
+      news_id: '12389931'
+      path: /listedco/listconews/sehk/2026/1030/2026103000755_c.pdf
+      title: 2026年第三季度報告
+      released: 2026-10-30 16:45
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 12
+    evidence:
+    - Published together at 16:45 HKT, same headline category, consecutive HKEX file numbers (00754 and 00755), the same numbers
+      appear in both titles.
+- id: 01398-tc-12390470
+  verified: false
+  stock_code: '01398'
+  stock_id: 12593
+  stock_name: ICBC
+  scenario: 01398-20261001-20261030
+  case_types:
+  - several_same_day
+  - tc_only_stub
+  truth:
+    en: null
+    tc:
+      news_id: '12390470'
+      path: /listedco/listconews/sehk/2026/1030/2026103001330_c.pdf
+      title: 海外監管公告
+      released: 2026-10-30 17:50
+    absent: stub
+  notes: ''
+  proposal:
+    status: tc_only
+    score: null
+    evidence:
+    - The issuer published this in Chinese only. HKEXnews' English section shows a notice instead.
+- id: 01398-12390362
+  verified: false
+  stock_code: '01398'
+  stock_id: 12593
+  stock_name: ICBC
+  scenario: 01398-20261001-20261030
+  case_types:
+  - ordinary
+  - several_same_day
+  truth:
+    en:
+      news_id: '12390362'
+      path: /listedco/listconews/sehk/2026/1030/2026103001218.pdf
+      title: Announcement on the Resolutions of the Board of Directors
+      released: 2026-10-30 17:37
+    tc:
+      news_id: '12390363'
+      path: /listedco/listconews/sehk/2026/1030/2026103001219_c.pdf
+      title: 董事會決議公告
+      released: 2026-10-30 17:37
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 17:37 HKT, same headline category, consecutive HKEX file numbers (01218 and 01219).
+- id: 01398-12377584
+  verified: false
+  stock_code: '01398'
+  stock_id: 12593
+  stock_name: ICBC
+  scenario: 01398-20261001-20261030
+  case_types:
+  - several_same_day
+  - bilingual_identical
+  truth:
+    en:
+      news_id: '12377584'
+      path: /listedco/listconews/sehk/2026/1021/2026102100015.pdf
+      title: Dividend Currency Election Form for 2026 Interim Dividend
+      released: 2026-10-21 07:00
+    tc:
+      news_id: '12377585'
+      path: /listedco/listconews/sehk/2026/1021/2026102100016_c.pdf
+      title: 二零二六年中期股息-股息貨幣選擇表格
+      released: 2026-10-21 07:00
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - 'Bilingual document: the English and Chinese sections link the identical file.'
+- id: 02318-tc-12386202
+  verified: false
+  stock_code: '02318'
+  stock_id: 7641
+  stock_name: PING AN
+  scenario: 02318-20261001-20261030
+  case_types:
+  - several_same_day
+  - tc_only_stub
+  truth:
+    en: null
+    tc:
+      news_id: '12386202'
+      path: /listedco/listconews/sehk/2026/1028/2026102800977_c.pdf
+      title: 海外監管公告 - 中國平安保險（集團）股份有限公司第十三屆董事會第十六次會議決議公告
+      released: 2026-10-28 18:56
+    absent: stub
+  notes: ''
+  proposal:
+    status: tc_only
+    score: null
+    evidence:
+    - The issuer published this in Chinese only. HKEXnews' English section shows a notice instead.
+- id: 02318-12385647
+  verified: false
+  stock_code: '02318'
+  stock_id: 7641
+  stock_name: PING AN
+  scenario: 02318-20261001-20261030
+  case_types:
+  - ordinary
+  - several_same_day
+  truth:
+    en:
+      news_id: '12385647'
+      path: /listedco/listconews/sehk/2026/1028/2026102800402.pdf
+      title: Announcement of Unaudited Results for the Nine Months Ended September 30, 2026
+      released: 2026-10-28 16:51
+    tc:
+      news_id: '12385648'
+      path: /listedco/listconews/sehk/2026/1028/2026102800403_c.pdf
+      title: 截至2026年9月30日止九個月的未經審計業績公告
+      released: 2026-10-28 16:51
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 12
+    evidence:
+    - Published together at 16:51 HKT, same headline category, consecutive HKEX file numbers (00402 and 00403), the same numbers
+      appear in both titles.
+- id: 00005-12270141
+  verified: false
+  stock_code: '00005'
+  stock_id: 5
+  stock_name: HSBC HOLDINGS
+  scenario: 00005-20260725-20260805
+  case_types:
+  - ordinary
+  - several_same_day
+  - several_same_minute
+  truth:
+    en:
+      news_id: '12270141'
+      path: /listedco/listconews/sehk/2026/0804/2026080400333.pdf
+      title: Dividend Currency Election Form
+      released: 2026-08-04 12:00
+    tc:
+      news_id: '12270142'
+      path: /listedco/listconews/sehk/2026/0804/2026080400334_c.pdf
+      title: 股息貨幣選擇表格
+      released: 2026-08-04 12:00
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 12:00 HKT, same headline category, consecutive HKEX file numbers (00333 and 00334).
+- id: 00005-12270137
+  verified: false
+  stock_code: '00005'
+  stock_id: 5
+  stock_name: HSBC HOLDINGS
+  scenario: 00005-20260725-20260805
+  case_types:
+  - ordinary
+  - several_same_day
+  - several_same_minute
+  truth:
+    en:
+      news_id: '12270137'
+      path: /listedco/listconews/sehk/2026/0804/2026080400329.pdf
+      title: Second Interim Dividend for 2026
+      released: 2026-08-04 12:00
+    tc:
+      news_id: '12270138'
+      path: /listedco/listconews/sehk/2026/0804/2026080400330_c.pdf
+      title: 2026年第二次股息
+      released: 2026-08-04 12:00
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 12
+    evidence:
+    - Published together at 12:00 HKT, same headline category, consecutive HKEX file numbers (00329 and 00330), the same numbers
+      appear in both titles.
+- id: 00005-12270133
+  verified: false
+  stock_code: '00005'
+  stock_id: 5
+  stock_name: HSBC HOLDINGS
+  scenario: 00005-20260725-20260805
+  case_types:
+  - ordinary
+  - several_same_day
+  - several_same_minute
+  truth:
+    en:
+      news_id: '12270133'
+      path: /listedco/listconews/sehk/2026/0804/2026080400325.pdf
+      title: 2026 Interim results
+      released: 2026-08-04 12:00
+    tc:
+      news_id: '12270134'
+      path: /listedco/listconews/sehk/2026/0804/2026080400326_c.pdf
+      title: 2026年中期業績
+      released: 2026-08-04 12:00
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 12
+    evidence:
+    - Published together at 12:00 HKT, same headline category, consecutive HKEX file numbers (00325 and 00326), the same numbers
+      appear in both titles.
+- id: 00005-12263152
+  verified: false
+  stock_code: '00005'
+  stock_id: 5
+  stock_name: HSBC HOLDINGS
+  scenario: 00005-20260725-20260805
+  case_types:
+  - several_same_day
+  - several_same_minute
+  - en_only_stub
+  truth:
+    en:
+      news_id: '12263152'
+      path: /listedco/listconews/sehk/2026/0731/2026073100035.pdf
+      title: NOTICE OF REDEMPTION
+      released: 2026-07-31 06:15
+    tc: null
+    absent: stub
+  notes: ''
+  proposal:
+    status: en_only
+    score: null
+    evidence:
+    - The issuer published this in English only. HKEXnews' Chinese section shows a notice instead.
+- id: 00005-12263148
+  verified: false
+  stock_code: '00005'
+  stock_id: 5
+  stock_name: HSBC HOLDINGS
+  scenario: 00005-20260725-20260805
+  case_types:
+  - ordinary
+  - several_same_day
+  - several_same_minute
+  truth:
+    en:
+      news_id: '12263148'
+      path: /listedco/listconews/sehk/2026/0731/2026073100031.pdf
+      title: HSBC TO SELL ITS AUD36 BILLION AUSTRALIAN HOME AND PERSONAL LOAN PORTFOLIO TO BLACKSTONE
+      released: 2026-07-31 06:15
+    tc:
+      news_id: '12263149'
+      path: /listedco/listconews/sehk/2026/0731/2026073100032_c.pdf
+      title: 滙豐出售其價值360億澳元的澳洲房屋及私人貸款組合予黑石
+      released: 2026-07-31 06:15
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 06:15 HKT, same headline category, consecutive HKEX file numbers (00031 and 00032).
+- id: 00005-12261416
+  verified: false
+  stock_code: '00005'
+  stock_id: 5
+  stock_name: HSBC HOLDINGS
+  scenario: 00005-20260725-20260805
+  case_types:
+  - ordinary
+  - several_same_day
+  - several_same_minute
+  truth:
+    en:
+      news_id: '12261416'
+      path: /listedco/listconews/sehk/2026/0730/2026073000392.pdf
+      title: LIST OF DIRECTORS AND THEIR ROLE AND FUNCTION
+      released: 2026-07-30 16:30
+    tc:
+      news_id: '12261417'
+      path: /listedco/listconews/sehk/2026/0730/2026073000393_c.pdf
+      title: 董事會成員名單及角色與職務
+      released: 2026-07-30 16:30
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 16:30 HKT, same headline category, consecutive HKEX file numbers (00392 and 00393).
+- id: 00005-12261382
+  verified: false
+  stock_code: '00005'
+  stock_id: 5
+  stock_name: HSBC HOLDINGS
+  scenario: 00005-20260725-20260805
+  case_types:
+  - ordinary
+  - several_same_day
+  - several_same_minute
+  truth:
+    en:
+      news_id: '12261382'
+      path: /listedco/listconews/sehk/2026/0730/2026073000358.pdf
+      title: CHANGES IN COMPOSITION OF THE BOARD COMMITTEES
+      released: 2026-07-30 16:30
+    tc:
+      news_id: '12261383'
+      path: /listedco/listconews/sehk/2026/0730/2026073000359_c.pdf
+      title: 董事會下設委員會成員變動
+      released: 2026-07-30 16:30
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 16:30 HKT, same headline category, consecutive HKEX file numbers (00358 and 00359).
+- id: 00005-305754
+  verified: false
+  stock_code: '00005'
+  stock_id: 5
+  stock_name: HSBC HOLDINGS
+  scenario: 00005-20050331-20050407
+  case_types:
+  - several_same_day
+  - multi_file
+  - pre_2007
+  truth:
+    en:
+      news_id: '305754'
+      path: /listedco/listconews/sehk/2005/0407/ltn20050407118.htm
+      title: Annual Review
+      released: 2005-04-07 17:12
+    tc:
+      news_id: '305755'
+      path: /listedco/listconews/sehk/2005/0407/ltn20050407118_c.htm
+      title: 年度回顧
+      released: 2005-04-07 17:49
+    absent: null
+  notes: ''
+  proposal:
+    status: check
+    score: 5
+    evidence:
+    - Published 37 minutes apart (17:12 and 17:49 HKT), no headline category to compare, the same HKEX file number (00118)
+      with the Chinese file marked _c.
+    - Best guess shown; compare before relying on it.
+- id: 00005-305752
+  verified: false
+  stock_code: '00005'
+  stock_id: 5
+  stock_name: HSBC HOLDINGS
+  scenario: 00005-20050331-20050407
+  case_types:
+  - several_same_day
+  - multi_file
+  - pre_2007
+  truth:
+    en:
+      news_id: '305752'
+      path: /listedco/listconews/sehk/2005/0407/ltn20050407117.htm
+      title: Annual Report
+      released: 2005-04-07 17:11
+    tc:
+      news_id: '305753'
+      path: /listedco/listconews/sehk/2005/0407/ltn20050407117_c.htm
+      title: 年報
+      released: 2005-04-07 17:45
+    absent: null
+  notes: ''
+  proposal:
+    status: check
+    score: 5
+    evidence:
+    - Published 34 minutes apart (17:11 and 17:45 HKT), no headline category to compare, the same HKEX file number (00117)
+      with the Chinese file marked _c.
+    - Best guess shown; compare before relying on it.
+- id: 00005-303690
+  verified: false
+  stock_code: '00005'
+  stock_id: 5
+  stock_name: HSBC HOLDINGS
+  scenario: 00005-20050331-20050407
+  case_types:
+  - several_same_day
+  - pre_2007
+  - single_not_found
+  truth:
+    en:
+      news_id: '303690'
+      path: /listedco/listconews/sehk/2005/0331/ltn20050331100.pdf
+      title: Letter to Shareholder
+      released: 2005-03-31 11:23
+    tc: null
+    absent: not_found
+  notes: ''
+  proposal:
+    status: en_only
+    score: null
+    evidence:
+    - No Chinese version found between 31 Mar 2005 and 7 Apr 2005.
+- id: 00005-303146
+  verified: false
+  stock_code: '00005'
+  stock_id: 5
+  stock_name: HSBC HOLDINGS
+  scenario: 00005-20050331-20050407
+  case_types:
+  - several_same_day
+  - several_same_minute
+  - pre_2007
+  truth:
+    en:
+      news_id: '303146'
+      path: /listedco/listconews/sehk/2005/0331/ltn20050331096.pdf
+      title: Circular (Form of Election)
+      released: 2005-03-31 11:22
+    tc:
+      news_id: '303147'
+      path: /listedco/listconews/sehk/2005/0331/ltn20050331096_c.pdf
+      title: 通函 (應收代息股份通知書表格)
+      released: 2005-03-31 11:22
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 8
+    evidence:
+    - Published together at 11:22 HKT, no headline category to compare, the same HKEX file number (00096) with the Chinese
+      file marked _c.
+- id: 00005-303144
+  verified: false
+  stock_code: '00005'
+  stock_id: 5
+  stock_name: HSBC HOLDINGS
+  scenario: 00005-20050331-20050407
+  case_types:
+  - several_same_day
+  - several_same_minute
+  - pre_2007
+  truth:
+    en:
+      news_id: '303144'
+      path: /listedco/listconews/sehk/2005/0331/ltn20050331094.pdf
+      title: Circular (Scrip dividend scheme and payment of dividends in United States dollars, sterling or Hong Kong dollars)
+      released: 2005-03-31 11:22
+    tc:
+      news_id: '303143'
+      path: /listedco/listconews/sehk/2005/0331/ltn20050331094_c.pdf
+      title: 通函 (以股代息計劃及以美元、英鎊或港元支付股息)
+      released: 2005-03-31 11:21
+    absent: null
+  notes: ''
+  proposal:
+    status: check
+    score: 5
+    evidence:
+    - Published 1 minute apart (11:22 and 11:21 HKT), no headline category to compare, the same HKEX file number (00094) with
+      the Chinese file marked _c.
+    - Best guess shown; compare before relying on it.
+    - 'Other possible matches: Chinese file 00095.'
+- id: 00005-tc-303145
+  verified: false
+  stock_code: '00005'
+  stock_id: 5
+  stock_name: HSBC HOLDINGS
+  scenario: 00005-20050331-20050407
+  case_types:
+  - several_same_day
+  - several_same_minute
+  - pre_2007
+  - single_not_found
+  truth:
+    en: null
+    tc:
+      news_id: '303145'
+      path: /listedco/listconews/sehk/2005/0331/ltn20050331095_c.pdf
+      title: 通函 (選擇表格)
+      released: 2005-03-31 11:22
+    absent: not_found
+  notes: ''
+  proposal:
+    status: tc_only
+    score: null
+    evidence:
+    - No English version found between 31 Mar 2005 and 7 Apr 2005.
+    - A possible counterpart (English file 00094) is shown with another entry.
+- id: 00005-303127
+  verified: false
+  stock_code: '00005'
+  stock_id: 5
+  stock_name: HSBC HOLDINGS
+  scenario: 00005-20050331-20050407
+  case_types:
+  - several_same_day
+  - several_same_minute
+  - pre_2007
+  truth:
+    en:
+      news_id: '303127'
+      path: /listedco/listconews/sehk/2005/0331/ltn20050331091.pdf
+      title: Notices of General Meetings
+      released: 2005-03-31 11:21
+    tc:
+      news_id: '303128'
+      path: /listedco/listconews/sehk/2005/0331/ltn20050331092_c.pdf
+      title: 股東大會通告
+      released: 2005-03-31 11:21
+    absent: null
+  notes: ''
+  proposal:
+    status: check
+    score: 4
+    evidence:
+    - Published together at 11:21 HKT, no headline category to compare, file numbers not close.
+    - Best guess shown; compare before relying on it.
+- id: 00005-303125
+  verified: false
+  stock_code: '00005'
+  stock_id: 5
+  stock_name: HSBC HOLDINGS
+  scenario: 00005-20050331-20050407
+  case_types:
+  - several_same_day
+  - several_same_minute
+  - pre_2007
+  truth:
+    en:
+      news_id: '303125'
+      path: /listedco/listconews/sehk/2005/0331/ltn20050331090.pdf
+      title: Circular (Notice of Annual General Meeting to be held on 27 May 2005)
+      released: 2005-03-31 11:21
+    tc:
+      news_id: '303126'
+      path: /listedco/listconews/sehk/2005/0331/ltn20050331090_c.pdf
+      title: 通函 (於2005年5月27日舉行之股東周年大會通告)
+      released: 2005-03-31 11:21
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 9
+    evidence:
+    - Published together at 11:21 HKT, no headline category to compare, the same HKEX file number (00090) with the Chinese
+      file marked _c, the same numbers appear in both titles.
+- id: 00005-tc-303130
+  verified: false
+  stock_code: '00005'
+  stock_id: 5
+  stock_name: HSBC HOLDINGS
+  scenario: 00005-20050331-20050407
+  case_types:
+  - several_same_day
+  - several_same_minute
+  - pre_2007
+  - single_not_found
+  truth:
+    en: null
+    tc:
+      news_id: '303130'
+      path: /listedco/listconews/sehk/2005/0331/ltn20050331093_c.pdf
+      title: 致股東信函
+      released: 2005-03-31 11:21
+    absent: not_found
+  notes: ''
+  proposal:
+    status: tc_only
+    score: null
+    evidence:
+    - No English version found between 31 Mar 2005 and 7 Apr 2005.
+- id: 00005-303596
+  verified: false
+  stock_code: '00005'
+  stock_id: 5
+  stock_name: HSBC HOLDINGS
+  scenario: 00005-20050331-20050407
+  case_types:
+  - several_same_day
+  - pre_2007
+  - single_not_found
+  truth:
+    en:
+      news_id: '303596'
+      path: /listedco/listconews/sehk/2005/0331/ltn20050331073.doc
+      title: Overseas Regulatory Announcement
+      released: 2005-03-31 09:56
+    tc: null
+    absent: not_found
+  notes: ''
+  proposal:
+    status: en_only
+    score: null
+    evidence:
+    - No Chinese version found between 31 Mar 2005 and 7 Apr 2005.
+- id: 00013-2106238
+  verified: false
+  stock_code: '00013'
+  stock_id: 20
+  stock_name: HUTCHISON
+  scenario: 00013-20150114-20150127
+  case_types:
+  - several_same_day
+  - several_same_minute
+  - delisted
+  - block_layout
+  truth:
+    en:
+      news_id: '2106238'
+      path: /listedco/listconews/sehk/2015/0127/ltn20150127493.pdf
+      title: Disclosure of Dealings under Rule 22 of the Takeovers Code
+      released: 2015-01-27 18:17
+    tc:
+      news_id: '2106240'
+      path: /listedco/listconews/sehk/2015/0127/ltn20150127495_c.pdf
+      title: 根據《收購守則》規則22作出的交易披露
+      released: 2015-01-27 18:17
+    absent: null
+  notes: ''
+  proposal:
+    status: check
+    score: 8
+    evidence:
+    - Published together at 18:17 HKT, same headline category, nearby HKEX file numbers (00493 and 00495).
+    - 2 English and 2 Chinese documents were published at 18:17; file order cannot show which Chinese file belongs to which
+      English file.
+    - Best guess shown; compare before relying on it.
+    - 'Other possible matches: English file 00492, Chinese file 00494.'
+- id: 00013-2106237
+  verified: false
+  stock_code: '00013'
+  stock_id: 20
+  stock_name: HUTCHISON
+  scenario: 00013-20150114-20150127
+  case_types:
+  - several_same_day
+  - several_same_minute
+  - delisted
+  - block_layout
+  truth:
+    en:
+      news_id: '2106237'
+      path: /listedco/listconews/sehk/2015/0127/ltn20150127492.pdf
+      title: Disclosure of Dealings under Rule 22 of the Takeovers Code
+      released: 2015-01-27 18:17
+    tc:
+      news_id: '2106239'
+      path: /listedco/listconews/sehk/2015/0127/ltn20150127494_c.pdf
+      title: 根據《收購守則》規則22作出的交易披露
+      released: 2015-01-27 18:17
+    absent: null
+  notes: ''
+  proposal:
+    status: check
+    score: 8
+    evidence:
+    - Published together at 18:17 HKT, same headline category, nearby HKEX file numbers (00492 and 00494).
+    - 2 English and 2 Chinese documents were published at 18:17; file order cannot show which Chinese file belongs to which
+      English file.
+    - Best guess shown; compare before relying on it.
+    - 'Other possible matches: English file 00493, Chinese file 00495.'
+- id: 00013-2106230
+  verified: false
+  stock_code: '00013'
+  stock_id: 20
+  stock_name: HUTCHISON
+  scenario: 00013-20150114-20150127
+  case_types:
+  - several_same_day
+  - several_same_minute
+  - delisted
+  - block_layout
+  truth:
+    en:
+      news_id: '2106230'
+      path: /listedco/listconews/sehk/2015/0127/ltn20150127485.pdf
+      title: Disclosure of Dealings under Rule 22 of the Takeovers Code
+      released: 2015-01-27 18:16
+    tc:
+      news_id: '2106232'
+      path: /listedco/listconews/sehk/2015/0127/ltn20150127487_c.pdf
+      title: 根據《收購守則》規則22作出的交易披露
+      released: 2015-01-27 18:16
+    absent: null
+  notes: ''
+  proposal:
+    status: check
+    score: 8
+    evidence:
+    - Published together at 18:16 HKT, same headline category, nearby HKEX file numbers (00485 and 00487).
+    - 2 English and 2 Chinese documents were published at 18:16; file order cannot show which Chinese file belongs to which
+      English file.
+    - Best guess shown; compare before relying on it.
+    - 'Other possible matches: English file 00484, Chinese file 00486.'
+- id: 00013-2106229
+  verified: false
+  stock_code: '00013'
+  stock_id: 20
+  stock_name: HUTCHISON
+  scenario: 00013-20150114-20150127
+  case_types:
+  - several_same_day
+  - several_same_minute
+  - delisted
+  - block_layout
+  truth:
+    en:
+      news_id: '2106229'
+      path: /listedco/listconews/sehk/2015/0127/ltn20150127484.pdf
+      title: Disclosure of Dealings under Rule 22 of the Takeovers Code
+      released: 2015-01-27 18:16
+    tc:
+      news_id: '2106231'
+      path: /listedco/listconews/sehk/2015/0127/ltn20150127486_c.pdf
+      title: 根據《收購守則》規則22作出的交易披露
+      released: 2015-01-27 18:16
+    absent: null
+  notes: ''
+  proposal:
+    status: check
+    score: 8
+    evidence:
+    - Published together at 18:16 HKT, same headline category, nearby HKEX file numbers (00484 and 00486).
+    - 2 English and 2 Chinese documents were published at 18:16; file order cannot show which Chinese file belongs to which
+      English file.
+    - Best guess shown; compare before relying on it.
+    - 'Other possible matches: English file 00485, Chinese file 00487.'
+- id: 00013-2104022
+  verified: false
+  stock_code: '00013'
+  stock_id: 20
+  stock_name: HUTCHISON
+  scenario: 00013-20150114-20150127
+  case_types:
+  - several_same_day
+  - revised_or_cancelled
+  - delisted
+  truth:
+    en:
+      news_id: '2104022'
+      path: /listedco/listconews/sehk/2015/0123/ltn20150123228.pdf
+      title: Inside Information - Exclusive Negotiations for Potential Acquisition of O2 UK
+      released: 2015-01-23 16:16
+    tc:
+      news_id: '2104023'
+      path: /listedco/listconews/sehk/2015/0123/ltn20150123229_c.pdf
+      title: 內幕消息 - 有關可能收購O2 UK之獨家洽商協議
+      released: 2015-01-23 16:16
+    absent: null
+  notes: ''
+  proposal:
+    status: check
+    score: 11
+    evidence:
+    - Published together at 16:16 HKT, same headline category, consecutive HKEX file numbers (00228 and 00229).
+    - One version is marked revised or cancelled and the other is not.
+    - Best guess shown; compare before relying on it.
+- id: 00013-2104014
+  verified: false
+  stock_code: '00013'
+  stock_id: 20
+  stock_name: HUTCHISON
+  scenario: 00013-20150114-20150127
+  case_types:
+  - several_same_day
+  - web_page
+  - delisted
+  truth:
+    en:
+      news_id: '2104014'
+      path: /listedco/listconews/sehk/2015/0123/ltn20150123201.htm
+      title: EXCHANGE NOTICE - RESUMPTION OF TRADING
+      released: 2015-01-23 12:35
+    tc:
+      news_id: '2104015'
+      path: /listedco/listconews/sehk/2015/0123/ltn20150123202_c.htm
+      title: 交易所通告 - 復牌
+      released: 2015-01-23 12:35
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 12:35 HKT, same headline category, consecutive HKEX file numbers (00201 and 00202).
+- id: 00013-2104010
+  verified: false
+  stock_code: '00013'
+  stock_id: 20
+  stock_name: HUTCHISON
+  scenario: 00013-20150114-20150127
+  case_types:
+  - several_same_day
+  - revised_or_cancelled
+  - delisted
+  truth:
+    en:
+      news_id: '2104010'
+      path: /listedco/listconews/sehk/2015/0123/ltn20150123197.pdf
+      title: Inside Information - Exclusive Negotiations for Potential Acquisition of O2 UK
+      released: 2015-01-23 12:17
+    tc:
+      news_id: '2104011'
+      path: /listedco/listconews/sehk/2015/0123/ltn20150123198_c.pdf
+      title: 內幕消息 - 有關可能收購O2 UK之獨家洽商協議
+      released: 2015-01-23 12:17
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 12:17 HKT, same headline category, consecutive HKEX file numbers (00197 and 00198).
+- id: 00013-2104006
+  verified: false
+  stock_code: '00013'
+  stock_id: 20
+  stock_name: HUTCHISON
+  scenario: 00013-20150114-20150127
+  case_types:
+  - several_same_day
+  - delisted
+  truth:
+    en:
+      news_id: '2104006'
+      path: /listedco/listconews/sehk/2015/0123/ltn20150123193.pdf
+      title: Trading Halt
+      released: 2015-01-23 12:11
+    tc:
+      news_id: '2104007'
+      path: /listedco/listconews/sehk/2015/0123/ltn20150123194_c.pdf
+      title: 短暫停牌
+      released: 2015-01-23 12:11
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 12:11 HKT, same headline category, consecutive HKEX file numbers (00193 and 00194).
+- id: 00013-2103906
+  verified: false
+  stock_code: '00013'
+  stock_id: 20
+  stock_name: HUTCHISON
+  scenario: 00013-20150114-20150127
+  case_types:
+  - several_same_day
+  - web_page
+  - delisted
+  truth:
+    en:
+      news_id: '2103906'
+      path: /listedco/listconews/sehk/2015/0123/ltn20150123099.htm
+      title: EXCHANGE NOTICE - TRADING HALT
+      released: 2015-01-23 09:54
+    tc:
+      news_id: '2103907'
+      path: /listedco/listconews/sehk/2015/0123/ltn20150123100_c.htm
+      title: 交易所通告 - 短暫停牌
+      released: 2015-01-23 09:54
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 09:54 HKT, same headline category, consecutive HKEX file numbers (00099 and 00100).
+- id: 00013-2100777
+  verified: false
+  stock_code: '00013'
+  stock_id: 20
+  stock_name: HUTCHISON
+  scenario: 00013-20150114-20150127
+  case_types:
+  - several_same_day
+  - delisted
+  truth:
+    en:
+      news_id: '2100777'
+      path: /listedco/listconews/sehk/2015/0119/ltn20150119744.pdf
+      title: Disclosure of Dealings under Rule 22 of the Takeovers Code
+      released: 2015-01-19 18:45
+    tc:
+      news_id: '2100778'
+      path: /listedco/listconews/sehk/2015/0119/ltn20150119745_c.pdf
+      title: 根據《收購守則》規則22作出的交易披露
+      released: 2015-01-19 18:45
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 18:45 HKT, same headline category, consecutive HKEX file numbers (00744 and 00745).
+- id: 00013-2099405
+  verified: false
+  stock_code: '00013'
+  stock_id: 20
+  stock_name: HUTCHISON
+  scenario: 00013-20150114-20150127
+  case_types:
+  - several_same_day
+  - revised_or_cancelled
+  - delisted
+  truth:
+    en:
+      news_id: '2099405'
+      path: /listedco/listconews/sehk/2015/0116/ltn20150116224.pdf
+      title: Disclosure of Dealings under Rule 22 of the Takeovers Code
+      released: 2015-01-16 16:42
+    tc:
+      news_id: '2099406'
+      path: /listedco/listconews/sehk/2015/0116/ltn20150116225_c.pdf
+      title: 根據《收購守則》規則22作出的交易披露
+      released: 2015-01-16 16:42
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 16:42 HKT, same headline category, consecutive HKEX file numbers (00224 and 00225).
+- id: 00013-2099403
+  verified: false
+  stock_code: '00013'
+  stock_id: 20
+  stock_name: HUTCHISON
+  scenario: 00013-20150114-20150127
+  case_types:
+  - several_same_day
+  - revised_or_cancelled
+  - delisted
+  truth:
+    en:
+      news_id: '2099403'
+      path: /listedco/listconews/sehk/2015/0116/ltn20150116222.pdf
+      title: Disclosure of Dealings under Rule 22 of the Takeovers Code
+      released: 2015-01-16 16:40
+    tc:
+      news_id: '2099404'
+      path: /listedco/listconews/sehk/2015/0116/ltn20150116223_c.pdf
+      title: 根據《收購守則》規則22作出的交易披露
+      released: 2015-01-16 16:40
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 16:40 HKT, same headline category, consecutive HKEX file numbers (00222 and 00223).
+- id: 00005-11098699
+  verified: false
+  stock_code: '00005'
+  stock_id: 5
+  stock_name: HSBC HOLDINGS
+  scenario: 00005-20240313-20240315
+  case_types:
+  - ordinary
+  - several_same_day
+  truth:
+    en:
+      news_id: '11098699'
+      path: /listedco/listconews/sehk/2024/0314/2024031400705.pdf
+      title: Next Day Disclosure Return
+      released: 2024-03-14 17:13
+    tc:
+      news_id: '11098700'
+      path: /listedco/listconews/sehk/2024/0314/2024031400706_c.pdf
+      title: 翌日披露報表
+      released: 2024-03-14 17:13
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 17:13 HKT, same headline category, consecutive HKEX file numbers (00705 and 00706).
+- id: 00005-11098085
+  verified: false
+  stock_code: '00005'
+  stock_id: 5
+  stock_name: HSBC HOLDINGS
+  scenario: 00005-20240313-20240315
+  case_types:
+  - several_same_day
+  - en_only_stub
+  truth:
+    en:
+      news_id: '11098085'
+      path: /listedco/listconews/sehk/2024/0314/2024031400093.pdf
+      title: Transaction in own shares
+      released: 2024-03-14 09:35
+    tc: null
+    absent: stub
+  notes: ''
+  proposal:
+    status: en_only
+    score: null
+    evidence:
+    - The issuer published this in English only. HKEXnews' Chinese section shows a notice instead.
+- id: 00005-11098015
+  verified: false
+  stock_code: '00005'
+  stock_id: 5
+  stock_name: HSBC HOLDINGS
+  scenario: 00005-20240313-20240315
+  case_types:
+  - several_same_day
+  - en_only_stub
+  - revised_or_cancelled
+  truth:
+    en:
+      news_id: '11098015'
+      path: /listedco/listconews/sehk/2024/0314/2024031400031.pdf
+      title: Transaction in own shares
+      released: 2024-03-14 07:31
+    tc: null
+    absent: stub
+  notes: ''
+  proposal:
+    status: en_only
+    score: null
+    evidence:
+    - The issuer published this in English only. HKEXnews' Chinese section shows a notice instead.
+- id: 00388-12373847
+  verified: false
+  stock_code: '00388'
+  stock_id: 781
+  stock_name: HKEX
+  scenario: 00388-20261001-20261030
+  case_types:
+  - ordinary
+  - several_same_day
+  - several_same_minute
+  truth:
+    en:
+      news_id: '12373847'
+      path: /listedco/listconews/sehk/2026/1015/2026101500727.pdf
+      title: Letter to Existing Registered Shareholders - (1) Publication of Circular dated 16 October 2026 containing Notice
+        of the General Meeting and Proxy Form; (2) General Meeting of HKEX; and (3) Request for printed or electronic version
+        of Corporate Communication(s)
+      released: 2026-10-15 17:53
+    tc:
+      news_id: '12373848'
+      path: /listedco/listconews/sehk/2026/1015/2026101500728_c.pdf
+      title: 致現有登記股東之函件 – (1)日期為2026年10月16日的通函連同股東大會通告及代表委任表格的刊發; (2)香港交易所股東大會; 及(3)有關收取公司通訊的印刷本或電子版本的要求
+      released: 2026-10-15 17:53
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 12
+    evidence:
+    - Published together at 17:53 HKT, same headline category, consecutive HKEX file numbers (00727 and 00728), the same numbers
+      appear in both titles.
+- id: 00388-12373839
+  verified: false
+  stock_code: '00388'
+  stock_id: 781
+  stock_name: HKEX
+  scenario: 00388-20261001-20261030
+  case_types:
+  - ordinary
+  - several_same_day
+  - several_same_minute
+  truth:
+    en:
+      news_id: '12373839'
+      path: /listedco/listconews/sehk/2026/1015/2026101500719.pdf
+      title: Letter to New Registered Shareholders - (1) Publication of Circular dated 16 October 2026 containing Notice of
+        the General Meeting and Proxy Form; (2) General Meeting of HKEX; and (3) Dissemination of HKEX's Corporate Communications
+        and solicitation of email address
+      released: 2026-10-15 17:53
+    tc:
+      news_id: '12373840'
+      path: /listedco/listconews/sehk/2026/1015/2026101500720_c.pdf
+      title: 致新登記股東之函件 – (1) 日期為2026年10月16日的通函連同股東大會通告及代表委任表格的刊發; (2)香港交易所股東大會; 及(3)發布香港交易所的公司通訊及收集電郵地址
+      released: 2026-10-15 17:53
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 12
+    evidence:
+    - Published together at 17:53 HKT, same headline category, consecutive HKEX file numbers (00719 and 00720), the same numbers
+      appear in both titles.
+- id: 00388-12373837
+  verified: false
+  stock_code: '00388'
+  stock_id: 781
+  stock_name: HKEX
+  scenario: 00388-20261001-20261030
+  case_types:
+  - ordinary
+  - several_same_day
+  truth:
+    en:
+      news_id: '12373837'
+      path: /listedco/listconews/sehk/2026/1015/2026101500717.pdf
+      title: Proxy Form for General Meeting
+      released: 2026-10-15 17:52
+    tc:
+      news_id: '12373838'
+      path: /listedco/listconews/sehk/2026/1015/2026101500718_c.pdf
+      title: 股東大會代表委任表格
+      released: 2026-10-15 17:52
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 17:52 HKT, same headline category, consecutive HKEX file numbers (00717 and 00718).
+- id: 00388-12373835
+  verified: false
+  stock_code: '00388'
+  stock_id: 781
+  stock_name: HKEX
+  scenario: 00388-20261001-20261030
+  case_types:
+  - ordinary
+  - several_same_day
+  truth:
+    en:
+      news_id: '12373835'
+      path: /listedco/listconews/sehk/2026/1015/2026101500715.pdf
+      title: Notice of General Meeting
+      released: 2026-10-15 17:51
+    tc:
+      news_id: '12373836'
+      path: /listedco/listconews/sehk/2026/1015/2026101500716_c.pdf
+      title: 股東大會通告
+      released: 2026-10-15 17:51
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 17:51 HKT, same headline category, consecutive HKEX file numbers (00715 and 00716).
+- id: 00941-tc-12377302
+  verified: false
+  stock_code: '00941'
+  stock_id: 2247
+  stock_name: CHINA MOBILE
+  scenario: 00941-20261001-20261030
+  case_types:
+  - several_same_day
+  - tc_only_stub
+  truth:
+    en: null
+    tc:
+      news_id: '12377302'
+      path: /listedco/listconews/sehk/2026/1020/2026102001235_c.pdf
+      title: 海外監管公告 2026年第三季度報告
+      released: 2026-10-20 20:00
+    absent: stub
+  notes: ''
+  proposal:
+    status: tc_only
+    score: null
+    evidence:
+    - The issuer published this in Chinese only. HKEXnews' English section shows a notice instead.
+- id: 00941-12377104
+  verified: false
+  stock_code: '00941'
+  stock_id: 2247
+  stock_name: CHINA MOBILE
+  scenario: 00941-20261001-20261030
+  case_types:
+  - ordinary
+  - several_same_day
+  truth:
+    en:
+      news_id: '12377104'
+      path: /listedco/listconews/sehk/2026/1020/2026102000963.pdf
+      title: RESULTS FOR THE FIRST THREE QUARTERS OF 2026
+      released: 2026-10-20 18:42
+    tc:
+      news_id: '12377105'
+      path: /listedco/listconews/sehk/2026/1020/2026102000964_c.pdf
+      title: 2026年首3季度業績
+      released: 2026-10-20 18:42
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 12
+    evidence:
+    - Published together at 18:42 HKT, same headline category, consecutive HKEX file numbers (00963 and 00964), the same numbers
+      appear in both titles.
+- id: 01299-12388867
+  verified: false
+  stock_code: '01299'
+  stock_id: 54299
+  stock_name: AIA
+  scenario: 01299-20261001-20261030
+  case_types:
+  - ordinary
+  truth:
+    en:
+      news_id: '12388867'
+      path: /listedco/listconews/sehk/2026/1030/2026103000001.pdf
+      title: Third Quarter 2026 New Business Highlights
+      released: 2026-10-30 06:01
+    tc:
+      news_id: '12388868'
+      path: /listedco/listconews/sehk/2026/1030/2026103000002_c.pdf
+      title: 2026年第三季新業務摘要
+      released: 2026-10-30 06:01
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 12
+    evidence:
+    - Published together at 06:01 HKT, same headline category, consecutive HKEX file numbers (00001 and 00002), the same numbers
+      appear in both titles.
+- id: 01299-12356973
+  verified: false
+  stock_code: '01299'
+  stock_id: 54299
+  stock_name: AIA
+  scenario: 01299-20261001-20261030
+  case_types:
+  - en_only_stub
+  truth:
+    en:
+      news_id: '12356973'
+      path: /listedco/listconews/sehk/2026/1002/2026100200688.pdf
+      title: 'Publication of Pricing Supplement in relation to CNY1,000,000,000 2.88 per cent. Subordinated Dated Securities
+        due 2036 (to be consolidated and form a single series with the CNY2,500,000,000 2.88 per cent. Subordinated Dated
+        Securities due 2036 issued on 30 April 2026 and the CNY500,000,000 2.88 per cent. Subordinated Dated Securities due
+        2036 issued on 12 June 2026) (Stock code: 85121) under the US$18,000,000,000 Global Medium Term Note and Securities
+        Programme of AIA Group Limited'
+      released: 2026-10-02 12:01
+    tc: null
+    absent: stub
+  notes: ''
+  proposal:
+    status: en_only
+    score: null
+    evidence:
+    - The issuer published this in English only. HKEXnews' Chinese section shows a notice instead.
+- id: 02372-12139170
+  verified: false
+  stock_code: '02372'
+  stock_id: 1000156455
+  stock_name: WEILI HOLDINGS
+  scenario: 02372-20260315-20260430
+  case_types:
+  - ordinary
+  - several_same_day
+  truth:
+    en:
+      news_id: '12139170'
+      path: /listedco/listconews/sehk/2026/0430/2026043001846.pdf
+      title: ANNUAL REPORT 2025
+      released: 2026-04-30 17:11
+    tc:
+      news_id: '12139171'
+      path: /listedco/listconews/sehk/2026/0430/2026043001847_c.pdf
+      title: 年報2025
+      released: 2026-04-30 17:11
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 12
+    evidence:
+    - Published together at 17:11 HKT, same headline category, consecutive HKEX file numbers (01846 and 01847), the same numbers
+      appear in both titles.
+- id: 01292-12125005
+  verified: false
+  stock_code: '01292'
+  stock_id: 91303
+  stock_name: CM LOGISTICS
+  scenario: 01292-20260315-20260430
+  case_types:
+  - ordinary
+  - several_same_day
+  truth:
+    en:
+      news_id: '12125005'
+      path: /listedco/listconews/sehk/2026/0427/2026042701581.pdf
+      title: 2025 Annual Report
+      released: 2026-04-27 17:28
+    tc:
+      news_id: '12125006'
+      path: /listedco/listconews/sehk/2026/0427/2026042701582_c.pdf
+      title: 2025年年報
+      released: 2026-04-27 17:28
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 12
+    evidence:
+    - Published together at 17:28 HKT, same headline category, consecutive HKEX file numbers (01581 and 01582), the same numbers
+      appear in both titles.
+- id: 06909-12110507
+  verified: false
+  stock_code: '06909'
+  stock_id: 1000102036
+  stock_name: BETTERLIFE HLDG
+  scenario: 06909-20260315-20260430
+  case_types:
+  - ordinary
+  - several_same_day
+  truth:
+    en:
+      news_id: '12110507'
+      path: /listedco/listconews/sehk/2026/0417/2026041701191.pdf
+      title: 2025 Annual Report
+      released: 2026-04-17 18:36
+    tc:
+      news_id: '12110508'
+      path: /listedco/listconews/sehk/2026/0417/2026041701192_c.pdf
+      title: 2025年度報告
+      released: 2026-04-17 18:36
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 12
+    evidence:
+    - Published together at 18:36 HKT, same headline category, consecutive HKEX file numbers (01191 and 01192), the same numbers
+      appear in both titles.
+- id: 06909-12089411
+  verified: false
+  stock_code: '06909'
+  stock_id: 1000102036
+  stock_name: BETTERLIFE HLDG
+  scenario: 06909-20260315-20260430
+  case_types:
+  - several_same_day
+  - revised_or_cancelled
+  truth:
+    en:
+      news_id: '12089411'
+      path: /listedco/listconews/sehk/2026/0401/2026040100761.pdf
+      title: (Revised) LIST OF DIRECTORS AND THEIR ROLES AND FUNCTIONS
+      released: 2026-04-01 12:00
+    tc:
+      news_id: '12089412'
+      path: /listedco/listconews/sehk/2026/0401/2026040100762_c.pdf
+      title: (經修訂) 董事名單與其角色和職能
+      released: 2026-04-01 12:00
+    absent: null
+  notes: ''
+  proposal:
+    status: check
+    score: 11
+    evidence:
+    - Published together at 12:00 HKT, same headline category, consecutive HKEX file numbers (00761 and 00762).
+    - One version is marked revised or cancelled and the other is not.
+    - Best guess shown; compare before relying on it.
+- id: 03718-12131068
+  verified: false
+  stock_code: '03718'
+  stock_id: 1000019708
+  stock_name: BJ ENT URBAN
+  scenario: 03718-20260315-20260430
+  case_types:
+  - ordinary
+  - several_same_day
+  truth:
+    en:
+      news_id: '12131068'
+      path: /listedco/listconews/sehk/2026/0428/2026042804387.pdf
+      title: Annual Report 2025
+      released: 2026-04-28 21:52
+    tc:
+      news_id: '12131069'
+      path: /listedco/listconews/sehk/2026/0428/2026042804388_c.pdf
+      title: 2025年報
+      released: 2026-04-28 21:52
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 12
+    evidence:
+    - Published together at 21:52 HKT, same headline category, consecutive HKEX file numbers (04387 and 04388), the same numbers
+      appear in both titles.
+- id: 02658-12125239
+  verified: false
+  stock_code: '02658'
+  stock_id: 1000276934
+  stock_name: TIANYU SEMI
+  scenario: 02658-20260315-20260430
+  case_types:
+  - ordinary
+  - several_same_day
+  truth:
+    en:
+      news_id: '12125239'
+      path: /listedco/listconews/sehk/2026/0427/2026042701813.pdf
+      title: 2025 ANNUAL REPORT
+      released: 2026-04-27 17:49
+    tc:
+      news_id: '12125240'
+      path: /listedco/listconews/sehk/2026/0427/2026042701814_c.pdf
+      title: 2025年度報告
+      released: 2026-04-27 17:49
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 12
+    evidence:
+    - Published together at 17:49 HKT, same headline category, consecutive HKEX file numbers (01813 and 01814), the same numbers
+      appear in both titles.
+- id: 08223-12141416
+  verified: false
+  stock_code: '08223'
+  stock_id: 189693
+  stock_name: ZYY
+  scenario: 08223-20260315-20260430
+  case_types:
+  - ordinary
+  - several_same_day
+  truth:
+    en:
+      news_id: '12141416'
+      path: /listedco/listconews/gem/2026/0430/2026043004702.pdf
+      title: 2025 ANNUAL REPORT
+      released: 2026-04-30 22:49
+    tc:
+      news_id: '12141417'
+      path: /listedco/listconews/gem/2026/0430/2026043004703_c.pdf
+      title: 2025 年報
+      released: 2026-04-30 22:49
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 12
+    evidence:
+    - Published together at 22:49 HKT, same headline category, consecutive HKEX file numbers (04702 and 04703), the same numbers
+      appear in both titles.
+- id: 08223-12110929
+  verified: false
+  stock_code: '08223'
+  stock_id: 189693
+  stock_name: ZYY
+  scenario: 08223-20260315-20260430
+  case_types:
+  - revised_or_cancelled
+  truth:
+    en:
+      news_id: '12110929'
+      path: /listedco/listconews/gem/2026/0417/2026041701619.pdf
+      title: (Revised) Next Day Disclosure Return
+      released: 2026-04-17 21:26
+    tc:
+      news_id: '12110930'
+      path: /listedco/listconews/gem/2026/0417/2026041701620_c.pdf
+      title: (經修訂)翌日披露報表
+      released: 2026-04-17 21:26
+    absent: null
+  notes: ''
+  proposal:
+    status: check
+    score: 11
+    evidence:
+    - Published together at 21:26 HKT, same headline category, consecutive HKEX file numbers (01619 and 01620).
+    - One version is marked revised or cancelled and the other is not.
+    - Best guess shown; compare before relying on it.
+- id: 08223-12104235
+  verified: false
+  stock_code: '08223'
+  stock_id: 189693
+  stock_name: ZYY
+  scenario: 08223-20260315-20260430
+  case_types:
+  - several_same_day
+  - revised_or_cancelled
+  truth:
+    en:
+      news_id: '12104235'
+      path: /listedco/listconews/gem/2026/0413/2026041301316.pdf
+      title: RESIGNATION OF NON-EXECUTIVE DIRECTOR AND CHANGE OF COMPOSITION OF BOARD COMMITTEE
+      released: 2026-04-13 22:26
+    tc:
+      news_id: '12104236'
+      path: /listedco/listconews/gem/2026/0413/2026041301317_c.pdf
+      title: 非執行董事辭任及董事委員會組成之變動
+      released: 2026-04-13 22:26
+    absent: null
+  notes: ''
+  proposal:
+    status: check
+    score: 11
+    evidence:
+    - Published together at 22:26 HKT, same headline category, consecutive HKEX file numbers (01316 and 01317).
+    - One version is marked revised or cancelled and the other is not.
+    - Best guess shown; compare before relying on it.
+    - 'Other possible matches: English file 01316, Chinese file 01317.'
+- id: 08223-12104121
+  verified: false
+  stock_code: '08223'
+  stock_id: 189693
+  stock_name: ZYY
+  scenario: 08223-20260315-20260430
+  case_types:
+  - several_same_day
+  - revised_or_cancelled
+  truth:
+    en:
+      news_id: '12104121'
+      path: /listedco/listconews/gem/2026/0413/2026041301316.pdf
+      title: RESIGNATION OF NON-EXECUTIVE DIRECTOR AND CHANGE OF COMPOSITION OF BOARD COMMITTEE
+      released: 2026-04-13 21:15
+    tc:
+      news_id: '12104122'
+      path: /listedco/listconews/gem/2026/0413/2026041301317_c.pdf
+      title: 非執行董事辭任及董事委員會組成之變動
+      released: 2026-04-13 21:15
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 21:15 HKT, same headline category, consecutive HKEX file numbers (01316 and 01317).
+- id: 08223-12075859
+  verified: false
+  stock_code: '08223'
+  stock_id: 189693
+  stock_name: ZYY
+  scenario: 08223-20260315-20260430
+  case_types:
+  - ordinary
+  truth:
+    en:
+      news_id: '12075859'
+      path: /listedco/listconews/gem/2026/0330/2026033000017.pdf
+      title: POSITIVE PROFIT ALERT
+      released: 2026-03-30 06:10
+    tc:
+      news_id: '12075860'
+      path: /listedco/listconews/gem/2026/0330/2026033000018_c.pdf
+      title: 正面盈利預告
+      released: 2026-03-30 06:10
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 06:10 HKT, same headline category, consecutive HKEX file numbers (00017 and 00018).
+- id: 08293-12095175
+  verified: false
+  stock_code: '08293'
+  stock_id: 142695
+  stock_name: SINGASIA HLDG
+  scenario: 08293-20260315-20260430
+  case_types:
+  - ordinary
+  - several_same_day
+  - several_same_minute
+  truth:
+    en:
+      news_id: '12095175'
+      path: /listedco/listconews/gem/2026/0402/2026040202172.pdf
+      title: COMPANY INFORMATION SHEET
+      released: 2026-04-02 18:32
+    tc:
+      news_id: '12095176'
+      path: /listedco/listconews/gem/2026/0402/2026040202173_c.pdf
+      title: 公司資料報表
+      released: 2026-04-02 18:32
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 18:32 HKT, same headline category, consecutive HKEX file numbers (02172 and 02173).
+- id: 08293-12069538
+  verified: false
+  stock_code: '08293'
+  stock_id: 142695
+  stock_name: SINGASIA HLDG
+  scenario: 08293-20260315-20260430
+  case_types:
+  - ordinary
+  truth:
+    en:
+      news_id: '12069538'
+      path: /listedco/listconews/gem/2026/0326/2026032601380.pdf
+      title: POSITIVE PROFIT ALERT
+      released: 2026-03-26 19:01
+    tc:
+      news_id: '12069539'
+      path: /listedco/listconews/gem/2026/0326/2026032601381_c.pdf
+      title: 正面盈利警告
+      released: 2026-03-26 19:01
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 19:01 HKT, same headline category, consecutive HKEX file numbers (01380 and 01381).
+- id: 08069-12109029
+  verified: false
+  stock_code: '08069'
+  stock_id: 149776
+  stock_name: FLYDOO TECH
+  scenario: 08069-20260315-20260430
+  case_types:
+  - ordinary
+  - several_same_day
+  truth:
+    en:
+      news_id: '12109029'
+      path: /listedco/listconews/gem/2026/0416/2026041601738.pdf
+      title: NOTICE OF EXTRAORDINARY GENERAL MEETING
+      released: 2026-04-16 22:02
+    tc:
+      news_id: '12109030'
+      path: /listedco/listconews/gem/2026/0416/2026041601739_c.pdf
+      title: 股東特別大會通告
+      released: 2026-04-16 22:02
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 22:02 HKT, same headline category, consecutive HKEX file numbers (01738 and 01739).
+- id: 08069-12074467
+  verified: false
+  stock_code: '08069'
+  stock_id: 149776
+  stock_name: FLYDOO TECH
+  scenario: 08069-20260315-20260430
+  case_types:
+  - ordinary
+  truth:
+    en:
+      news_id: '12074467'
+      path: /listedco/listconews/gem/2026/0327/2026032703412.pdf
+      title: PROPOSED SHARE CONSOLIDATION
+      released: 2026-03-27 22:11
+    tc:
+      news_id: '12074468'
+      path: /listedco/listconews/gem/2026/0327/2026032703413_c.pdf
+      title: 建議股份合併
+      released: 2026-03-27 22:11
+    absent: null
+  notes: ''
+  proposal:
+    status: matched
+    score: 11
+    evidence:
+    - Published together at 22:11 HKT, same headline category, consecutive HKEX file numbers (03412 and 03413).

@@ -119,6 +119,10 @@ def test_bad_date_is_a_row_error() -> None:
         ("/listedco/listconews/sehk/2008/1120/00705_439528/EWP127.pdf", date(2008, 11, 20), None),
         ("/listedco/listconews/sehk/dod/en.html", None, None),
         ("/listedco/listconews/sehk/dod/tc.html", None, None),
+        # GEM issuers (08xxx) use the same scheme under /gem/ (research notes, Phase 2.4 findings).
+        ("/listedco/listconews/gem/2026/0430/2026043004744.pdf", date(2026, 4, 30), 4744),
+        ("/listedco/listconews/gem/2026/0402/2026040201183_c.pdf", date(2026, 4, 2), 1183),
+        ("/listedco/listconews/GEM/2026/0402/2026040201183_c.pdf", date(2026, 4, 2), 1183),
     ],
 )
 def test_parse_file_path_handles_every_observed_shape(
