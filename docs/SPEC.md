@@ -1,6 +1,6 @@
 # Specification
 
-Version 1.1, 30 October 2026 (Gate 0 changes: D-009, research notes §9). Owner: Zarif. Changes need Zarif's approval and an entry in `docs/DECISIONS.md`.
+Version 1.2, 31 October 2026 (Gate 0 changes: D-009, research notes §9; Gate 1 change: D-010, code reuse). Owner: Zarif. Changes need Zarif's approval and an entry in `docs/DECISIONS.md`.
 
 ## 1. Users and the job to be done
 
@@ -47,7 +47,7 @@ Every requirement maps to at least one test. Fill the Tests column as tests are 
 
 ### 3.1 Inputs and validation
 
-- **Stock code:** trim; drop a trailing `.HK` (any case) and spaces; must be 1 to 5 digits; left-pad to 5. Resolve against the stock directory (active and delisted lists). Errors: `INVALID_STOCK_CODE`, `UNKNOWN_STOCK_CODE`. If a code maps to more than one security over time (code reuse), return the choices and let the user pick (`AMBIGUOUS_STOCK_CODE`).
+- **Stock code:** trim; drop a trailing `.HK` (any case) and spaces; must be 1 to 5 digits; left-pad to 5. Resolve against the stock directory (active and delisted lists). Errors: `INVALID_STOCK_CODE`, `UNKNOWN_STOCK_CODE`. If a code maps to more than one security over time (code reuse), the one active security is used by default and the delisted holders of the code are returned as alternatives so the UI can offer a visible switch (D-010). Only a code with no single active security (for example three delisted companies) returns the choices and lets the user pick (`AMBIGUOUS_STOCK_CODE`). An explicit `stock_id` always wins.
 - **Dates:** ISO `YYYY-MM-DD`. Start ≤ end; end ≤ today in HKT; start ≥ 1999-04-01 (earliest HKEXnews records). Error: `INVALID_DATE_RANGE` with the specific reason.
 - **Category:** optional tier codes from the HKEX category tree. Default: all categories.
 - **Keyword:** optional, 1 to 100 characters.
@@ -231,7 +231,7 @@ All errors share one shape: `{code, message, details?}` with codes from §9.
 
 **Required states and elements**
 
-- Search: stock field with live lookup (for example "00700 Tencent Holdings 騰訊控股"), a delisted badge, and a chooser for reused codes; date range with presets (Today, Last 7 days, Last 30 days, This year, Custom) computed in HKT and labelled "Hong Kong time"; category picker defaulting to All categories; optional keyword.
+- Search: stock field with live lookup (for example "00700 Tencent Holdings 騰訊控股"), a delisted badge; a reused code opens its active company directly, with a note such as "00013 was also used by HUTCHISON (delisted). Switch"; a chooser only when no single active company holds the code; date range with presets (Today, Last 7 days, Last 30 days, This year, Custom) computed in HKT and labelled "Hong Kong time"; category picker defaulting to All categories; optional keyword.
 - Progress: plain step text ("Searching the English section", "Searching the Chinese section", "Pairing versions"), announced to screen readers.
 - Results: a summary line ("28 announcements: 25 matched, 2 to check, 1 English only") with filter chips by status; newest first.
 - Announcement entry: status (icon plus word, never colour alone); date and time in HKT; category; code and company; an EN row and a TC row, each with title, size, format, source link, download button and editable proposed filename; "Download both (ZIP)", disabled with a reason when a version is missing; expandable "Why this pairing" evidence; rivals and "Check contents" for `check` entries.
@@ -257,7 +257,7 @@ All errors share one shape: `{code, message, details?}` with codes from §9.
 |---|---|
 | `INVALID_STOCK_CODE` | Enter a stock code of up to 5 digits, for example 00700. |
 | `UNKNOWN_STOCK_CODE` | No HKEX security uses code {code}. Check the code and try again. |
-| `AMBIGUOUS_STOCK_CODE` | Code {code} has belonged to more than one company. Choose the one you mean. |
+| `AMBIGUOUS_STOCK_CODE` | Code {code} has belonged to more than one company, and none is listed today. Choose the one you mean. |
 | `INVALID_DATE_RANGE` | The start date is after the end date. / The end date is in the future; today in Hong Kong is {date}. / HKEXnews records start on 1 April 1999. |
 | `NO_RESULTS` | No announcements for {code} between {start} and {end} (Hong Kong time). Try a wider range. |
 | `TOO_MANY_RESULTS` | This search returns more than 20,000 documents. Narrow the dates or choose a category. |

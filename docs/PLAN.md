@@ -1,6 +1,6 @@
 # Plan
 
-**Status:** Phase 1 built; awaiting Gate 1 approval. Update this line at every gate. Update this line at every gate.
+**Status:** Gate 1 approved 31 October 2026 (with D-010, code reuse); Phase 2 plan proposed, awaiting approval. Update this line at every gate.
 
 **Timeline (HKT):** Fri 30 Oct, Phases 0 to 2. Sat 31 Oct, Phases 3 and 4. Sun 1 Nov, Phases 5 and 6. Mon 2 Nov, Phase 7 and submit.
 

@@ -71,6 +71,14 @@ class CategoryIndex:
         return tuple(dict.fromkeys(found))
 
 
+@dataclass(frozen=True)
+class Resolution:
+    """The security chosen for a code and the other securities that held the same code."""
+
+    stock: Stock
+    alternatives: tuple[Stock, ...] = ()
+
+
 class StockDirectory:
     """Active and delisted securities. A code can belong to several over time (code reuse)."""
 
@@ -114,24 +122,41 @@ class StockDirectory:
     def lookup(self, code: str) -> list[Stock]:
         return list(self._by_code.get(code, ()))
 
-    def resolve(self, code: str, stock_id: int | None = None) -> Stock:
-        """The one security for a code, or an error that tells the user what to do."""
+    def resolve(self, code: str, stock_id: int | None = None) -> Resolution:
+        """The security to search for a code, plus the other securities that used the code.
+
+        With a `stock_id` (the user's explicit choice) that security is used. Without one, a
+        code with exactly one active security defaults to it (D-010), so a famous code such as
+        00700 never forces a chooser; the delisted holders come back as alternatives for the UI
+        to offer. Only a code with no single active security (for example three delisted
+        companies) is ambiguous and has to be chosen.
+        """
         found = self.lookup(code)
-        if stock_id is not None:
-            found = [s for s in found if s.stock_id == stock_id]
         if not found:
             raise AppError(
                 ErrorCode.UNKNOWN_STOCK_CODE,
                 f"No HKEX security uses code {code}. Check the code and try again.",
                 {"code": code},
             )
-        if len(found) > 1:
-            raise AppError(
-                ErrorCode.AMBIGUOUS_STOCK_CODE,
-                f"Code {code} has belonged to more than one company. Choose the one you mean.",
-                {"code": code, "choices": [s.model_dump() for s in found]},
-            )
-        return found[0]
+        if stock_id is not None:
+            chosen = [s for s in found if s.stock_id == stock_id]
+            if not chosen:
+                raise AppError(
+                    ErrorCode.UNKNOWN_STOCK_CODE,
+                    f"No HKEX security uses code {code}. Check the code and try again.",
+                    {"code": code, "stock_id": stock_id},
+                )
+            return Resolution(chosen[0], tuple(s for s in found if s is not chosen[0]))
+        active = [s for s in found if s.active]
+        if len(found) == 1 or len(active) == 1:
+            default = active[0] if active else found[0]
+            return Resolution(default, tuple(s for s in found if s is not default))
+        raise AppError(
+            ErrorCode.AMBIGUOUS_STOCK_CODE,
+            f"Code {code} has belonged to more than one company, and none is listed today. "
+            "Choose the one you mean.",
+            {"code": code, "choices": [s.model_dump() for s in found]},
+        )
 
 
 # --- loading: live, cache, snapshot -----------------------------------------------------

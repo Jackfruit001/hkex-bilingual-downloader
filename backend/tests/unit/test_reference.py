@@ -157,12 +157,14 @@ def test_delisted_stocks_are_found_and_marked_inactive(stocks: StockDirectory) -
     assert {s.stock_id for s in found} == {39454, 9278, 22079}
 
 
-def test_resolve_returns_the_only_match(stocks: StockDirectory) -> None:
-    assert stocks.resolve("09688").stock_id == 1000057951
+def test_resolve_returns_the_only_match_with_no_alternatives(stocks: StockDirectory) -> None:
+    found = stocks.resolve("09688")
+    assert found.stock.stock_id == 1000057951
+    assert found.alternatives == ()
 
 
 def test_resolve_with_a_stock_id_picks_the_active_tencent(stocks: StockDirectory) -> None:
-    assert stocks.resolve("00700", stock_id=7609).name_en == "TENCENT"
+    assert stocks.resolve("00700", stock_id=7609).stock.name_en == "TENCENT"
 
 
 def test_unknown_code_is_reported(stocks: StockDirectory) -> None:
@@ -172,21 +174,59 @@ def test_unknown_code_is_reported(stocks: StockDirectory) -> None:
     assert "99999" in exc.value.message
 
 
-def test_reused_code_asks_the_user_to_choose(stocks: StockDirectory) -> None:
+def test_a_reused_code_defaults_to_its_only_active_security(stocks: StockDirectory) -> None:
+    # D-010: 00700 is TENCENT today; YAOHAN INT'L held the code before. No chooser for this case.
+    found = stocks.resolve("00700")
+    assert (found.stock.name_en, found.stock.active) == ("TENCENT", True)
+    assert [(s.name_en, s.active) for s in found.alternatives] == [("YAOHAN INT'L", False)]
+
+
+def test_the_default_for_00013_is_the_active_company_and_the_delisted_one_is_offered(
+    stocks: StockDirectory,
+) -> None:
+    found = stocks.resolve("00013")
+    assert found.stock.name_en == "HUTCHMED"
+    assert [s.name_en for s in found.alternatives] == ["HUTCHISON"]
+
+
+def test_a_code_with_several_delisted_securities_and_no_active_one_asks_the_user(
+    stocks: StockDirectory,
+) -> None:
     with pytest.raises(AppError) as exc:
-        stocks.resolve("00013")
+        stocks.resolve("03333")
     assert exc.value.code is ErrorCode.AMBIGUOUS_STOCK_CODE
     choices = exc.value.details["choices"]  # type: ignore[index]
-    assert {c["name_en"] for c in choices} == {"HUTCHISON", "HUTCHMED"}
-    assert {c["active"] for c in choices} == {True, False}
+    assert len(choices) == 3
+    assert not any(c["active"] for c in choices)
 
 
-def test_a_chosen_stock_id_settles_a_reused_code(stocks: StockDirectory) -> None:
-    assert stocks.resolve("00013", stock_id=20).name_en == "HUTCHISON"
-    assert stocks.resolve("00013", stock_id=1000001102).name_en == "HUTCHMED"
+def test_a_chosen_stock_id_overrides_the_default_and_keeps_the_others_as_alternatives(
+    stocks: StockDirectory,
+) -> None:
+    older = stocks.resolve("00013", stock_id=20)
+    assert older.stock.name_en == "HUTCHISON"
+    assert [s.name_en for s in older.alternatives] == ["HUTCHMED"]
+    current = stocks.resolve("00013", stock_id=1000001102)
+    assert current.stock.name_en == "HUTCHMED"
+    assert [s.name_en for s in current.alternatives] == ["HUTCHISON"]
+
+
+def test_a_chosen_stock_id_settles_a_code_with_only_delisted_securities(
+    stocks: StockDirectory,
+) -> None:
+    found = stocks.resolve("03333", stock_id=39454)
+    assert found.stock.stock_id == 39454
+    assert {s.stock_id for s in found.alternatives} == {9278, 22079}
 
 
 def test_a_stock_id_from_another_code_is_rejected(stocks: StockDirectory) -> None:
     with pytest.raises(AppError) as exc:
         stocks.resolve("00700", stock_id=20)  # id 20 belongs to code 00013
     assert exc.value.code is ErrorCode.UNKNOWN_STOCK_CODE
+
+
+def test_no_recorded_code_has_two_active_securities(reference_raw: dict[str, Any]) -> None:
+    # The default rule (D-010) relies on this. If HKEX ever lists two active securities for one
+    # code, resolve() asks the user instead (test above), but this test says it happened.
+    codes = [str(e["c"]).zfill(5) for e in reference_raw["activestock_sehk_e"]]
+    assert len(codes) == len(set(codes))

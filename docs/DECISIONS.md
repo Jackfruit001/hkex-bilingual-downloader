@@ -59,3 +59,12 @@ Each record: context, options, decision, reasons, status. Add new records at the
 - **Reasons:** 7 is the 9 threshold minus the 3 points the category signal would have contributed. Requiring two independent structural signals keeps the rule explainable.
 - **Validation and fallback:** the golden set must include pre-2007 pairs (SPEC §10.4). If it shows any wrong `matched` among them, revert to (a), keep every pre-2007 pair as `check`, and say so in the README limitations.
 - **Status:** accepted provisionally; SPEC §4.3 and §4.4 to be updated at Gate 0 approval.
+
+## D-010 Reused stock codes: default to the active security
+
+- **Context:** HKEX reuses stock codes. In the 30 October reference lists (17,948 codes), 250 have one active security and at least one delisted earlier holder (00700 TENCENT and YAOHAN INT'L; 00013 HUTCHMED and HUTCHISON), 55 have several delisted holders and no active one (03333), and none has two active securities. SPEC v1.1 §3.1 made every reused code return `AMBIGUOUS_STOCK_CODE`, so typing Tencent's code would show a chooser first.
+- **Options:** (a) as written: always ask; (b) default to the active security when exactly one is active, offer the delisted holders as a visible switch, and ask only when there is no single active security; (c) default to the active security and hide the others.
+- **Decision:** (b). `StockDirectory.resolve` returns the chosen security plus `alternatives`; an explicit `stock_id` always wins; zero or several active candidates still raise `AMBIGUOUS_STOCK_CODE`.
+- **Reasons:** an evaluator who types a well-known code expects its current company, and a chooser on 7% of codes (including the most famous ones) is friction for no gain. The switch keeps the other holders one click away, so nothing is hidden (rejects c). The rule is evidence-based: it depends on no code having two active securities, and a test fails if that ever changes.
+- **Consequence:** the UI must show which company was searched (name, EN and TC) and the alternatives note on every result, so a user looking for the older company notices at once.
+- **Status:** accepted at Gate 1 (31 October 2026); SPEC §3.1, §8 and §9 updated (v1.2).

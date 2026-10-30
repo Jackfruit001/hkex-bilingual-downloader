@@ -72,6 +72,15 @@ How AI tools were used, and the mistakes they made that were caught. Entries are
 - **Fix and commit:** restored the class line and shortened the docstring on the right line; all tests green again.
 - **Guard added:** line-number edits are checked against the file (a `sed -n` with numbers) before running, and the lint run follows every edit.
 
+### M-007: the sequence-delta statistic left out the hardest cases
+
+- **Date and tool:** 2026-10-31, Claude Code.
+- **What the AI produced:** research notes Q6, "TC file number minus EN file number is +1 in 2,197 of 2,216 cases", which SPEC S3 and D-009 then treated as the rule for 2014 onwards.
+- **What was wrong:** the statistic only counted minutes with exactly one document per language, which excludes same-minute batches. It was never measured how many English documents have no Chinese file at +1. In the `delisted` fixture (00013, 2014 to 2015) 507 of 1,687 do: 488 same-minute groups are laid out as English files first, then Chinese files, so the Chinese file is at +2 or +3.
+- **How it was caught:** a read-only structural check of every recorded scenario, run before proposing the Phase 2 plan, not a failing test. Nothing wrong had reached the matcher or the UI, because the matcher is not built yet.
+- **Fix and commit:** research notes Q6 correction and open question added; Phase 2 plan adds a block-layout case and a rule that block groups stay `check` until contents support a pairing.
+- **Guard added:** when a statistic is used as the basis of a rule, the notes state the filter used to select the cases, and the rule's complement (how many cases fall outside it) is reported alongside.
+
 ### Template
 
 ### M-00X: short title

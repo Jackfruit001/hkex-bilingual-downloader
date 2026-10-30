@@ -84,7 +84,7 @@ def test_snapshot_is_small_and_round_trips(snapshot_file: Path) -> None:
     assert [s.name_en for s in data.stocks.lookup("00700")] == ["TENCENT", "YAOHAN INT'L"]
     assert data.stocks.lookup("00700")[0].name_tc == "騰訊控股"
     assert len(data.stocks.lookup("03333")) == 3
-    assert data.stocks.resolve("00013", stock_id=20).active is False
+    assert data.stocks.resolve("00013", stock_id=20).stock.active is False
     codes = data.categories.resolve(Lang.TC, parse_category_text("翌日披露報表 - [其他]"))
     assert codes == data.categories.resolve(
         Lang.EN, parse_category_text("Next Day Disclosure Returns - [Others]")
@@ -115,7 +115,7 @@ async def test_first_use_loads_the_eight_reference_files_live(
     data = await service(client, Clock(), snapshot_file).get()
     assert data.source == "live"
     assert route.call_count == 8
-    assert data.stocks.resolve("09688").name_en == "ZAI LAB"
+    assert data.stocks.resolve("09688").stock.name_en == "ZAI LAB"
 
 
 @respx.mock
@@ -152,7 +152,7 @@ async def test_falls_back_to_the_snapshot_when_hkexnews_is_unreachable(
     serve_live(fail=True)
     data = await service(client, Clock(), snapshot_file).get()
     assert data.source == "snapshot"
-    assert data.stocks.resolve("09688").stock_id == 1000057951
+    assert data.stocks.resolve("09688").stock.stock_id == 1000057951
 
 
 @respx.mock
@@ -238,4 +238,4 @@ def test_the_bundled_snapshot_is_present_and_usable() -> None:
     data = load_snapshot(DEFAULT_SNAPSHOT)
     assert data.source == "snapshot"
     assert len(data.stocks) > 17000
-    assert data.stocks.resolve("09688").name_en == "ZAI LAB"
+    assert data.stocks.resolve("09688").stock.name_en == "ZAI LAB"
