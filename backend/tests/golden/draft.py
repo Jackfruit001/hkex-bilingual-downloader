@@ -274,14 +274,21 @@ async def fetch_row_files(
     return RowFiles(en, tc, score, skipped)
 
 
-def repair_with_hashes(drafted: Drafted, facts: Mapping[str, FileFacts]) -> Drafted:
-    """Pair again knowing which fetched files are byte for byte identical (SPEC S5)."""
-    sha256 = {
+def sha256_by_document(facts: Mapping[str, FileFacts]) -> dict[tuple[Lang, str], str]:
+    """The bytes hashes the matcher takes (SPEC S5), from facts keyed `<lang>:<news_id>`."""
+    return {
         (Lang(key.split(":", 1)[0]), key.split(":", 1)[1]): value.sha256
         for key, value in facts.items()
     }
+
+
+def repair_with_hashes(drafted: Drafted, facts: Mapping[str, FileFacts]) -> Drafted:
+    """Pair again knowing which fetched files are byte for byte identical (SPEC S5)."""
     return pair_and_tag(
-        drafted.search, drafted.stock, drafted.scenario, ContentEvidence(sha256=sha256)
+        drafted.search,
+        drafted.stock,
+        drafted.scenario,
+        ContentEvidence(sha256=sha256_by_document(facts)),
     )
 
 

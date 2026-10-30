@@ -137,6 +137,15 @@ How AI tools were used, and the mistakes they made that were caught. Entries are
 - **Fix and commit:** edited with the Edit tool; the full suite passed.
 - **Guard added:** scripted replacements assert that their target exists before writing. A later scripted multi-line cut removed a neighbouring constant as well; the suite failed at once, and the lesson is to make small edits with the Edit tool and run the tests straight after.
 
+### M-014: the pre-2007 "same number plus `_c`" rule produced a wrong `matched`
+
+- **Date and tool:** 2026-10-31, Claude Code (matcher, Phase 2.2, D-009).
+- **What the AI produced:** a rule that, before 25 June 2007, treats an exact file number plus `_c` in the same minute as strong evidence, enough for `matched` at a lower score threshold (D-009), validated only on the 2005 pairs in the recordings.
+- **What was wrong:** in HSBC's 31 March 2005 batch the Chinese files are not at the English number: English 96 (Form of Election) was matched with Chinese 96 (Entitlement Advice Form) while the real counterpart, Chinese 95, stayed unpaired. Figure overlap (92%) agreed, because the two forms share their figures.
+- **How it was caught:** reading the documents for the golden set (Phase 2.5); a triage that trusted figure overlap had classed the entry as strong.
+- **Fix and commit:** not made. D-009 already names the fallback (every pre-2007 pair stays `check`); applying it is a decision for Gate 2.
+- **Guard added:** the corrected entry and the two single-language entries that are really a pair go into the golden set, so the golden test (2.6) fails on this case until the rule is changed.
+
 ### M-00X: short title
 
 - **Date and tool:**

@@ -9,7 +9,7 @@
 # Never edit `id`. Run `uv run --project backend python scripts/golden_helper.py coverage` to see
 # what is still missing.
 - id: 09688-12386841
-  verified: false
+  verified: true
   stock_code: '09688'
   stock_id: 1000057951
   stock_name: ZAI LAB
@@ -29,14 +29,15 @@
       title: 翌日披露報表
       released: 2026-10-28 22:52
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (Chinese first page as an image)): same issuer, document
+    and date; figures or titles agree.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 22:52 HKT, same headline category, consecutive HKEX file numbers (01739 and 01740).
 - id: 09688-12386773
-  verified: false
+  verified: true
   stock_code: '09688'
   stock_id: 1000057951
   stock_name: ZAI LAB
@@ -56,14 +57,15 @@
       title: 自願公告 - 交割私人配售美國存託股份
       released: 2026-10-28 22:28
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (titles and first-page text)): titles are translations;
+    text parallels.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 22:28 HKT, same headline category, consecutive HKEX file numbers (01671 and 01672).
 - id: 09688-12382152
-  verified: false
+  verified: true
   stock_code: '09688'
   stock_id: 1000057951
   stock_name: ZAI LAB
@@ -83,14 +85,15 @@
       title: 審核委員會行動通告
       released: 2026-10-23 21:24
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (titles and first-page text)): titles are translations;
+    text parallels.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 21:24 HKT, same headline category, consecutive HKEX file numbers (01563 and 01564).
 - id: 09688-12381738
-  verified: false
+  verified: true
   stock_code: '09688'
   stock_id: 1000057951
   stock_name: ZAI LAB
@@ -110,14 +113,15 @@
       title: 內幕消息 - 關於zocilurtatug pelitecan全球1b 期臨床研究的首個數據的更新
       released: 2026-10-23 18:58
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (titles and first-page text)): titles are translations;
+    text parallels.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 18:58 HKT, same headline category, consecutive HKEX file numbers (01149 and 01150).
 - id: 09688-12381659
-  verified: false
+  verified: true
   stock_code: '09688'
   stock_id: 1000057951
   stock_name: ZAI LAB
@@ -133,14 +137,15 @@
       released: 2026-10-23 18:28
     tc: null
     absent: stub
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (listing: HKEXnews notice in the other section at the next file number; no
+    unclaimed document within 10 minutes): stub says a version ''may or may not'' follow; none in the searched window.'
   proposal:
     status: en_only
     score: null
     evidence:
     - The issuer published this in English only. HKEXnews' Chinese section shows a notice instead.
 - id: 09688-12380653
-  verified: false
+  verified: true
   stock_code: '09688'
   stock_id: 1000057951
   stock_name: ZAI LAB
@@ -160,14 +165,15 @@
       title: 私人配售美國存託股份及根據一般授權發行相關股份
       released: 2026-10-23 08:28
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (titles and first-page text)): titles are translations;
+    text parallels.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 08:28 HKT, same headline category, consecutive HKEX file numbers (00069 and 00070).
 - id: 00700-12379123
-  verified: false
+  verified: true
   stock_code: '00700'
   stock_id: 7609
   stock_name: TENCENT
@@ -189,14 +195,15 @@
       title: 根據騰訊控股有限公司最高限額為300億美元之全球中期票據計劃發行將於二零三六年到期的1,300,000,000美元6.10%優先票據及將於二零四六年到期的500,000,000美元6.75%優先票據及將於二零三六年到期的人民幣20,000,000,000元2.40%優先票據及將於二零五六年到期的人民幣6,000,000,000元3.00%優先票據刊發定價補充文件
       released: 2026-10-22 12:03
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (Chinese first page as an image)): same issuer, document
+    and date; figures or titles agree.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 12:03 HKT, same headline category, consecutive HKEX file numbers (00202 and 00203).
 - id: 00700-12378784
-  verified: false
+  verified: true
   stock_code: '00700'
   stock_id: 7609
   stock_name: TENCENT
@@ -219,14 +226,15 @@
       title: 於香港聯合交易所有限公司上市之通告 - 根據騰訊控股有限公司最高限額為300億美元之全球中期票據計劃發行將於二零三六年到期的1,300,000,000美元6.10%優先票據及將於二零四六年到期的500,000,000美元6.75%優先票據及將於二零三六年到期的人民幣20,000,000,000元2.40%優先票據及將於二零五六年到期的人民幣6,000,000,000元3.00%優先票據
       released: 2026-10-22 07:40
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (Chinese first page as an image)): same issuer, document
+    and date; figures or titles agree.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 07:40 HKT, same headline category, consecutive HKEX file numbers (00035 and 00036).
 - id: 00700-12369908
-  verified: false
+  verified: true
   stock_code: '00700'
   stock_id: 7609
   stock_name: TENCENT
@@ -246,14 +254,15 @@
       title: 翌日披露報表 - 已發行股份變動及股份購回
       released: 2026-10-12 17:50
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (Chinese first page as an image)): same issuer, document
+    and date; figures or titles agree.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 17:50 HKT, same headline category, consecutive HKEX file numbers (00659 and 00660).
 - id: 01810-12381758
-  verified: false
+  verified: true
   stock_code: '01810'
   stock_id: 190371
   stock_name: XIAOMI-W
@@ -272,14 +281,15 @@
       title: 董事會會議召開日期
       released: 2026-10-23 19:01
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (Chinese first page as an image)): same issuer, document
+    and date; figures or titles agree.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 19:01 HKT, same headline category, consecutive HKEX file numbers (01169 and 01170).
 - id: 01810-12365166
-  verified: false
+  verified: true
   stock_code: '01810'
   stock_id: 190371
   stock_name: XIAOMI-W
@@ -298,14 +308,15 @@
       title: 截至二零二六年九月三十日止之股份發行人的證券變動月報表
       released: 2026-10-07 16:36
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (Chinese first page as an image)): same issuer, document
+    and date; figures or titles agree.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 16:36 HKT, same headline category, consecutive HKEX file numbers (00862 and 00863).
 - id: 09988-12371800
-  verified: false
+  verified: true
   stock_code: '09988'
   stock_id: 1000015694
   stock_name: BABA-W
@@ -320,14 +331,15 @@
       released: 2026-10-14 06:07
     tc: null
     absent: stub
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (listing: HKEXnews notice in the other section at the next file number; no
+    unclaimed document within 10 minutes): stub says a version ''may or may not'' follow; none in the searched window.'
   proposal:
     status: en_only
     score: null
     evidence:
     - The issuer published this in English only. HKEXnews' Chinese section shows a notice instead.
 - id: 09988-12365726
-  verified: false
+  verified: true
   stock_code: '09988'
   stock_id: 1000015694
   stock_name: BABA-W
@@ -346,7 +358,8 @@
       title: 截至2026年9月30日止月份之股份發行人的證券變動月報表
       released: 2026-10-07 18:00
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (Chinese first page as an image)): same issuer, document
+    and date; figures or titles agree.'
   proposal:
     status: matched
     score: 12
@@ -354,7 +367,7 @@
     - Published together at 18:00 HKT, same headline category, consecutive HKEX file numbers (01422 and 01423), the same numbers
       appear in both titles.
 - id: 03690-12385257
-  verified: false
+  verified: true
   stock_code: '03690'
   stock_id: 198419
   stock_name: MEITUAN-W
@@ -373,7 +386,8 @@
       title: 發行人民幣45億元於2031年到期的2.50%優先票據及人民幣35億元於2036年到期的3.10%優先票據
       released: 2026-10-28 08:00
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (Chinese first page as an image)): same issuer, document
+    and date; figures or titles agree.'
   proposal:
     status: matched
     score: 12
@@ -381,7 +395,7 @@
     - Published together at 08:00 HKT, same headline category, consecutive HKEX file numbers (00041 and 00042), the same numbers
       appear in both titles.
 - id: 03690-12385009
-  verified: false
+  verified: true
   stock_code: '03690'
   stock_id: 198419
   stock_name: MEITUAN-W
@@ -400,14 +414,15 @@
       title: 授出受限制股份單位
       released: 2026-10-27 22:00
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (Chinese first page as an image)): same issuer, document
+    and date; figures or titles agree.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 22:00 HKT, same headline category, consecutive HKEX file numbers (01305 and 01306).
 - id: 00939-tc-12390048
-  verified: false
+  verified: true
   stock_code: '00939'
   stock_id: 9970
   stock_name: CCB
@@ -423,14 +438,15 @@
       title: 2026年A股第三季度報告
       released: 2026-10-30 16:57
     absent: stub
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (listing: HKEXnews notice in the other section at the next file number; no
+    unclaimed document within 10 minutes): stub says a version ''may or may not'' follow; none in the searched window.'
   proposal:
     status: tc_only
     score: null
     evidence:
     - The issuer published this in Chinese only. HKEXnews' English section shows a notice instead.
 - id: 00939-12389930
-  verified: false
+  verified: true
   stock_code: '00939'
   stock_id: 9970
   stock_name: CCB
@@ -450,7 +466,8 @@
       title: 2026年第三季度報告
       released: 2026-10-30 16:45
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (titles and first-page text)): titles are translations;
+    text parallels.'
   proposal:
     status: matched
     score: 12
@@ -458,7 +475,7 @@
     - Published together at 16:45 HKT, same headline category, consecutive HKEX file numbers (00754 and 00755), the same numbers
       appear in both titles.
 - id: 01398-tc-12390470
-  verified: false
+  verified: true
   stock_code: '01398'
   stock_id: 12593
   stock_name: ICBC
@@ -474,14 +491,15 @@
       title: 海外監管公告
       released: 2026-10-30 17:50
     absent: stub
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (listing: HKEXnews notice in the other section at the next file number; no
+    unclaimed document within 10 minutes): stub says a version ''may or may not'' follow; none in the searched window.'
   proposal:
     status: tc_only
     score: null
     evidence:
     - The issuer published this in Chinese only. HKEXnews' English section shows a notice instead.
 - id: 01398-12390362
-  verified: false
+  verified: true
   stock_code: '01398'
   stock_id: 12593
   stock_name: ICBC
@@ -501,14 +519,15 @@
       title: 董事會決議公告
       released: 2026-10-30 17:37
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (Chinese first page as an image)): same issuer, document
+    and date; figures or titles agree.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 17:37 HKT, same headline category, consecutive HKEX file numbers (01218 and 01219).
 - id: 01398-12377584
-  verified: false
+  verified: true
   stock_code: '01398'
   stock_id: 12593
   stock_name: ICBC
@@ -528,14 +547,14 @@
       title: 二零二六年中期股息-股息貨幣選擇表格
       released: 2026-10-21 07:00
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (text)): titles are translations; first-page text parallels.'
   proposal:
     status: matched
     score: 11
     evidence:
     - 'Bilingual document: the English and Chinese sections link the identical file.'
 - id: 02318-tc-12386202
-  verified: false
+  verified: true
   stock_code: '02318'
   stock_id: 7641
   stock_name: PING AN
@@ -551,14 +570,15 @@
       title: 海外監管公告 - 中國平安保險（集團）股份有限公司第十三屆董事會第十六次會議決議公告
       released: 2026-10-28 18:56
     absent: stub
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (listing: HKEXnews notice in the other section at the next file number; no
+    unclaimed document within 10 minutes): stub says a version ''may or may not'' follow; none in the searched window.'
   proposal:
     status: tc_only
     score: null
     evidence:
     - The issuer published this in Chinese only. HKEXnews' English section shows a notice instead.
 - id: 02318-12385647
-  verified: false
+  verified: true
   stock_code: '02318'
   stock_id: 7641
   stock_name: PING AN
@@ -578,7 +598,8 @@
       title: 截至2026年9月30日止九個月的未經審計業績公告
       released: 2026-10-28 16:51
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (Chinese first page as an image)): same issuer, document
+    and date; figures or titles agree.'
   proposal:
     status: matched
     score: 12
@@ -586,7 +607,7 @@
     - Published together at 16:51 HKT, same headline category, consecutive HKEX file numbers (00402 and 00403), the same numbers
       appear in both titles.
 - id: 00005-12270141
-  verified: false
+  verified: true
   stock_code: '00005'
   stock_id: 5
   stock_name: HSBC HOLDINGS
@@ -607,14 +628,15 @@
       title: 股息貨幣選擇表格
       released: 2026-08-04 12:00
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (Chinese first page as an image)): same issuer, document
+    and date; figures or titles agree.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 12:00 HKT, same headline category, consecutive HKEX file numbers (00333 and 00334).
 - id: 00005-12270137
-  verified: false
+  verified: true
   stock_code: '00005'
   stock_id: 5
   stock_name: HSBC HOLDINGS
@@ -635,7 +657,8 @@
       title: 2026年第二次股息
       released: 2026-08-04 12:00
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (Chinese first page as an image)): same issuer, document
+    and date; figures or titles agree.'
   proposal:
     status: matched
     score: 12
@@ -643,7 +666,7 @@
     - Published together at 12:00 HKT, same headline category, consecutive HKEX file numbers (00329 and 00330), the same numbers
       appear in both titles.
 - id: 00005-12270133
-  verified: false
+  verified: true
   stock_code: '00005'
   stock_id: 5
   stock_name: HSBC HOLDINGS
@@ -664,7 +687,7 @@
       title: 2026年中期業績
       released: 2026-08-04 12:00
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (text)): titles are translations; first-page text parallels.'
   proposal:
     status: matched
     score: 12
@@ -672,7 +695,7 @@
     - Published together at 12:00 HKT, same headline category, consecutive HKEX file numbers (00325 and 00326), the same numbers
       appear in both titles.
 - id: 00005-12263152
-  verified: false
+  verified: true
   stock_code: '00005'
   stock_id: 5
   stock_name: HSBC HOLDINGS
@@ -689,14 +712,15 @@
       released: 2026-07-31 06:15
     tc: null
     absent: stub
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (listing: HKEXnews notice in the other section at the next file number; no
+    unclaimed document within 10 minutes): stub says a version ''may or may not'' follow; none in the searched window.'
   proposal:
     status: en_only
     score: null
     evidence:
     - The issuer published this in English only. HKEXnews' Chinese section shows a notice instead.
 - id: 00005-12263148
-  verified: false
+  verified: true
   stock_code: '00005'
   stock_id: 5
   stock_name: HSBC HOLDINGS
@@ -717,14 +741,14 @@
       title: 滙豐出售其價值360億澳元的澳洲房屋及私人貸款組合予黑石
       released: 2026-07-31 06:15
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (text)): titles are translations; first-page text parallels.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 06:15 HKT, same headline category, consecutive HKEX file numbers (00031 and 00032).
 - id: 00005-12261416
-  verified: false
+  verified: true
   stock_code: '00005'
   stock_id: 5
   stock_name: HSBC HOLDINGS
@@ -745,14 +769,14 @@
       title: 董事會成員名單及角色與職務
       released: 2026-07-30 16:30
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (text)): titles are translations; first-page text parallels.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 16:30 HKT, same headline category, consecutive HKEX file numbers (00392 and 00393).
 - id: 00005-12261382
-  verified: false
+  verified: true
   stock_code: '00005'
   stock_id: 5
   stock_name: HSBC HOLDINGS
@@ -773,14 +797,15 @@
       title: 董事會下設委員會成員變動
       released: 2026-07-30 16:30
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (titles and first-page text)): titles are translations;
+    text parallels.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 16:30 HKT, same headline category, consecutive HKEX file numbers (00358 and 00359).
 - id: 00005-305754
-  verified: false
+  verified: true
   stock_code: '00005'
   stock_id: 5
   stock_name: HSBC HOLDINGS
@@ -801,7 +826,8 @@
       title: 年度回顧
       released: 2005-04-07 17:49
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (titles only (no PDF read: web page, multi-file or over the size limit)):
+    titles are translations; consecutive file numbers.'
   proposal:
     status: check
     score: 5
@@ -810,7 +836,7 @@
       with the Chinese file marked _c.
     - Best guess shown; compare before relying on it.
 - id: 00005-305752
-  verified: false
+  verified: true
   stock_code: '00005'
   stock_id: 5
   stock_name: HSBC HOLDINGS
@@ -831,7 +857,8 @@
       title: 年報
       released: 2005-04-07 17:45
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (titles only (no PDF read: web page, multi-file or over the size limit)):
+    titles are translations; consecutive file numbers.'
   proposal:
     status: check
     score: 5
@@ -840,7 +867,7 @@
       with the Chinese file marked _c.
     - Best guess shown; compare before relying on it.
 - id: 00005-303690
-  verified: false
+  verified: true
   stock_code: '00005'
   stock_id: 5
   stock_name: HSBC HOLDINGS
@@ -848,23 +875,27 @@
   case_types:
   - several_same_day
   - pre_2007
-  - single_not_found
   truth:
     en:
       news_id: '303690'
       path: /listedco/listconews/sehk/2005/0331/ltn20050331100.pdf
       title: Letter to Shareholder
       released: 2005-03-31 11:23
-    tc: null
-    absent: not_found
-  notes: ''
+    tc:
+      news_id: '303130'
+      path: /listedco/listconews/sehk/2005/0331/ltn20050331093_c.pdf
+      title: 致股東信函
+      released: 2005-03-31 11:21
+    absent: null
+  notes: 'Claude read the documents, 2026-10-31 (read both documents): not English-only: pairs with Chinese 致股東信函 (news 303130),
+    the informal meeting letter of 24 May 2005.'
   proposal:
     status: en_only
     score: null
     evidence:
     - No Chinese version found between 31 Mar 2005 and 7 Apr 2005.
 - id: 00005-303146
-  verified: false
+  verified: true
   stock_code: '00005'
   stock_id: 5
   stock_name: HSBC HOLDINGS
@@ -880,12 +911,13 @@
       title: Circular (Form of Election)
       released: 2005-03-31 11:22
     tc:
-      news_id: '303147'
-      path: /listedco/listconews/sehk/2005/0331/ltn20050331096_c.pdf
-      title: 通函 (應收代息股份通知書表格)
+      news_id: '303145'
+      path: /listedco/listconews/sehk/2005/0331/ltn20050331095_c.pdf
+      title: 通函 (選擇表格)
       released: 2005-03-31 11:22
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read English and both Chinese documents): WRONG matched: English file 96
+    (Form of Election) belongs with Chinese file 95 (news 303145), not 96.'
   proposal:
     status: matched
     score: 8
@@ -893,7 +925,7 @@
     - Published together at 11:22 HKT, no headline category to compare, the same HKEX file number (00096) with the Chinese
       file marked _c.
 - id: 00005-303144
-  verified: false
+  verified: true
   stock_code: '00005'
   stock_id: 5
   stock_name: HSBC HOLDINGS
@@ -914,7 +946,7 @@
       title: 通函 (以股代息計劃及以美元、英鎊或港元支付股息)
       released: 2005-03-31 11:21
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (text)): pre-2007 check pair is correct.'
   proposal:
     status: check
     score: 5
@@ -923,34 +955,8 @@
       the Chinese file marked _c.
     - Best guess shown; compare before relying on it.
     - 'Other possible matches: Chinese file 00095.'
-- id: 00005-tc-303145
-  verified: false
-  stock_code: '00005'
-  stock_id: 5
-  stock_name: HSBC HOLDINGS
-  scenario: 00005-20050331-20050407
-  case_types:
-  - several_same_day
-  - several_same_minute
-  - pre_2007
-  - single_not_found
-  truth:
-    en: null
-    tc:
-      news_id: '303145'
-      path: /listedco/listconews/sehk/2005/0331/ltn20050331095_c.pdf
-      title: 通函 (選擇表格)
-      released: 2005-03-31 11:22
-    absent: not_found
-  notes: ''
-  proposal:
-    status: tc_only
-    score: null
-    evidence:
-    - No English version found between 31 Mar 2005 and 7 Apr 2005.
-    - A possible counterpart (English file 00094) is shown with another entry.
 - id: 00005-303127
-  verified: false
+  verified: true
   stock_code: '00005'
   stock_id: 5
   stock_name: HSBC HOLDINGS
@@ -971,7 +977,7 @@
       title: 股東大會通告
       released: 2005-03-31 11:21
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (text)): pre-2007 check pair is correct.'
   proposal:
     status: check
     score: 4
@@ -979,7 +985,7 @@
     - Published together at 11:21 HKT, no headline category to compare, file numbers not close.
     - Best guess shown; compare before relying on it.
 - id: 00005-303125
-  verified: false
+  verified: true
   stock_code: '00005'
   stock_id: 5
   stock_name: HSBC HOLDINGS
@@ -1000,38 +1006,14 @@
       title: 通函 (於2005年5月27日舉行之股東周年大會通告)
       released: 2005-03-31 11:21
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (titles and first-page text)): titles are translations;
+    text parallels.'
   proposal:
     status: matched
     score: 9
     evidence:
     - Published together at 11:21 HKT, no headline category to compare, the same HKEX file number (00090) with the Chinese
       file marked _c, the same numbers appear in both titles.
-- id: 00005-tc-303130
-  verified: false
-  stock_code: '00005'
-  stock_id: 5
-  stock_name: HSBC HOLDINGS
-  scenario: 00005-20050331-20050407
-  case_types:
-  - several_same_day
-  - several_same_minute
-  - pre_2007
-  - single_not_found
-  truth:
-    en: null
-    tc:
-      news_id: '303130'
-      path: /listedco/listconews/sehk/2005/0331/ltn20050331093_c.pdf
-      title: 致股東信函
-      released: 2005-03-31 11:21
-    absent: not_found
-  notes: ''
-  proposal:
-    status: tc_only
-    score: null
-    evidence:
-    - No English version found between 31 Mar 2005 and 7 Apr 2005.
 - id: 00005-303596
   verified: false
   stock_code: '00005'
@@ -1050,14 +1032,14 @@
       released: 2005-03-31 09:56
     tc: null
     absent: not_found
-  notes: ''
+  notes: 'Not verified (2026-10-31): absence cannot be checked here; leave unverified or delete.'
   proposal:
     status: en_only
     score: null
     evidence:
     - No Chinese version found between 31 Mar 2005 and 7 Apr 2005.
 - id: 00013-2106238
-  verified: false
+  verified: true
   stock_code: '00013'
   stock_id: 20
   stock_name: HUTCHISON
@@ -1079,7 +1061,8 @@
       title: 根據《收購守則》規則22作出的交易披露
       released: 2015-01-27 18:17
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (table headings differ by dealing type and agree across languages): independent
+    of file order.'
   proposal:
     status: check
     score: 8
@@ -1090,7 +1073,7 @@
     - Best guess shown; compare before relying on it.
     - 'Other possible matches: English file 00492, Chinese file 00494.'
 - id: 00013-2106237
-  verified: false
+  verified: true
   stock_code: '00013'
   stock_id: 20
   stock_name: HUTCHISON
@@ -1112,7 +1095,8 @@
       title: 根據《收購守則》規則22作出的交易披露
       released: 2015-01-27 18:17
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (table headings differ by dealing type and agree across languages): independent
+    of file order.'
   proposal:
     status: check
     score: 8
@@ -1123,7 +1107,7 @@
     - Best guess shown; compare before relying on it.
     - 'Other possible matches: English file 00493, Chinese file 00495.'
 - id: 00013-2106230
-  verified: false
+  verified: true
   stock_code: '00013'
   stock_id: 20
   stock_name: HUTCHISON
@@ -1145,7 +1129,8 @@
       title: 根據《收購守則》規則22作出的交易披露
       released: 2015-01-27 18:16
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (table headings differ by dealing type and agree across languages): independent
+    of file order.'
   proposal:
     status: check
     score: 8
@@ -1156,7 +1141,7 @@
     - Best guess shown; compare before relying on it.
     - 'Other possible matches: English file 00484, Chinese file 00486.'
 - id: 00013-2106229
-  verified: false
+  verified: true
   stock_code: '00013'
   stock_id: 20
   stock_name: HUTCHISON
@@ -1178,7 +1163,8 @@
       title: 根據《收購守則》規則22作出的交易披露
       released: 2015-01-27 18:16
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (table headings differ by dealing type and agree across languages): independent
+    of file order.'
   proposal:
     status: check
     score: 8
@@ -1189,7 +1175,7 @@
     - Best guess shown; compare before relying on it.
     - 'Other possible matches: English file 00485, Chinese file 00487.'
 - id: 00013-2104022
-  verified: false
+  verified: true
   stock_code: '00013'
   stock_id: 20
   stock_name: HUTCHISON
@@ -1210,7 +1196,8 @@
       title: 內幕消息 - 有關可能收購O2 UK之獨家洽商協議
       released: 2015-01-23 16:16
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (titles and text; same pair, Chinese revision marker not recognised by the
+    parser): check is a soft miss.'
   proposal:
     status: check
     score: 11
@@ -1219,7 +1206,7 @@
     - One version is marked revised or cancelled and the other is not.
     - Best guess shown; compare before relying on it.
 - id: 00013-2104014
-  verified: false
+  verified: true
   stock_code: '00013'
   stock_id: 20
   stock_name: HUTCHISON
@@ -1240,14 +1227,15 @@
       title: 交易所通告 - 復牌
       released: 2015-01-23 12:35
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (titles only (no PDF read: web page, multi-file or over the size limit)):
+    titles are translations; consecutive file numbers.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 12:35 HKT, same headline category, consecutive HKEX file numbers (00201 and 00202).
 - id: 00013-2104010
-  verified: false
+  verified: true
   stock_code: '00013'
   stock_id: 20
   stock_name: HUTCHISON
@@ -1268,14 +1256,14 @@
       title: 內幕消息 - 有關可能收購O2 UK之獨家洽商協議
       released: 2015-01-23 12:17
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (text)): titles are translations; first-page text parallels.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 12:17 HKT, same headline category, consecutive HKEX file numbers (00197 and 00198).
 - id: 00013-2104006
-  verified: false
+  verified: true
   stock_code: '00013'
   stock_id: 20
   stock_name: HUTCHISON
@@ -1295,14 +1283,14 @@
       title: 短暫停牌
       released: 2015-01-23 12:11
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (text)): titles are translations; first-page text parallels.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 12:11 HKT, same headline category, consecutive HKEX file numbers (00193 and 00194).
 - id: 00013-2103906
-  verified: false
+  verified: true
   stock_code: '00013'
   stock_id: 20
   stock_name: HUTCHISON
@@ -1323,14 +1311,15 @@
       title: 交易所通告 - 短暫停牌
       released: 2015-01-23 09:54
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (titles only (no PDF read: web page, multi-file or over the size limit)):
+    titles are translations; consecutive file numbers.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 09:54 HKT, same headline category, consecutive HKEX file numbers (00099 and 00100).
 - id: 00013-2100777
-  verified: false
+  verified: true
   stock_code: '00013'
   stock_id: 20
   stock_name: HUTCHISON
@@ -1350,14 +1339,15 @@
       title: 根據《收購守則》規則22作出的交易披露
       released: 2015-01-19 18:45
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (titles and first-page text)): titles are translations;
+    text parallels.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 18:45 HKT, same headline category, consecutive HKEX file numbers (00744 and 00745).
 - id: 00013-2099405
-  verified: false
+  verified: true
   stock_code: '00013'
   stock_id: 20
   stock_name: HUTCHISON
@@ -1378,14 +1368,15 @@
       title: 根據《收購守則》規則22作出的交易披露
       released: 2015-01-16 16:42
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (titles and first-page text)): titles are translations;
+    text parallels.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 16:42 HKT, same headline category, consecutive HKEX file numbers (00224 and 00225).
 - id: 00013-2099403
-  verified: false
+  verified: true
   stock_code: '00013'
   stock_id: 20
   stock_name: HUTCHISON
@@ -1406,14 +1397,15 @@
       title: 根據《收購守則》規則22作出的交易披露
       released: 2015-01-16 16:40
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (titles and first-page text)): titles are translations;
+    text parallels.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 16:40 HKT, same headline category, consecutive HKEX file numbers (00222 and 00223).
 - id: 00005-11098699
-  verified: false
+  verified: true
   stock_code: '00005'
   stock_id: 5
   stock_name: HSBC HOLDINGS
@@ -1433,14 +1425,15 @@
       title: 翌日披露報表
       released: 2024-03-14 17:13
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (Chinese first page as an image)): same issuer, document
+    and date; figures or titles agree.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 17:13 HKT, same headline category, consecutive HKEX file numbers (00705 and 00706).
 - id: 00005-11098085
-  verified: false
+  verified: true
   stock_code: '00005'
   stock_id: 5
   stock_name: HSBC HOLDINGS
@@ -1456,14 +1449,15 @@
       released: 2024-03-14 09:35
     tc: null
     absent: stub
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (listing: HKEXnews notice in the other section at the next file number; no
+    unclaimed document within 10 minutes): stub says a version ''may or may not'' follow; none in the searched window.'
   proposal:
     status: en_only
     score: null
     evidence:
     - The issuer published this in English only. HKEXnews' Chinese section shows a notice instead.
 - id: 00005-11098015
-  verified: false
+  verified: true
   stock_code: '00005'
   stock_id: 5
   stock_name: HSBC HOLDINGS
@@ -1480,14 +1474,15 @@
       released: 2024-03-14 07:31
     tc: null
     absent: stub
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (listing: HKEXnews notice in the other section at the next file number; no
+    unclaimed document within 10 minutes): stub says a version ''may or may not'' follow; none in the searched window.'
   proposal:
     status: en_only
     score: null
     evidence:
     - The issuer published this in English only. HKEXnews' Chinese section shows a notice instead.
 - id: 00388-12373847
-  verified: false
+  verified: true
   stock_code: '00388'
   stock_id: 781
   stock_name: HKEX
@@ -1510,7 +1505,8 @@
       title: 致現有登記股東之函件 – (1)日期為2026年10月16日的通函連同股東大會通告及代表委任表格的刊發; (2)香港交易所股東大會; 及(3)有關收取公司通訊的印刷本或電子版本的要求
       released: 2026-10-15 17:53
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (titles and first-page text)): titles are translations;
+    text parallels.'
   proposal:
     status: matched
     score: 12
@@ -1518,7 +1514,7 @@
     - Published together at 17:53 HKT, same headline category, consecutive HKEX file numbers (00727 and 00728), the same numbers
       appear in both titles.
 - id: 00388-12373839
-  verified: false
+  verified: true
   stock_code: '00388'
   stock_id: 781
   stock_name: HKEX
@@ -1541,7 +1537,8 @@
       title: 致新登記股東之函件 – (1) 日期為2026年10月16日的通函連同股東大會通告及代表委任表格的刊發; (2)香港交易所股東大會; 及(3)發布香港交易所的公司通訊及收集電郵地址
       released: 2026-10-15 17:53
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (titles and first-page text)): titles are translations;
+    text parallels.'
   proposal:
     status: matched
     score: 12
@@ -1549,7 +1546,7 @@
     - Published together at 17:53 HKT, same headline category, consecutive HKEX file numbers (00719 and 00720), the same numbers
       appear in both titles.
 - id: 00388-12373837
-  verified: false
+  verified: true
   stock_code: '00388'
   stock_id: 781
   stock_name: HKEX
@@ -1569,14 +1566,15 @@
       title: 股東大會代表委任表格
       released: 2026-10-15 17:52
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (Chinese first page as an image)): same issuer, document
+    and date; figures or titles agree.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 17:52 HKT, same headline category, consecutive HKEX file numbers (00717 and 00718).
 - id: 00388-12373835
-  verified: false
+  verified: true
   stock_code: '00388'
   stock_id: 781
   stock_name: HKEX
@@ -1596,14 +1594,15 @@
       title: 股東大會通告
       released: 2026-10-15 17:51
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (titles and first-page text)): titles are translations;
+    text parallels.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 17:51 HKT, same headline category, consecutive HKEX file numbers (00715 and 00716).
 - id: 00941-tc-12377302
-  verified: false
+  verified: true
   stock_code: '00941'
   stock_id: 2247
   stock_name: CHINA MOBILE
@@ -1619,14 +1618,15 @@
       title: 海外監管公告 2026年第三季度報告
       released: 2026-10-20 20:00
     absent: stub
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (listing: HKEXnews notice in the other section at the next file number; no
+    unclaimed document within 10 minutes): stub says a version ''may or may not'' follow; none in the searched window.'
   proposal:
     status: tc_only
     score: null
     evidence:
     - The issuer published this in Chinese only. HKEXnews' English section shows a notice instead.
 - id: 00941-12377104
-  verified: false
+  verified: true
   stock_code: '00941'
   stock_id: 2247
   stock_name: CHINA MOBILE
@@ -1646,7 +1646,8 @@
       title: 2026年首3季度業績
       released: 2026-10-20 18:42
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (Chinese first page as an image)): same issuer, document
+    and date; figures or titles agree.'
   proposal:
     status: matched
     score: 12
@@ -1654,7 +1655,7 @@
     - Published together at 18:42 HKT, same headline category, consecutive HKEX file numbers (00963 and 00964), the same numbers
       appear in both titles.
 - id: 01299-12388867
-  verified: false
+  verified: true
   stock_code: '01299'
   stock_id: 54299
   stock_name: AIA
@@ -1673,7 +1674,8 @@
       title: 2026年第三季新業務摘要
       released: 2026-10-30 06:01
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (Chinese first page as an image)): same issuer, document
+    and date; figures or titles agree.'
   proposal:
     status: matched
     score: 12
@@ -1681,7 +1683,7 @@
     - Published together at 06:01 HKT, same headline category, consecutive HKEX file numbers (00001 and 00002), the same numbers
       appear in both titles.
 - id: 01299-12356973
-  verified: false
+  verified: true
   stock_code: '01299'
   stock_id: 54299
   stock_name: AIA
@@ -1700,14 +1702,15 @@
       released: 2026-10-02 12:01
     tc: null
     absent: stub
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (listing: HKEXnews notice in the other section at the next file number; no
+    unclaimed document within 10 minutes): stub says a version ''may or may not'' follow; none in the searched window.'
   proposal:
     status: en_only
     score: null
     evidence:
     - The issuer published this in English only. HKEXnews' Chinese section shows a notice instead.
 - id: 02372-12139170
-  verified: false
+  verified: true
   stock_code: '02372'
   stock_id: 1000156455
   stock_name: WEILI HOLDINGS
@@ -1727,7 +1730,8 @@
       title: 年報2025
       released: 2026-04-30 17:11
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (titles and first-page text)): titles are translations;
+    text parallels.'
   proposal:
     status: matched
     score: 12
@@ -1735,7 +1739,7 @@
     - Published together at 17:11 HKT, same headline category, consecutive HKEX file numbers (01846 and 01847), the same numbers
       appear in both titles.
 - id: 01292-12125005
-  verified: false
+  verified: true
   stock_code: '01292'
   stock_id: 91303
   stock_name: CM LOGISTICS
@@ -1755,7 +1759,8 @@
       title: 2025年年報
       released: 2026-04-27 17:28
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (titles only (no PDF read: web page, multi-file or over the size limit)):
+    titles are translations; consecutive file numbers.'
   proposal:
     status: matched
     score: 12
@@ -1763,7 +1768,7 @@
     - Published together at 17:28 HKT, same headline category, consecutive HKEX file numbers (01581 and 01582), the same numbers
       appear in both titles.
 - id: 06909-12110507
-  verified: false
+  verified: true
   stock_code: '06909'
   stock_id: 1000102036
   stock_name: BETTERLIFE HLDG
@@ -1783,7 +1788,8 @@
       title: 2025年度報告
       released: 2026-04-17 18:36
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (titles only (no PDF read: web page, multi-file or over the size limit)):
+    titles are translations; consecutive file numbers.'
   proposal:
     status: matched
     score: 12
@@ -1791,7 +1797,7 @@
     - Published together at 18:36 HKT, same headline category, consecutive HKEX file numbers (01191 and 01192), the same numbers
       appear in both titles.
 - id: 06909-12089411
-  verified: false
+  verified: true
   stock_code: '06909'
   stock_id: 1000102036
   stock_name: BETTERLIFE HLDG
@@ -1811,7 +1817,8 @@
       title: (經修訂) 董事名單與其角色和職能
       released: 2026-04-01 12:00
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (titles and text; same pair, Chinese revision marker not recognised by the
+    parser): check is a soft miss.'
   proposal:
     status: check
     score: 11
@@ -1820,7 +1827,7 @@
     - One version is marked revised or cancelled and the other is not.
     - Best guess shown; compare before relying on it.
 - id: 03718-12131068
-  verified: false
+  verified: true
   stock_code: '03718'
   stock_id: 1000019708
   stock_name: BJ ENT URBAN
@@ -1840,7 +1847,8 @@
       title: 2025年報
       released: 2026-04-28 21:52
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (Chinese first page as an image)): same issuer, document
+    and date; figures or titles agree.'
   proposal:
     status: matched
     score: 12
@@ -1848,7 +1856,7 @@
     - Published together at 21:52 HKT, same headline category, consecutive HKEX file numbers (04387 and 04388), the same numbers
       appear in both titles.
 - id: 02658-12125239
-  verified: false
+  verified: true
   stock_code: '02658'
   stock_id: 1000276934
   stock_name: TIANYU SEMI
@@ -1868,7 +1876,8 @@
       title: 2025年度報告
       released: 2026-04-27 17:49
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (Chinese first page as an image)): same issuer, document
+    and date; figures or titles agree.'
   proposal:
     status: matched
     score: 12
@@ -1876,7 +1885,7 @@
     - Published together at 17:49 HKT, same headline category, consecutive HKEX file numbers (01813 and 01814), the same numbers
       appear in both titles.
 - id: 08223-12141416
-  verified: false
+  verified: true
   stock_code: '08223'
   stock_id: 189693
   stock_name: ZYY
@@ -1896,7 +1905,8 @@
       title: 2025 年報
       released: 2026-04-30 22:49
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (titles only (no PDF read: web page, multi-file or over the size limit)):
+    titles are translations; consecutive file numbers.'
   proposal:
     status: matched
     score: 12
@@ -1904,7 +1914,7 @@
     - Published together at 22:49 HKT, same headline category, consecutive HKEX file numbers (04702 and 04703), the same numbers
       appear in both titles.
 - id: 08223-12110929
-  verified: false
+  verified: true
   stock_code: '08223'
   stock_id: 189693
   stock_name: ZYY
@@ -1923,7 +1933,8 @@
       title: (經修訂)翌日披露報表
       released: 2026-04-17 21:26
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (titles and text; same pair, Chinese revision marker not recognised by the
+    parser): check is a soft miss.'
   proposal:
     status: check
     score: 11
@@ -1932,7 +1943,7 @@
     - One version is marked revised or cancelled and the other is not.
     - Best guess shown; compare before relying on it.
 - id: 08223-12104235
-  verified: false
+  verified: true
   stock_code: '08223'
   stock_id: 189693
   stock_name: ZYY
@@ -1952,7 +1963,8 @@
       title: 非執行董事辭任及董事委員會組成之變動
       released: 2026-04-13 22:26
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (titles and text; same pair, Chinese revision marker not recognised by the
+    parser): check is a soft miss.'
   proposal:
     status: check
     score: 11
@@ -1962,7 +1974,7 @@
     - Best guess shown; compare before relying on it.
     - 'Other possible matches: English file 01316, Chinese file 01317.'
 - id: 08223-12104121
-  verified: false
+  verified: true
   stock_code: '08223'
   stock_id: 189693
   stock_name: ZYY
@@ -1982,14 +1994,14 @@
       title: 非執行董事辭任及董事委員會組成之變動
       released: 2026-04-13 21:15
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (text)): titles are translations; first-page text parallels.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 21:15 HKT, same headline category, consecutive HKEX file numbers (01316 and 01317).
 - id: 08223-12075859
-  verified: false
+  verified: true
   stock_code: '08223'
   stock_id: 189693
   stock_name: ZYY
@@ -2008,14 +2020,14 @@
       title: 正面盈利預告
       released: 2026-03-30 06:10
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (text)): titles are translations; first-page text parallels.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 06:10 HKT, same headline category, consecutive HKEX file numbers (00017 and 00018).
 - id: 08293-12095175
-  verified: false
+  verified: true
   stock_code: '08293'
   stock_id: 142695
   stock_name: SINGASIA HLDG
@@ -2036,14 +2048,15 @@
       title: 公司資料報表
       released: 2026-04-02 18:32
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (titles and first-page text)): titles are translations;
+    text parallels.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 18:32 HKT, same headline category, consecutive HKEX file numbers (02172 and 02173).
 - id: 08293-12069538
-  verified: false
+  verified: true
   stock_code: '08293'
   stock_id: 142695
   stock_name: SINGASIA HLDG
@@ -2062,14 +2075,15 @@
       title: 正面盈利警告
       released: 2026-03-26 19:01
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (Chinese first page as an image)): same issuer, document
+    and date; figures or titles agree.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 19:01 HKT, same headline category, consecutive HKEX file numbers (01380 and 01381).
 - id: 08069-12109029
-  verified: false
+  verified: true
   stock_code: '08069'
   stock_id: 149776
   stock_name: FLYDOO TECH
@@ -2089,14 +2103,15 @@
       title: 股東特別大會通告
       released: 2026-04-16 22:02
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (titles and first-page text)): titles are translations;
+    text parallels.'
   proposal:
     status: matched
     score: 11
     evidence:
     - Published together at 22:02 HKT, same headline category, consecutive HKEX file numbers (01738 and 01739).
 - id: 08069-12074467
-  verified: false
+  verified: true
   stock_code: '08069'
   stock_id: 149776
   stock_name: FLYDOO TECH
@@ -2115,7 +2130,8 @@
       title: 建議股份合併
       released: 2026-03-27 22:11
     absent: null
-  notes: ''
+  notes: 'Claude read the documents, 2026-10-31 (read both documents (titles and first-page text)): titles are translations;
+    text parallels.'
   proposal:
     status: matched
     score: 11
