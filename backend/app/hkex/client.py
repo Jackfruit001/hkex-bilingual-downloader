@@ -10,6 +10,7 @@ import json
 import random
 import time
 from collections.abc import Awaitable, Callable, Mapping
+from dataclasses import dataclass
 from datetime import UTC, datetime
 from email.utils import parsedate_to_datetime
 from typing import Any
@@ -26,6 +27,15 @@ RETRY_AFTER_CAP_S = 30.0
 
 _UNAVAILABLE = "HKEXnews didn't respond. Try again in a minute."
 _RATE_LIMITED = "HKEXnews is limiting requests. Retrying shortly."
+MAX_DOWNLOAD_BYTES = 150 * 1024 * 1024
+
+
+@dataclass(frozen=True)
+class Download:
+    """A fully received body and the length the server announced for it (if any)."""
+
+    body: bytes
+    content_length: int | None
 
 
 def check_allowed_url(url: str) -> None:
@@ -125,8 +135,50 @@ class HkexClient:
         except ValueError as exc:  # an HTML page (for example a bot challenge) with status 200
             raise _Retryable(status) from exc
 
+    async def _attempt_download(self, url: str) -> Download:
+        async with self._semaphore:
+            await self._pace()
+            self.requests_made += 1
+            try:
+                async with self._http.stream("GET", url) as response:
+                    status = response.status_code
+                    if status == 429 or status >= 500:
+                        retry_after = parse_retry_after(response.headers.get("retry-after"))
+                        raise _Retryable(status, retry_after)
+                    if status != 200:  # includes redirects, which are never followed
+                        raise AppError(
+                            ErrorCode.DOWNLOAD_FAILED,
+                            "HKEXnews didn't send the file. Nothing was saved.",
+                            {"status": status},
+                        )
+                    body = bytearray()
+                    async for chunk in response.aiter_bytes():
+                        body += chunk
+                        if len(body) > MAX_DOWNLOAD_BYTES:
+                            raise AppError(
+                                ErrorCode.DOWNLOAD_FAILED,
+                                "The file is larger than this app allows. Nothing was saved.",
+                            )
+                    announced = response.headers.get("content-length", "")
+            except (httpx.TimeoutException, httpx.NetworkError, httpx.RemoteProtocolError) as exc:
+                raise _Retryable(None) from exc
+        length = int(announced) if announced.isdigit() else None
+        if length is not None and length != len(body):
+            raise _Retryable(200)  # cut short: try again before giving up
+        return Download(bytes(body), length)
+
+    async def get_bytes(self, url: str) -> Download:
+        """A whole file, retried like any request; the caller verifies what it contains."""
+        check_allowed_url(url)
+        return await self._with_retries(lambda: self._attempt_download(url), download=True)
+
     async def get_json(self, url: str, params: Mapping[str, Any] | None = None) -> Any:
         check_allowed_url(url)
+        return await self._with_retries(lambda: self._attempt(url, params), download=False)
+
+    async def _with_retries[T](
+        self, attempt_once: Callable[[], Awaitable[T]], *, download: bool
+    ) -> T:
         failure: _Retryable | None = None
         for attempt in range(self._max_retries + 1):
             if failure is not None:
@@ -139,10 +191,22 @@ class HkexClient:
                 await self._sleep(delay)
                 self.retries_made += 1
             try:
-                return await self._attempt(url, params)
+                return await attempt_once()
             except _Retryable as exc:
                 failure = exc
         assert failure is not None
         if failure.status == 429:
             raise AppError(ErrorCode.HKEX_RATE_LIMITED, _RATE_LIMITED, {"status": 429})
+        if download and failure.status == 200:
+            raise AppError(
+                ErrorCode.VERIFY_FAILED,
+                "HKEXnews sent an incomplete file. Nothing was saved.",
+                {"reason": "shorter than announced"},
+            )
+        if download:
+            raise AppError(
+                ErrorCode.DOWNLOAD_FAILED,
+                "The file couldn't be downloaded (the connection failed). Nothing was saved.",
+                {"status": failure.status},
+            )
         raise AppError(ErrorCode.HKEX_UNAVAILABLE, _UNAVAILABLE, {"status": failure.status})

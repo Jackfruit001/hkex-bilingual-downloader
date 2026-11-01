@@ -7,9 +7,52 @@ Filled in as tests are written. Built from the requirements table in `docs/SPEC.
 ```
 cd backend
 uv run pytest              # offline tests (default)
-uv run pytest -m live      # opt-in live HKEXnews smoke tests
-uv run ruff check . && uv run mypy
+uv run pytest -m live      # opt-in live HKEXnews tests (a smoke test and a real pair ZIP)
+uv run ruff check . && uv run mypy app
+
+cd frontend
+npm test                   # Vitest: date logic
+npm run e2e                # Playwright: browser journeys against the app in fixture mode
 ```
+
+CI runs the backend on Ubuntu, macOS and Windows and the frontend on Ubuntu (`.github/workflows/ci.yml`).
+
+## Results (1 November 2026)
+
+| Suite | Result |
+|---|---|
+| Backend, offline | 991 passed, 1 expected failure (the open M-015 case), 2 live tests not run |
+| Frontend unit (Vitest) | 4 passed |
+| Browser journeys (Playwright, fixture mode) | 5 passed |
+| Ruff, mypy strict on `backend/app` | clean |
+
+What each area covers:
+
+- **Pairing:** unit tests for every signal and rule; 11 recorded scenarios replayed; a golden set of
+  74 hand-verified announcements from 21 issuers (same-minute batches, interleaved numbers, stubs
+  in both directions, revised headlines, identical bilingual files, pre-2007 files, a delisted
+  company, a web-page entry). Zero wrong confirmations from the rules alone. Hypothesis checks the
+  invariants.
+- **Same-day announcements:** the Tencent and Zai Lab scenarios hold several announcements in one
+  minute; the layout rule keeps them as "Check pairing" when file order cannot tell them apart.
+- **Missing results:** English-only and Chinese-only entries, stubs, and the empty range (a 404
+  with a message) are in the matcher, API and browser tests.
+- **Filenames:** 196 tests: 41 real titles, Hypothesis properties, and every one of the 6,316
+  recorded PDFs checked for validity on Windows, macOS and Linux, length, and unique names.
+  Mutation testing killed every non-equivalent mutant (M-018).
+- **Failed downloads (fault injection with respx):** timeout; connection reset then success; 500
+  then success; 429 with `Retry-After`; body shorter than `Content-Length`; HTML page with status
+  200; non-PDF bytes; redirect to another site (never followed); 404. A failed file never produces
+  a ZIP, and "Retry failed files" fetches only what failed.
+- **Security:** a client sending another site's URL or a path with `..` is refused before any fetch.
+- **API:** every error carries a code and a message; unknown fields are rejected; rate limiting.
+
+### Not yet run
+
+- The live Gate 3 test (`uv run pytest -m live`) and `scripts/audit_random.py` need approval for
+  live HKEXnews calls. Audit results will be added here as `docs/audit-report.md`.
+- Windows check by hand (Chrome and Edge downloads, Chinese filenames, ZIP in File Explorer).
+- The hosted app's smoke test.
 
 ## The golden pairing set (SPEC section 10.4)
 

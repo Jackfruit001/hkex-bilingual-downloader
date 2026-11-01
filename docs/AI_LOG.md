@@ -182,6 +182,24 @@ How AI tools were used, and the mistakes they made that were caught. Entries are
 - **Fix and commit:** tests added for each survivor; the cut property replaced by an independent statement of the SPEC rule; the dash extension removed.
 - **Guard added:** every non-equivalent mutant is killed. The habit stays: mutate new rules before calling them done.
 
+### M-019: the first fixture-mode server returned the wrong rows
+
+- **Date and tool:** 2026-11-01, Claude Code (API, Phase 4.2).
+- **What the AI produced:** a fixture transport that answered every search for a stock with the first recording found for it, whatever dates were asked for.
+- **What was wrong:** the recordings for one stock cover different windows, so the Chinese side returned 33 rows from another window and every English document looked English only (10 of 10).
+- **How it was caught:** the first API test (it expected confirmed pairs) failed; printing the search diagnostics showed 33 rows fetched and all outside the range.
+- **Fix and commit:** the transport now merges all recorded rows for a stock and filters them by the requested dates, which is what the real servlet does. The same search then gives 17 of 17 matched.
+- **Guard added:** API tests assert pairs, sorting, filenames and ZIP downloads against the fixtures.
+
+### M-020: the suggestion list covered the date buttons
+
+- **Date and tool:** 2026-11-01, Claude Code (frontend, Phase 5.2).
+- **What the AI produced:** a stock search box whose suggestion list stayed open after the user moved on, and could be re-filled by a late reply. I also ran the formatter over the whole `scripts/` folder, which rewrote two older scripts that were not part of the task.
+- **What was wrong:** the open list covered the date presets, so a real user could not click "Custom" (a Playwright run timed out); the formatter changes were unrelated to the work.
+- **How it was caught:** the end-to-end test failed once, then passed on a re-run, which showed a timing problem; a screenshot confirmed the list was still open after the search. `git status` showed the two modified scripts.
+- **Fix and commit:** the list is shown only while the box has focus and closes on Escape; the two scripts were restored.
+- **Guard added:** the Playwright journeys click the date presets right after typing a code.
+
 ### M-00X: short title
 
 - **Date and tool:**

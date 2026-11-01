@@ -1,6 +1,6 @@
 # Specification
 
-Version 1.6, 31 October 2026 (Phase 3.1: D-016, filename rules the SPEC left open; Gate 2 answers: D-015, pre-2007 fallback; Gate 0 changes: D-009, research notes §9; Gate 1 change: D-010, code reuse; Phase 2: D-011, same-minute batches; D-013, GEM paths and unreadable Chinese text). Owner: Zarif. Changes need Zarif's approval and an entry in `docs/DECISIONS.md`.
+Version 1.7, 1 November 2026 (D-017: job states and the content check result; Phase 3.1: D-016, filename rules the SPEC left open; Gate 2 answers: D-015, pre-2007 fallback; Gate 0 changes: D-009, research notes §9; Gate 1 change: D-010, code reuse; Phase 2: D-011, same-minute batches; D-013, GEM paths and unreadable Chinese text). Owner: Zarif. Changes need Zarif's approval and an entry in `docs/DECISIONS.md`.
 
 ## 1. Users and the job to be done
 
@@ -208,7 +208,7 @@ Format: `{LANG}_{YYYY-MM-DD}-{CODE}-{TITLE}.pdf`
 - **Fetch:** stream to a temporary file; connect timeout 10 s, read timeout 30 s; up to 3 retries with exponential backoff and jitter on network errors, 429 and 5xx; respect `Retry-After`.
 - **Verify, in order:** HTTP 200; body starts with `%PDF-`; bytes received equal `Content-Length` when present; not an HTML page; pypdf opens it (non-strict) with ≥ 1 page. Record SHA-256 and page count. Any failure is `VERIFY_FAILED` with the reason; nothing is offered for download.
 - **Cache** verified files by path for 1 hour (disk, LRU, 1 GB cap). Repeated downloads reuse the cache and get the same filename.
-- **Jobs:** id, items (path, filename, state `queued | fetching | verifying | done | failed`, bytes, error), overall state. Kept in memory, expire after 1 hour. The client polls every 500 ms.
+- **Jobs:** id, items (path, filename, state `queued | fetching | done | failed`, bytes, error; fetching and verifying are one step, D-017), overall state `running | done | failed`. Kept in memory, expire after 1 hour. The client polls every 500 ms.
 - **ZIP:** built from verified files only; UTF-8 entry names; stored without compression (PDFs are already compressed). If any item fails, the job fails with per-item reasons and offers "Retry failed files"; no partial ZIP is offered as complete.
 - **Limits:** 50 announcements or 500 MB per bulk ZIP; at most 3 concurrent HKEX downloads per job and 6 globally.
 - **Hosted hygiene:** per-IP rate limits on search and download endpoints; `X-Robots-Tag: noindex`; request bodies are not logged.
@@ -268,6 +268,8 @@ All errors share one shape: `{code, message, details?}` with codes from §9.
 | `DOWNLOAD_FAILED` | The Chinese PDF couldn't be downloaded (connection timed out). Nothing was saved. |
 | `VERIFY_FAILED` | HKEXnews sent an incomplete file (2.1 of 4.8 MB). Nothing was saved. |
 | `ZIP_INCOMPLETE` | The ZIP wasn't created because 1 of 6 files failed. Retry the failed file. |
+| `INVALID_DOCUMENT_PATH` | That is not an HKEXnews document path. Search again and use the download buttons. |
+| `DOWNLOAD_LIMIT_EXCEEDED` | Choose between 1 and 100 files for this download. / These files add up to more than 500 MB. Choose fewer announcements. |
 
 ## 10. Testing strategy
 

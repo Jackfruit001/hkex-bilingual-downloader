@@ -230,3 +230,22 @@ def test_no_recorded_code_has_two_active_securities(reference_raw: dict[str, Any
     # code, resolve() asks the user instead (test above), but this test says it happened.
     codes = [str(e["c"]).zfill(5) for e in reference_raw["activestock_sehk_e"]]
     assert len(codes) == len(set(codes))
+
+
+def test_stock_search_matches_code_prefixes_and_names() -> None:
+    from app.domain.models import Stock
+    from app.hkex.reference import StockDirectory
+
+    directory = StockDirectory(
+        [
+            Stock(stock_id=1, code="00700", name_en="TENCENT", name_tc="騰訊控股", active=True),
+            Stock(stock_id=2, code="00005", name_en="HSBC HOLDINGS", name_tc="匯豐控股"),
+            Stock(stock_id=3, code="00013", name_en="HUTCHISON", active=False),
+        ]
+    )
+    assert [s.code for s in directory.search("700")] == ["00700"]
+    assert [s.code for s in directory.search("5")] == ["00005"]
+    assert [s.code for s in directory.search("hsbc")] == ["00005"]
+    assert [s.code for s in directory.search("控股")] == ["00005", "00700"]
+    assert [s.code for s in directory.search("1")] == ["00013"]
+    assert directory.search("  ") == []

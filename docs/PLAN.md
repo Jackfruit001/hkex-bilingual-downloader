@@ -1,6 +1,6 @@
 # Plan
 
-**Status:** Phase 2 done, Gate 2 approved by Zarif (31 October 2026): 2.1 to 2.6 done (matcher, evidence, content check, golden helper, golden set, golden test; D-011 to D-014). The 2.4 findings were settled on 31 October (D-013): GEM paths fixed, unreadable Chinese text rule added to the content check, separate annual report an accepted README limitation. 2.5 done (D-014): Claude read the drafts and Zarif confirmed; 74 of 75 entries verified from 21 issuers (72 agreed, 2 corrected including one wrong `matched`, M-014; 2 duplicates deleted; 1 `.doc` left unverified). 2.6 done (74 verified entries judged offline: 50 confirmed and right, 1 wrong `matched` expected and open (M-014), 12 for checking, 1 pair shown apart, 10 single; with the content check 56 confirmed and 6 for checking; 717 tests passed, 2 expected failures). The four Gate 2 items were answered and applied on 31 October (D-015): the D-009 fallback (pre-2007 pairs stay `check`), the Chinese revision markers mapped, the stub wording changed, and the 2005 annual report not tagged. One expected failure remains in the golden test, in the run with the content check (`00005-303146`, M-015), open for Zarif; 740 backend tests pass plus 1 expected failure. Phase 3 plan awaits approval. Update this line at every gate.
+**Status (1 Nov 2026):** Phases 3 to 5 built in one day on Zarif's instruction (D-017): 991 backend tests pass plus 1 expected failure (2 live tests are opt-in), 4 Vitest tests, 5 Playwright journeys, ruff and strict mypy clean. Open: Zarif's review of the 30 sample filenames (3.1), a hosted deploy and smoke test (6.1, 6.2), the live Gate 3 pair test and the random audit (6.3), which need live-call approval, the Windows check (6.4) and the README time spent. Earlier status: Phase 2 done, Gate 2 approved by Zarif (31 October 2026): 2.1 to 2.6 done (matcher, evidence, content check, golden helper, golden set, golden test; D-011 to D-014). The 2.4 findings were settled on 31 October (D-013): GEM paths fixed, unreadable Chinese text rule added to the content check, separate annual report an accepted README limitation. 2.5 done (D-014): Claude read the drafts and Zarif confirmed; 74 of 75 entries verified from 21 issuers (72 agreed, 2 corrected including one wrong `matched`, M-014; 2 duplicates deleted; 1 `.doc` left unverified). 2.6 done (74 verified entries judged offline: 50 confirmed and right, 1 wrong `matched` expected and open (M-014), 12 for checking, 1 pair shown apart, 10 single; with the content check 56 confirmed and 6 for checking; 717 tests passed, 2 expected failures). The four Gate 2 items were answered and applied on 31 October (D-015): the D-009 fallback (pre-2007 pairs stay `check`), the Chinese revision markers mapped, the stub wording changed, and the 2005 annual report not tagged. One expected failure remains in the golden test, in the run with the content check (`00005-303146`, M-015), open for Zarif; 740 backend tests pass plus 1 expected failure. Phase 3 plan awaits approval. Update this line at every gate.
 
 **Timeline (HKT):** Fri 30 Oct, Phases 0 to 2. Sat 31 Oct, Phases 3 and 4. Sun 1 Nov, Phases 5 and 6. Mon 2 Nov, Phase 7 and submit. Update, 31 Oct: the reviewer allowed one extra day, so submission can slip to Tue 3 Nov. Phases run strictly in order, each gate approved before the next starts; no phase is skipped or reopened to save time.
 
@@ -55,24 +55,24 @@ Goal: confirm how HKEXnews really behaves before designing around it.
 ## Phase 3: Filenames, downloads and ZIP (about 3 h)
 
 - [ ] 3.1 `naming/titlecase.py` and `naming/filenames.py` per SPEC §5. Unit tests with at least 30 real titles from the fixtures; Hypothesis properties. [Zarif] Review 30 sample filenames. (Built 31 Oct: 936 tests pass plus 1 expected failure, D-016; the review of the 30 samples is pending, so the box stays open.)
-- [ ] 3.2 `downloads/fetcher.py` and `verify.py`: allowlist, streaming, retries, verification, cache.
-- [ ] 3.3 `downloads/jobs.py` and `zipper.py`: jobs, progress, all-or-nothing ZIP, `sources.csv`, limits.
-- [ ] 3.4 Fault-injection tests (SPEC §10.5).
+- [x] 3.2 `downloads/fetcher.py` and `verify.py`: allowlist, streaming, retries, verification, cache.
+- [x] 3.3 `downloads/jobs.py` and `zipper.py`: jobs, progress, all-or-nothing ZIP, `sources.csv`, limits.
+- [x] 3.4 Fault-injection tests (SPEC §10.5).
 - **GATE 3:** test summary; a real pair ZIP downloaded from HKEX and opened on macOS.
 
 ## Phase 4: API (about 2 h)
 
-- [ ] 4.1 Routes and schemas per SPEC §7; error model per §9; per-IP rate limiting; noindex header.
-- [ ] 4.2 Fixture mode (`HKEX_MODE=fixtures`) so the frontend and Playwright run without calling HKEXnews.
-- [ ] 4.3 API tests.
+- [x] 4.1 Routes and schemas per SPEC §7; error model per §9; per-IP rate limiting; noindex header.
+- [x] 4.2 Fixture mode (`HKEX_MODE=fixtures`) so the frontend and Playwright run without calling HKEXnews.
+- [x] 4.3 API tests.
 - **GATE 4:** example request and response for each endpoint.
 
 ## Phase 5: Frontend (about 5 h)
 
-- [ ] 5.1 Design plan per SPEC §8: palette, type, wireframes, principles, and copy for every state. **GATE 5a:** Zarif approves before any UI code.
-- [ ] 5.2 Build: search, progress, results, announcement entries, evidence, filename editing, downloads with progress, bulk ZIP, empty and error states, help panel and diagnostics.
-- [ ] 5.3 Accessibility pass (keyboard, focus, screen-reader announcements, contrast) and responsive pass.
-- [ ] 5.4 Vitest and Playwright journeys (SPEC §10.7).
+- [x] 5.1 Design plan per SPEC §8: palette, type, wireframes, principles, and copy for every state. **GATE 5a:** Zarif approves before any UI code.
+- [x] 5.2 Build: search, progress, results, announcement entries, evidence, filename editing, downloads with progress, bulk ZIP, empty and error states, help panel and diagnostics.
+- [x] 5.3 Accessibility pass (keyboard, focus, screen-reader announcements, contrast) and responsive pass.
+- [x] 5.4 Vitest and Playwright journeys (SPEC §10.7).
 - **GATE 5b:** screenshots of every state; Playwright results.
 
 ## Phase 6: Deploy and harden (about 3 h)
@@ -81,7 +81,7 @@ Goal: confirm how HKEXnews really behaves before designing around it.
 - [ ] 6.2 Smoke-test the hosted app with three stock codes.
 - [ ] 6.3 `scripts/audit_random.py`: at least 30 random active stocks (mostly ordinary shares, a few other securities) over the last 90 days; writes `docs/audit-report.md`. Fix what it finds; write up the failures and fixes for TESTING.md.
 - [ ] 6.4 [Zarif] Windows check on a real PC: downloads in Chrome and Edge, Chinese filenames, ZIP extraction in File Explorer, long names.
-- [ ] 6.5 CI workflow on Ubuntu, macOS and Windows.
+- [x] 6.5 CI workflow on Ubuntu, macOS and Windows.
 - **GATE 6:** audit report, Windows results, CI green.
 
 ## Phase 7: Submission (about 2 h)

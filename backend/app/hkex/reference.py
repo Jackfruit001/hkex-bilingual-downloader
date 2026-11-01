@@ -56,6 +56,20 @@ class CategoryIndex:
             two[lang] = {k: tuple(v) for k, v in grouped.items()}
         return cls(one, two)
 
+    def top_level(self) -> list[tuple[str, str, str]]:
+        """Tier-one categories as (code, English name, Chinese name), for the category picker."""
+        tc_name = {code: name for name, code in self._tier_one[Lang.TC].items()}
+        return sorted(
+            (code, name, tc_name.get(code, name)) for name, code in self._tier_one[Lang.EN].items()
+        )
+
+    def parent_of(self, code: str) -> str:
+        """The tier-one code a category code belongs to (a tier-one code is its own parent)."""
+        for (parent, _), codes in self._tier_two[Lang.EN].items():
+            if code in codes:
+                return parent
+        return code
+
     def resolve(self, lang: Lang, parsed: ParsedCategory) -> tuple[str, ...]:
         parent = self._tier_one[lang].get(parsed.parent)
         if parent is None:
@@ -118,6 +132,34 @@ class StockDirectory:
 
     def __len__(self) -> int:
         return sum(len(g) for g in self._by_code.values())
+
+    def search(self, query: str, limit: int = 8) -> list[Stock]:
+        """Securities whose code starts with the digits typed, or whose name contains the text."""
+        text = query.strip().casefold()
+        if not text:
+            return []
+        if text.isdigit():
+            digits = text.lstrip("0") or "0"
+            hits = [
+                s
+                for g in self._by_code.values()
+                for s in g
+                if s.code.lstrip("0").startswith(digits)
+            ]
+        else:
+            hits = [
+                s
+                for g in self._by_code.values()
+                for s in g
+                if text in s.name_en.casefold() or text in (s.name_tc or "")
+            ]
+        hits.sort(key=lambda s: (not s.active, s.code, s.stock_id))
+        return hits[:limit]
+
+    def active(self) -> list[Stock]:
+        return sorted(
+            (s for g in self._by_code.values() for s in g if s.active), key=lambda s: s.code
+        )
 
     def lookup(self, code: str) -> list[Stock]:
         return list(self._by_code.get(code, ()))

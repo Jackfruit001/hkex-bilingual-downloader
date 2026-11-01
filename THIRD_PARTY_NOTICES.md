@@ -27,6 +27,8 @@ Hypothesis (MPL-2.0), PyYAML (MIT, golden set file), Ruff (MIT), mypy (MIT).
 | Tailwind CSS, @tailwindcss/vite | MIT | Styling |
 | TypeScript | Apache-2.0 | Type checking |
 
+Test only: Vitest (MIT), Playwright (Apache-2.0).
+
 ## Reused code
 
 None so far. Open-source HKEX clients were read for reference only; see
