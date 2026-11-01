@@ -113,7 +113,7 @@ research and probes of HKEXnews first, then tests, then features.
 - **Pairing was verified** against a golden set and against recorded real responses, not by
   trusting the code. Downloads are verified by content (PDF header, length, page count) before
   anything is offered.
-- **AI mistakes are logged** in `docs/AI_LOG.md` (20 entries). One example, M-015: a content check
+- **AI mistakes are logged** in `docs/AI_LOG.md` (21 entries). One example, M-015: a content check
   that looked conclusive confirmed a wrong pair because it compared against only one candidate.
   Others were caught by mutation testing (M-018), by an API test (M-019) and by a browser test
   (M-020).

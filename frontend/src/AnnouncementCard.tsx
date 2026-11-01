@@ -92,7 +92,7 @@ export function AnnouncementCard({ item, selected, onToggle }: Props) {
 
   const runCheck = async () => {
     if (!item.en) return;
-    const tcPaths = [item.tc?.path, ...item.rivals.filter((r) => r.lang === "tc").map((r) => r.path)].filter(
+    const tcPaths = [item.tc?.path, ...item.rivals.filter((r) => r.lang === "tc" && /\.pdf$/i.test(r.path)).map((r) => r.path)].filter(
       (p): p is string => !!p,
     );
     setCheck("Comparing the figures in the files…");
@@ -174,7 +174,7 @@ export function AnnouncementCard({ item, selected, onToggle }: Props) {
             {zipReason}
           </span>
         )}
-        {item.status === "check" && item.en && (
+        {item.status === "check" && item.en?.downloadable && item.tc?.downloadable && (
           <button type="button" className="secondary" onClick={runCheck}>
             Check contents
           </button>

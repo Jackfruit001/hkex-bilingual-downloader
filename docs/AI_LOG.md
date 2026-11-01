@@ -200,6 +200,15 @@ How AI tools were used, and the mistakes they made that were caught. Entries are
 - **Fix and commit:** the list is shown only while the box has focus and closes on Escape; the two scripts were restored.
 - **Guard added:** the Playwright journeys click the date presets right after typing a code.
 
+### M-021: a live smoke test written in Phase 1 had never been run
+
+- **Date and tool:** 2026-11-01, Claude Code (Gate 3 live run).
+- **What the AI produced:** `test_zai_lab_on_28_october_2026_has_two_pairs`, which passed the whole `Resolution` object to the search instead of its `.stock`.
+- **What was wrong:** the test could not work. It is opt-in (`-m live`), so every offline run skipped it and nothing flagged the bug.
+- **How it was caught:** the first live run, with Zarif's approval, failed with an AttributeError.
+- **Fix and commit:** use `resolve(...).stock`; the test then passed against real HKEXnews.
+- **Guard added:** live tests are now run once before each gate that depends on them.
+
 ### M-00X: short title
 
 - **Date and tool:**

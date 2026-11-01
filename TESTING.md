@@ -74,3 +74,19 @@ cd backend && uv run pytest tests/integration/test_golden.py -s
 ```
 
 Live runs are one request at a time, at least a second apart, and stop at the first refusal. Everything is cached under `scripts/.golden_cache/` (not committed, PDFs included). A run that writes entries also records the search responses it used under `backend/tests/fixtures/golden/`; PDFs are never committed, only their hashes and figure fingerprints (`backend/tests/golden/fingerprints.json`).
+
+## Audit on random stocks (1 November 2026)
+
+`scripts/audit_random.py --stocks 30 --seed 1`: 30 random active securities (25 ordinary shares or
+funds, 5 warrants and other products), last 90 days, live HKEXnews. Full table: `docs/audit-report.md`.
+
+- 30 of 30 searches worked; 760 announcements, 759 "Matched", 1 "Check pairing", none single-language.
+- 25 stocks had a confirmed pair: both PDFs downloaded, verified and zipped; 0 failures. The other 5
+  had no announcements in the period.
+- **One failure found and fixed.** For 00135 the only "Check pairing" entry is a shared HKEXnews web
+  page (`/dod/en.html`) listed as a PDF. The app handled it correctly (not downloadable, linked to
+  HKEXnews), but the audit script tried to content-check it and the page offered "Check contents".
+  Both now skip entries that are not downloadable PDFs.
+- **What the audit cannot show:** it counts statuses, not whether each "Matched" is right. That is
+  what the golden set is for. A very high "Matched" share is expected here because many securities
+  are funds and structured products that publish in both languages at once.

@@ -103,7 +103,14 @@ async def audit_stock(
     check = next(
         (a for a in paired.announcements if a.status is Status.CHECK and a.en and a.tc), None
     )
-    if check and check.en and check.tc and state["checks"] < MAX_CONTENT_CHECKS:
+    if (
+        check
+        and check.en
+        and check.tc
+        and check.en.path in names
+        and check.tc.path in names  # web pages cannot be content-checked
+        and state["checks"] < MAX_CONTENT_CHECKS
+    ):
         state["checks"] += 1
         try:
             texts = [

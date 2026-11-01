@@ -22,7 +22,7 @@ async def test_zai_lab_on_28_october_2026_has_two_pairs() -> None:
     try:
         reference = await ReferenceService(client).get()
         assert reference.source == "live"
-        stock = reference.stocks.resolve("09688")
+        stock = reference.stocks.resolve("09688").stock
         out = await search_both(
             client, stock, date(2026, 10, 28), date(2026, 10, 28), reference.categories
         )
