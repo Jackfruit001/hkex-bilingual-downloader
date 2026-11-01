@@ -109,7 +109,8 @@ def test_with_files_it_shows_hashes_figures_overlap_and_the_two_first_pages() ->
     assert "100% of the figures in the smaller set (4 figures compared)" in text
     assert "2026×3" in text
     assert "Annual results for 2026" in text and "2026年全年業績" in text
-    assert "/cache/en_100.pdf" in text and "/cache/tc_101.pdf" in text
+    # the path is printed in the platform's own form (backslashes on Windows)
+    assert str(Path("/cache/en_100.pdf")) in text and str(Path("/cache/tc_101.pdf")) in text
 
 
 def test_identical_bytes_are_called_out() -> None:
@@ -155,7 +156,7 @@ def test_no_line_is_wider_than_the_terminal() -> None:
     )
     a = pair().model_copy(update={"evidence": (long,)})
     for line in row_detail(1, a, (CaseType.ORDINARY,), "09688-100", files, 100):
-        if "http" not in line and "/cache/" not in line:
+        if "http" not in line and "cache" not in line:
             assert display_width(line) <= 100, line
 
 
