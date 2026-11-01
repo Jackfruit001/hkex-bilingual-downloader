@@ -54,7 +54,7 @@ Goal: confirm how HKEXnews really behaves before designing around it.
 
 ## Phase 3: Filenames, downloads and ZIP (about 3 h)
 
-- [ ] 3.1 `naming/titlecase.py` and `naming/filenames.py` per SPEC §5. Unit tests with at least 30 real titles from the fixtures; Hypothesis properties. [Zarif] Review 30 sample filenames.
+- [ ] 3.1 `naming/titlecase.py` and `naming/filenames.py` per SPEC §5. Unit tests with at least 30 real titles from the fixtures; Hypothesis properties. [Zarif] Review 30 sample filenames. (Built 31 Oct: 936 tests pass plus 1 expected failure, D-016; the review of the 30 samples is pending, so the box stays open.)
 - [ ] 3.2 `downloads/fetcher.py` and `verify.py`: allowlist, streaming, retries, verification, cache.
 - [ ] 3.3 `downloads/jobs.py` and `zipper.py`: jobs, progress, all-or-nothing ZIP, `sources.csv`, limits.
 - [ ] 3.4 Fault-injection tests (SPEC §10.5).

@@ -13,6 +13,7 @@ Runtime dependencies are permissive (MIT, BSD, Apache-2.0, ISC). Versions are pi
 | Pydantic | MIT | Validated models |
 | tzdata | Apache-2.0 | Time zone data for `Asia/Hong_Kong` |
 | pypdf | BSD-3-Clause | Text extraction for the content check (SPEC §4.5) |
+| pathvalidate | MIT | Final check that a filename is valid on Windows, macOS and Linux (SPEC §5) |
 
 Test and lint only: pytest (MIT), pytest-asyncio (Apache-2.0), respx (BSD-3-Clause),
 Hypothesis (MPL-2.0), PyYAML (MIT, golden set file), Ruff (MIT), mypy (MIT).

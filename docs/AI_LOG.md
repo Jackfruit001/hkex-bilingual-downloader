@@ -173,6 +173,15 @@ How AI tools were used, and the mistakes they made that were caught. Entries are
 - **Fix and commit:** reworded to the search result plus what the notice says; SPEC §4.1 and §4.6 updated (D-015).
 - **Guard added:** unit tests assert the exact evidence in both directions.
 
+### M-018: first drafts of the Phase 3.1 tests were weaker than they looked
+
+- **Date and tool:** 2026-10-31, Claude Code (tests for Title Case and filenames).
+- **What the AI produced:** 196 tests that all passed on the first run against the new code. Among them: a header test whose regex could not see a stray quote; no test that a longer word before "shares" (`NEW SHARES`) is not kept upper case; no test that same-minute files are ordered by file number as a number (3 and 4 digit numbers in 2015 paths); a property with a vacuous `or True`; two hand-written expectations that were wrong ("AND SO ON" cannot give "And so On" when "on" is a small word, and an all-caps filler string that Title Case rightly changes). I also added an en and em dash as separators, which the SPEC does not ask for and no recorded title uses.
+- **What was wrong:** green meant little. Several tests could not fail for the mistakes they were written for.
+- **How it was caught:** mutation testing (20 mutants of `titlecase.py`, 36 of `filenames.py`, with `__pycache__` cleared between runs): 6 real survivors, plus 2 equivalent ones (the number suffix is pure ASCII, and a slug never starts with a hyphen). The `or True` on re-reading before the first run; the two wrong expectations on the first run.
+- **Fix and commit:** tests added for each survivor; the cut property replaced by an independent statement of the SPEC rule; the dash extension removed.
+- **Guard added:** every non-equivalent mutant is killed. The habit stays: mutate new rules before calling them done.
+
 ### M-00X: short title
 
 - **Date and tool:**

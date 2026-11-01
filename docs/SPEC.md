@@ -1,6 +1,6 @@
 # Specification
 
-Version 1.5, 31 October 2026 (Gate 2 answers: D-015, pre-2007 fallback; Gate 0 changes: D-009, research notes §9; Gate 1 change: D-010, code reuse; Phase 2: D-011, same-minute batches; D-013, GEM paths and unreadable Chinese text). Owner: Zarif. Changes need Zarif's approval and an entry in `docs/DECISIONS.md`.
+Version 1.6, 31 October 2026 (Phase 3.1: D-016, filename rules the SPEC left open; Gate 2 answers: D-015, pre-2007 fallback; Gate 0 changes: D-009, research notes §9; Gate 1 change: D-010, code reuse; Phase 2: D-011, same-minute batches; D-013, GEM paths and unreadable Chinese text). Owner: Zarif. Changes need Zarif's approval and an entry in `docs/DECISIONS.md`.
 
 ## 1. Users and the job to be done
 
@@ -178,22 +178,22 @@ Format: `{LANG}_{YYYY-MM-DD}-{CODE}-{TITLE}.pdf`
 
 1. HTML-unescape, NFC, collapse whitespace.
 2. Title Case (`TITLE_CASE_MODE = "title"` by default; `"as_published"` keeps HKEX casing). Apply only when ≥ 70% of ASCII letters are upper case; mixed-case titles stay as published.
-   - Keep upper case: an acronym list in config (AGM, EGM, SGM, ESG, CEO, CFO, INED, PRC, HK, HKD, RMB, USD, US, UK, EU, SEC, SFC, CSRC, HKEX, SEHK, GEM, IPO, ADS, ADR, ETF, REIT, CBBC, RSU, ESOP, PLC, LLC, NV, SA, AG, plus more found in fixtures); Roman numerals I to XXX; tokens containing digits (8-K, 10-Q, 20-F, Q3, H1, FY2025, 2026); single-letter share classes before "share(s)" (H Shares, A Shares).
+   - Keep upper case: an acronym list in config (AGM, EGM, SGM, ESG, CEO, CFO, INED, PRC, HK, HKD, RMB, USD, US, UK, EU, SEC, SFC, CSRC, HKEX, SEHK, GEM, IPO, ADS, ADR, ETF, REIT, CBBC, RSU, ESOP, PLC, LLC, NV, SA, AG, plus HSBC, CKH, CK, GSK, CNY, AUD, MREL found in the recorded all-caps titles and the currency codes EUR, GBP, JPY, SGD; D-016); Roman numerals I to XXX; tokens containing digits (8-K, 10-Q, 20-F, Q3, H1, FY2025, 2026); single-letter share classes before "share(s)" (H Shares, A Shares).
    - Lower case: a, an, the, and, but, or, nor, as, at, by, for, from, in, into, of, off, on, onto, per, to, up, upon, via, vs, with; except as the first word, after an opening bracket, or after a " - " separator.
-   - Everything else: first letter upper, rest lower, per hyphenated part (Non-Exempt) and keeping apostrophes (Shareholders').
+   - Everything else: first letter upper, rest lower, per hyphenated part (Non-Exempt) and keeping apostrophes (Shareholders'). Parts joined by `-`, `/`, `&`, `.`, `,`, `;` or `:` inside one word are cased one by one and every part is capitalised, small words included (Mark-To-Market), which also keeps dotted initialisms upper case (L.P., S.P.A.). A " - " separator is a bare hyphen between spaces (D-016).
 3. Slug: replace `< > : " / \ | ? *` and control characters with a space; whitespace runs become `-`; collapse repeated `-`; strip `-`, `.`, `_` and spaces at both ends. Other punctuation (commas, brackets, apostrophes, ampersands) stays.
 
 **Chinese title pipeline:** steps 1 and 3 only; also treat the ideographic space U+3000 as whitespace. Full-width punctuation stays (valid on Windows).
 
-**Limits:** the whole filename is ≤ 180 UTF-8 bytes and ≤ 120 characters (fits Windows, macOS and typical download paths). Truncate the title at the last `-` boundary that fits; never cut inside a multi-byte character. An empty title becomes `Untitled`. Validate the final name with pathvalidate for the universal platform.
+**Limits:** the whole filename is ≤ 180 UTF-8 bytes and ≤ 120 characters (fits Windows, macOS and typical download paths). Truncate the title at the last `-` at or before the point where the name stops fitting, then strip `-`, `.`, `_` and spaces from the end; if there is no `-`, cut at a character boundary, never inside a multi-byte character. An empty title becomes `Untitled`. Validate the final name with pathvalidate for the universal platform.
 
-**Collisions:** compute names over the full unfiltered day for that stock. When two different files would get the same name, add `-(2)`, `-(3)` in publication order (release time, then sequence). The same document always gets the same name, whatever the filters.
+**Collisions:** compute names over the full unfiltered day for that stock. When two different files would get the same name, add `-(2)`, `-(3)` in publication order (release time, then sequence). The first file keeps the name; the numbering room is taken from the title, so a numbered name still fits the limits. Stubs and entries that are not `.pdf` files take no number, and a file listed twice (a cancelled entry and its replacement) is one document. Publication order compares the file number as a number. The same document always gets the same name, whatever the filters.
 
 **ZIP names:** pair `EN-TC_{date}-{code}-{EN title}.zip` (TC title if EN is missing); bulk `HKEX_{code}_{start}_to_{end}.zip`. Bulk ZIPs include `sources.csv`: announcement, language, filename, status, source URL, SHA-256, retrieved at (HKT). Missing versions appear as rows marked "not published".
 
-**User edits:** the UI may edit a proposed name; the server re-sanitises it and says so if anything changed. Edits keep `.pdf`.
+**User edits:** the UI may edit a proposed name; the server re-sanitises it and says so if anything changed. Edits keep `.pdf`. The server cleans every filename a client sends the same way (a ZIP entry name is never trusted), whether or not the UI offers editing.
 
-**HTTP header:** `Content-Disposition: attachment; filename="<ASCII fallback>"; filename*=UTF-8''<percent-encoded>`.
+**HTTP header:** `Content-Disposition: attachment; filename="<ASCII fallback>"; filename*=UTF-8''<percent-encoded>`. The fallback replaces every non-ASCII, non-printable, `"` and `\` character with `_`; the encoded name percent-encodes everything but letters, digits and `-._~`.
 
 **Examples (each is a test):**
 

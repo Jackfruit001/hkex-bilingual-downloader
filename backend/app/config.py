@@ -3,6 +3,7 @@
 import os
 from dataclasses import dataclass
 from datetime import date
+from typing import Literal
 
 REPO_URL = "https://github.com/Jackfruit001/hkex-bilingual-downloader"
 VERSION = "0.1.0"
@@ -75,3 +76,39 @@ class PairingConfig:
 
 
 PAIRING = PairingConfig()
+
+TitleCaseMode = Literal["title", "as_published"]
+
+
+@dataclass(frozen=True)
+class NamingConfig:
+    """Filename rules (SPEC §5)."""
+
+    # "title" re-cases all-caps English titles; "as_published" keeps the HKEX casing (D-004).
+    title_case_mode: TitleCaseMode = "title"
+    # Title Case only runs when at least this share of the ASCII letters is upper case.
+    upper_share_min: float = 0.7
+    # Kept upper case. The SPEC list, plus those seen in all-caps recorded titles (HSBC, CKH, CK,
+    # GSK, CNY, AUD, MREL) and four more currency codes of the HKD, RMB and USD kind.
+    acronyms: frozenset[str] = frozenset(
+        {
+            "AGM", "EGM", "SGM", "ESG", "CEO", "CFO", "INED", "PRC", "HK", "HKD", "RMB", "USD",
+            "US", "UK", "EU", "SEC", "SFC", "CSRC", "HKEX", "SEHK", "GEM", "IPO", "ADS", "ADR",
+            "ETF", "REIT", "CBBC", "RSU", "ESOP", "PLC", "LLC", "NV", "SA", "AG",
+            "HSBC", "CKH", "CK", "GSK", "CNY", "AUD", "MREL", "EUR", "GBP", "JPY", "SGD",
+        }
+    )  # fmt: skip
+    # Lower case unless first, after an opening bracket, or after a " - " separator.
+    lower_words: frozenset[str] = frozenset(
+        {
+            "a", "an", "the", "and", "but", "or", "nor", "as", "at", "by", "for", "from", "in",
+            "into", "of", "off", "on", "onto", "per", "to", "up", "upon", "via", "vs", "with",
+        }
+    )  # fmt: skip
+    # The whole filename, prefix and extension included (fits Windows, macOS and download paths).
+    max_filename_bytes: int = 180
+    max_filename_chars: int = 120
+    untitled: str = "Untitled"
+
+
+NAMING = NamingConfig()
