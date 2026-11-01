@@ -20,6 +20,7 @@ scripts/.probe_cache/
 
 # Golden helper cache: PDFs and search responses (PDFs are never committed)
 scripts/.golden_cache/
+scripts/.audit/
 
 # Environment and OS
 .env
@@ -31,3 +32,4 @@ state/
 frontend/test-results/
 frontend/playwright-report/
 *.tsbuildinfo
+docs/PLAN.md

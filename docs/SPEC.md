@@ -280,7 +280,7 @@ All errors share one shape: `{code, message, details?}` with codes from §9.
 5. **Fault injection (respx):** timeouts; connection reset mid-body; 500 then success; 429 with `Retry-After`; truncated body versus `Content-Length`; HTML error page with status 200; non-PDF bytes; redirect off the allowlist.
 6. **API tests** with FastAPI's TestClient against fixtures.
 7. **Frontend:** Vitest for state logic; Playwright end to end against the backend in fixture mode (search, view pairs, download single, download ZIP, failure and retry, invalid inputs).
-8. **Live, opt-in** (`pytest -m live`, `scripts/audit_random.py`): random active stocks over recent ranges; pairs everything, runs content checks on a sample, verifies downloads, writes `docs/audit-report.md`. Failures found here and their fixes go into `TESTING.md`.
+8. **Live, opt-in** (`pytest -m live`, `scripts/audit_random.py`): random active stocks over recent ranges; pairs everything, runs content checks on a sample, verifies downloads, and writes a table to `scripts/.audit/report.md` (not committed). The summary goes into `TESTING.md`.
 
 CI (GitHub Actions): offline tests and lint on Ubuntu, macOS and Windows runners. Windows matters for filenames and ZIP entry names.
 

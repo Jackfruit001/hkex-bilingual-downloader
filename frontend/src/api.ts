@@ -52,7 +52,25 @@ export interface SearchResult {
   announcements: Announcement[];
   summary: Record<string, number>;
   warnings: string[];
-  diagnostics: Record<string, unknown>;
+  diagnostics: Diagnostics;
+}
+
+export interface LangStats {
+  calls: number;
+  rows_fetched: number;
+  rows_skipped: number;
+  splits: number;
+  rows_with_c_suffix: number;
+  rows_without_c_suffix: number;
+}
+
+export interface Diagnostics {
+  english: LangStats;
+  chinese: LangStats;
+  outside_range: number;
+  seconds: number;
+  pairing: Record<string, number>;
+  reference: "live" | "snapshot";
 }
 
 export interface SearchParams {

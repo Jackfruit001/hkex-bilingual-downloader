@@ -1,6 +1,7 @@
 import { useEffect, useId, useState } from "react";
 import { api, type Category, type SearchParams, type Stock } from "./api";
 import { PRESETS, presetRange, todayHkt, type Preset } from "./dates";
+import { SearchIcon, Spinner } from "./icons";
 
 interface Props {
   busy: boolean;
@@ -42,7 +43,7 @@ export function SearchForm({ busy, onSearch }: Props) {
 
   return (
     <form
-      className="grid gap-5"
+      className="panel grid gap-5"
       onSubmit={(e) => {
         e.preventDefault();
         onSearch({
@@ -61,27 +62,29 @@ export function SearchForm({ busy, onSearch }: Props) {
           if (!e.currentTarget.contains(e.relatedTarget)) setOpen(false);
         }}
       >
-        <label htmlFor={ids.code} className="block font-medium">
+        <label htmlFor={ids.code} className="block font-semibold">
           Stock code or company name
         </label>
-        <input
-          id={ids.code}
-          className="field mt-1 w-full"
-          value={code}
-          placeholder="For example 00700 or Tencent"
-          autoComplete="off"
-          inputMode="text"
-          aria-controls={ids.list}
-          onKeyDown={(e) => {
-            if (e.key === "Escape") setOpen(false);
-          }}
-          onFocus={() => setOpen(true)}
-          onChange={(e) => {
-            setCode(e.target.value);
-            setStockId(undefined);
-            setOpen(true);
-          }}
-        />
+        <div className="field-icon mt-1">
+          <SearchIcon />
+          <input
+            id={ids.code}
+            className="field w-full"
+            value={code}
+            placeholder="For example 00700 or Tencent"
+            autoComplete="off"
+            aria-controls={ids.list}
+            onFocus={() => setOpen(true)}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") setOpen(false);
+            }}
+            onChange={(e) => {
+              setCode(e.target.value);
+              setStockId(undefined);
+              setOpen(true);
+            }}
+          />
+        </div>
         {open && suggestions.length > 0 && stockId === undefined && (
           <ul
             id={ids.list}
@@ -99,7 +102,7 @@ export function SearchForm({ busy, onSearch }: Props) {
                     setOpen(false);
                   }}
                 >
-                  <span className="font-medium">{s.code}</span> {s.name_en}{" "}
+                  <span className="font-semibold">{s.code}</span> {s.name_en}{" "}
                   <span lang="zh-Hant">{s.name_tc}</span>
                   {!s.active && <span className="badge-muted">Delisted</span>}
                 </button>
@@ -110,53 +113,49 @@ export function SearchForm({ busy, onSearch }: Props) {
       </div>
 
       <fieldset>
-        <legend className="font-medium">
+        <legend className="font-semibold">
           Publication dates <span className="text-muted font-normal">(Hong Kong time)</span>
         </legend>
-        <div className="mt-1 flex flex-wrap gap-2" role="group" aria-label="Date presets">
-          {PRESETS.map((p) => (
-            <button
-              key={p.id}
-              type="button"
-              className="chip"
-              aria-pressed={preset === p.id}
-              onClick={() => choosePreset(p.id)}
-            >
-              {p.label}
-            </button>
-          ))}
-        </div>
-        <div className="mt-3 flex flex-wrap items-center gap-3">
-          <label htmlFor={ids.start}>From</label>
-          <input
-            id={ids.start}
-            type="date"
-            className="field"
-            value={start}
-            max={today}
-            onChange={(e) => {
-              setPreset("custom");
-              setRange([e.target.value, end]);
-            }}
-          />
-          <label htmlFor={ids.end}>to</label>
-          <input
-            id={ids.end}
-            type="date"
-            className="field"
-            value={end}
-            max={today}
-            onChange={(e) => {
-              setPreset("custom");
-              setRange([start, e.target.value]);
-            }}
-          />
+        <div className="mt-1 flex flex-wrap items-center gap-x-5 gap-y-3">
+          <div className="segmented" role="group" aria-label="Date presets">
+            {PRESETS.map((p) => (
+              <button key={p.id} type="button" aria-pressed={preset === p.id} onClick={() => choosePreset(p.id)}>
+                {p.label}
+              </button>
+            ))}
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <label htmlFor={ids.start}>From</label>
+            <input
+              id={ids.start}
+              type="date"
+              className="field"
+              value={start}
+              max={today}
+              onChange={(e) => {
+                setPreset("custom");
+                setRange([e.target.value, end]);
+              }}
+            />
+            <label htmlFor={ids.end}>to</label>
+            <input
+              id={ids.end}
+              type="date"
+              className="field"
+              value={end}
+              max={today}
+              onChange={(e) => {
+                setPreset("custom");
+                setRange([start, e.target.value]);
+              }}
+            />
+          </div>
         </div>
       </fieldset>
 
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <label htmlFor={ids.cat} className="block font-medium">
+          <label htmlFor={ids.cat} className="block font-semibold">
             Category
           </label>
           <select
@@ -174,7 +173,7 @@ export function SearchForm({ busy, onSearch }: Props) {
           </select>
         </div>
         <div>
-          <label htmlFor={ids.kw} className="block font-medium">
+          <label htmlFor={ids.kw} className="block font-semibold">
             Title contains <span className="text-muted font-normal">(optional)</span>
           </label>
           <input
@@ -189,6 +188,7 @@ export function SearchForm({ busy, onSearch }: Props) {
 
       <div>
         <button type="submit" className="primary" disabled={busy || !code.trim()}>
+          {busy ? <Spinner /> : <SearchIcon />}
           {busy ? "Searching…" : "Search announcements"}
         </button>
       </div>

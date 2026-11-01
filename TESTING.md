@@ -1,92 +1,158 @@
 # Testing
 
-Filled in as tests are written. Built from the requirements table in `docs/SPEC.md` section 2.
-
 ## Run the tests
 
 ```
 cd backend
-uv run pytest              # offline tests (default)
-uv run pytest -m live      # opt-in live HKEXnews tests (a smoke test and a real pair ZIP)
+uv run pytest                  # all offline tests (about 25 seconds, no internet needed)
+uv run pytest -m live          # optional: two tests that call the real HKEXnews
 uv run ruff check . && uv run mypy app
 
 cd frontend
-npm test                   # Vitest: date logic
-npm run e2e                # Playwright: browser journeys against the app in fixture mode
+npm test                       # unit tests (Vitest)
+npm run e2e                    # browser tests (Playwright), run on recorded data
 ```
 
-CI runs the backend on Ubuntu, macOS and Windows and the frontend on Ubuntu (`.github/workflows/ci.yml`).
-
-## Results (1 November 2026)
+The offline tests use responses recorded from the real HKEXnews, so they give the same result every
+time. GitHub Actions is set up to run them on Ubuntu, macOS and Windows (`.github/workflows/ci.yml`).
 
 | Suite | Result |
 |---|---|
-| Backend, offline | 991 passed, 1 expected failure (the open M-015 case), 2 live tests not run |
-| Frontend unit (Vitest) | 4 passed |
-| Browser journeys (Playwright, fixture mode) | 5 passed |
-| Ruff, mypy strict on `backend/app` | clean |
+| Backend, offline | 991 passed, 1 expected failure (a known limit of "Check contents", see below) |
+| Frontend unit tests | 13 passed |
+| Browser tests | 10 passed |
+| Code checks (ruff, mypy strict) | clean |
 
-What each area covers:
+## Language pairing
 
-- **Pairing:** unit tests for every signal and rule; 11 recorded scenarios replayed; a golden set of
-  74 hand-verified announcements from 21 issuers (same-minute batches, interleaved numbers, stubs
-  in both directions, revised headlines, identical bilingual files, pre-2007 files, a delisted
-  company, a web-page entry). Zero wrong confirmations from the rules alone. Hypothesis checks the
-  invariants.
-- **Same-day announcements:** the Tencent and Zai Lab scenarios hold several announcements in one
-  minute; the layout rule keeps them as "Check pairing" when file order cannot tell them apart.
-- **Missing results:** English-only and Chinese-only entries, stubs, and the empty range (a 404
-  with a message) are in the matcher, API and browser tests.
-- **Filenames:** 196 tests: 41 real titles, Hypothesis properties, and every one of the 6,316
-  recorded PDFs checked for validity on Windows, macOS and Linux, length, and unique names.
-  Mutation testing killed every non-equivalent mutant (M-018).
-- **Failed downloads (fault injection with respx):** timeout; connection reset then success; 500
-  then success; 429 with `Retry-After`; body shorter than `Content-Length`; HTML page with status
-  200; non-PDF bytes; redirect to another site (never followed); 404. A failed file never produces
-  a ZIP, and "Retry failed files" fetches only what failed.
-- **Security:** a client sending another site's URL or a path with `..` is refused before any fetch.
-- **API:** every error carries a code and a message; unknown fields are rejected; rate limiting.
+HKEXnews lists English and Chinese documents separately and does not say which belong together,
+so the app pairs them by comparing publication minute, file numbers, headline category and numbers
+in the titles. A pair is "Matched" only when the evidence is strong and nothing competes for either
+document; otherwise it is "Check pairing" with the candidates listed.
 
-### Not yet run
+**How it was tested**
 
-- The live Gate 3 test (`uv run pytest -m live`) and `scripts/audit_random.py` need approval for
-  live HKEXnews calls. Audit results will be added here as `docs/audit-report.md`.
-- Windows check by hand (Chrome and Edge downloads, Chinese filenames, ZIP in File Explorer).
-- The hosted app's smoke test.
+- Unit tests for every rule (`test_matcher.py`, `test_signals.py`), including the cases that must
+  never be "Matched": a close rival, conflicting numbers, a cancelled document, documents far apart.
+- Real HKEXnews responses replayed through the matcher (Tencent, an A+H company, a company with
+  English-only notices, a delisted company, documents from 2005, a three-year range, an empty result).
+- A **hand-checked set of 74 announcements from 21 issuers** (`backend/tests/golden/pairs.yaml`).
+  Each entry says which English and Chinese files truly belong together. The test fails if the app
+  shows a wrong pair as "Matched".
 
-## The golden pairing set (SPEC section 10.4)
+**Result on the 74 hand-checked announcements**
 
-`backend/tests/golden/pairs.yaml` holds hand-verified English and Chinese pairs. Drafts are made by `scripts/golden_helper.py`; an entry counts only once it is `verified: true`. Claude read both documents of each entry and Zarif confirmed the result; Zarif did not open every PDF (D-014). Design and limits: `docs/DECISIONS.md` D-012.
+| What the app showed | Count |
+|---|---|
+| "Matched", and the pair is right | 53 |
+| "Matched", and the pair is wrong | **0** |
+| "Check pairing", right partner among the candidates | 9 |
+| "Check pairing", but the listed partner is wrong (flagged as uncertain, so the user is warned) | 1 |
+| Two files that belong together, shown apart rather than guessed | 1 |
+| Only one language exists, and the reason is right | 10 |
 
-```
-uv run --project backend python scripts/golden_helper.py coverage                       # what is still missing
-uv run --project backend python scripts/golden_helper.py show 09688-12386841            # evidence and PDF paths for one entry
-uv run --project backend python scripts/golden_helper.py draft 00700 2026-10-01 2026-10-30   # table only
-uv run --project backend python scripts/golden_helper.py draft 00700 2026-10-01 2026-10-30 --pick 3,7
-uv run --project backend python scripts/golden_helper.py draft 00700 2026-10-01 2026-10-30 --offline --pick 3   # cache only
-scripts/golden_drafts.sh --offline                                                      # the first 68 drafts, from the cache
-```
+The hand-checked set was verified by AI reading both documents and a person confirming; the person
+did not open every PDF. It shows the rules do not confirm wrong pairs on these 74 cases, not that
+they never will.
 
-The golden test judges the matcher against the verified entries, offline, and prints a metrics table with `-s`. Each entry is a test in two runs (rules plus identical bytes; and with the content check), and a wrong `matched` fails it. A known open failure is marked as a strict expected failure with its reason (`KNOWN_WRONG` in the test); fixing it makes the marker fail until it is removed.
+**"Check contents"** compares the figures inside the two PDFs and is shown as extra evidence only.
+It never changes a status, because it can be wrong: in one 2005 case two scrip dividend forms share
+their figures and it favours the wrong partner. The tests model what would happen if it did confirm
+pairs, and in that model this one case is confirmed wrongly; that is the one expected failure above,
+and the reason the app does not do it. About a third of the Chinese PDFs sampled cannot be read at
+all, and then the app says so.
 
-```
-cd backend && uv run pytest tests/integration/test_golden.py -s
-```
+## Several announcements on the same day
 
-Live runs are one request at a time, at least a second apart, and stop at the first refusal. Everything is cached under `scripts/.golden_cache/` (not committed, PDFs included). A run that writes entries also records the search responses it used under `backend/tests/fixtures/golden/`; PDFs are never committed, only their hashes and figure fingerprints (`backend/tests/golden/fingerprints.json`).
+Busy days are where pairing can go wrong, so they were tested hardest: 62 of the 74 hand-checked
+announcements come from days with several announcements, and 18 were published in the same minute.
 
-## Audit on random stocks (1 November 2026)
+| Case | Announcements | "Matched", right | "Matched", wrong | "Check pairing" | Single-language or shown apart |
+|---|---|---|---|---|---|
+| Several on one day | 62 | 43 | 0 | 10 | 9 |
+| Several in the same minute | 18 | 9 | 0 | 8 | 1 |
+| Batches filed as EN, EN, TC, TC | 4 | 0 | 0 | 4 | 0 |
 
-`scripts/audit_random.py --stocks 30 --seed 1`: 30 random active securities (25 ordinary shares or
-funds, 5 warrants and other products), last 90 days, live HKEXnews. Full table: `docs/audit-report.md`.
+When the file order cannot show which Chinese file belongs to which English file, the app does not
+guess: the announcement stays "Check pairing" and the evidence says why.
 
-- 30 of 30 searches worked; 760 announcements, 759 "Matched", 1 "Check pairing", none single-language.
-- 25 stocks had a confirmed pair: both PDFs downloaded, verified and zipped; 0 failures. The other 5
-  had no announcements in the period.
-- **One failure found and fixed.** For 00135 the only "Check pairing" entry is a shared HKEXnews web
-  page (`/dod/en.html`) listed as a PDF. The app handled it correctly (not downloadable, linked to
-  HKEXnews), but the audit script tried to content-check it and the page offered "Check contents".
-  Both now skip entries that are not downloadable PDFs.
-- **What the audit cannot show:** it counts statuses, not whether each "Matched" is right. That is
-  what the golden set is for. A very high "Matched" share is expected here because many securities
-  are funds and structured products that publish in both languages at once.
+Same title on the same day (for example a company filing many identical disclosure forms) gives
+filenames that would clash. They are numbered (`...-(2).pdf`, `...-(3).pdf`). Tests name every
+recorded PDF (more than 5,000) and check each name is valid on Windows, macOS and Linux and within
+the length limits, and that the PDFs of one stock never share a name.
+
+## Missing results
+
+| Situation | What the user sees | Tested in |
+|---|---|---|
+| Only an English (or only a Chinese) version exists | "English only" or "Chinese only" with the reason. The other language is never substituted | matcher tests; 10 of 10 hand-checked cases right |
+| HKEXnews shows a notice in the other section ("published in the Chinese section") | The notice is linked as a source, never offered as a version | matcher tests (`test_a_stub_is_never_offered...`) |
+| No announcements in the dates | "No announcements for 00700 between ... Try a wider range." | API test and browser test |
+| Unknown stock code | "No HKEX security uses code 99999. Check the code and try again." | API test and browser test |
+| Start date after end date, a future date, a wrongly typed date | A plain message saying what to fix | API test and browser test |
+| Entry that is a web page, not a PDF | Linked on HKEXnews, no download button | download and parser tests |
+| More than 20,000 documents | Asks the user to narrow the dates | search tests |
+| HKEXnews slow or refusing | Retried with waits; if it keeps failing the page says so and offers nothing partial | client tests |
+
+## Failed or interrupted downloads
+
+The server fetches each file from HKEXnews and checks it before the browser gets it: it must be a
+complete PDF (right start, full length, pages that open). Only then does the page say
+"Sent to your downloads". Faults were injected on purpose (`test_downloads.py`, `test_api.py`):
+
+| Fault | Result |
+|---|---|
+| Server error, then success | Retried; the file is delivered |
+| Connection reset, then success | Retried; the file is delivered |
+| "Too many requests" with a wait time | Waits as told, then succeeds |
+| Timeout that keeps happening | Fails with a clear message |
+| File shorter than announced (cut off) | Refused, never offered |
+| An HTML error page sent with a "success" code | Refused |
+| Bytes that are not a PDF | Refused |
+| Redirect to another address | Never followed |
+| File not found | Fails at once, no pointless retries |
+| One file of a pair fails | No ZIP is offered. "Retry failed files" fetches only the failed file, then the ZIP |
+| Another site's address, or a path with `..`, sent to the server | Refused before anything is fetched |
+| Asking for a file before its job finished, or an unknown job | A clear message, no file |
+
+While a download runs the page shows progress ("Downloading and checking 1 of 2 files…"); a failure
+shows what happened and what to do next.
+
+**Repeated downloads:** a file fetched again within an hour comes from the server's cache, with the
+same name; your browser adds its own "(1)" if the file already exists. Two files with the same name
+in one ZIP are numbered, never overwritten.
+
+## Checked against the real HKEXnews
+
+- An automated live test downloaded a real pair (English and Chinese) from HKEXnews, checked
+  both files and zipped them.
+- **30 random stocks, last 90 days** (`scripts/audit_random.py --stocks 30 --seed 1`, run on
+  1 November 2026): 00707, 03639, 09839, 00315, 01388, 00620, 02837, 09807, 02527, 02655, 07262,
+  02120, 01129, 00488, 02803, 00135, 02176, 02423, 06138, 09820, 09878, 00012, 08283, 02508,
+  01458, 63950, 68165, 17228, 57337, 14308 (mostly ordinary shares, a few funds and warrants).
+  - All 30 searches worked; 760 announcements: 759 "Matched", 1 "Check pairing", none single-language.
+  - For each of the 25 stocks with a confirmed pair, both PDFs were downloaded, verified and
+    zipped: 25 of 25 worked. The other 5 had no announcements in the period.
+  - The one "Check pairing" entry was a shared web page listed as a PDF (00135): it is linked, not downloaded.
+  - This run counts statuses. It cannot show that each "Matched" is right; the hand-checked set does that.
+- The hosted app was tried by hand with three stock codes, including a download.
+
+## Try it yourself (5 minutes)
+
+On the hosted app (the first load can take a minute):
+
+1. Search `700` for "This year". Most announcements show **Matched**; open "Why this pairing" on one.
+2. On a Matched announcement press **Download both (ZIP)**. The ZIP holds `EN_...pdf` and
+   `TC_...pdf` plus `sources.csv`; open both PDFs and check they are the same announcement.
+3. Search `5` (HSBC) for 1 January to 31 December 2005. Documents from before June 2007 carry no
+   headline categories, so every pair shows **Check pairing**, with the candidates listed.
+4. Search `99999`: a message says no security uses that code.
+5. Search one stock for a single day with no filings (for example a Sunday): a message says there
+   are no announcements.
+
+## Not tested
+
+- A person trying it on Windows (Chrome, Edge, unzipping in File Explorer). The automated tests are
+  set up to run on Windows in CI.
+- The failure messages in a real browser (they are tested at the server and API level).
+- Heavy use: the hosted app is one free instance.

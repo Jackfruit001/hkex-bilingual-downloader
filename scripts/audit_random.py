@@ -3,9 +3,9 @@
     uv run --project backend python scripts/audit_random.py --stocks 30 --seed 1
 
 For each stock: search both sections, pair, and verify one confirmed pair end to end (both PDFs
-downloaded and checked, ZIP built). A few `check` entries get the content check. Writes
-docs/audit-report.md. Live and polite: one request at a time, at least a second apart.
-Failures are reported, never hidden.
+downloaded and checked, ZIP built). A few `check` entries get the content check. Writes a table
+to scripts/.audit/report.md (not committed; the summary is in TESTING.md). Live and
+polite: one request at a time, at least a second apart. Failures are reported, never hidden.
 """
 
 import argparse
@@ -175,6 +175,7 @@ def write_report(rows: list[dict[str, object]], seed: int, out: Path) -> None:
             r["warnings"],
         ]
         lines.append("| " + " | ".join(str(c) for c in cells) + " |")
+    out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -205,6 +206,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--stocks", type=int, default=30)
     parser.add_argument("--seed", type=int, default=1)
-    parser.add_argument("--out", type=Path, default=ROOT / "docs" / "audit-report.md")
+    parser.add_argument("--out", type=Path, default=ROOT / "scripts" / ".audit" / "report.md")
     args = parser.parse_args()
     asyncio.run(main(args.stocks, args.seed, args.out))

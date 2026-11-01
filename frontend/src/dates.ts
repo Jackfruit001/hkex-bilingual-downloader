@@ -35,10 +35,16 @@ export function presetRange(preset: Exclude<Preset, "custom">, today: string): [
   }
 }
 
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+/** "3 Oct 2026" from "2026-10-03". */
+export function formatDay(iso: string): string {
+  const [y = "", m = "", d = ""] = iso.slice(0, 10).split("-");
+  return `${Number(d)} ${MONTHS[Number(m) - 1] ?? m} ${y}`;
+}
+
 /** "22 Oct 2026, 12:03" from an ISO time that already carries the +08:00 offset. */
 export function formatHkt(iso: string): string {
   const [date = "", time = ""] = iso.split("T");
-  const [y = "", m = "", d = ""] = date.split("-");
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  return `${Number(d)} ${months[Number(m) - 1] ?? m} ${y}, ${time.slice(0, 5)}`;
+  return `${formatDay(date)}, ${time.slice(0, 5)}`;
 }
