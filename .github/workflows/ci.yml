@@ -32,6 +32,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --frozen # the browser tests start the backend in fixture mode
+        working-directory: backend
       - run: npm ci
       - run: npm run build
       - run: npm test
